@@ -16,3 +16,11 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Banco de dados SQLite
+data/shortener.db
+data/*.db
+
+# Variáveis de ambiente locais
+.env.local
+.env*.local
