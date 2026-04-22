@@ -6,7 +6,7 @@ export const links = sqliteTable(
     id: text('id')
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    slug: text('slug').notNull().unique(),
+    slug: text('slug').notNull(),
     url: text('url').notNull(),
     clickCount: integer('click_count').notNull().default(0),
     createdAt: integer('created_at', { mode: 'timestamp' })
