@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/c/Users/raul-/AppData/Local/nvm/nvm list *)",
+      "Bash(export PATH=\"/c/Users/raul-/AppData/Local/nvm/v24.12.0/node_modules/.bin:/c/Users/raul-/AppData/Local/nvm/v24.12.0:$PATH\")",
+      "Bash(npx create-next-app@latest . --typescript --eslint --tailwind --app --src-dir --import-alias \"@/*\" --no-git --yes)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(npx drizzle-kit *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npm run *)",
+      "Bash(nvm --version)",
+      "Bash(where node *)",
+      "Bash(\"C:/Program Files/nodejs/node.exe\" --version)",
+      "Bash(nvm list *)",
+      "Bash(echo \"exit: $?\")",
+      "Read(//c/Program Files/nodejs/**)",
+      "Read(//c/Users/raul-/.nvm/**)",
+      "Bash(git check-ignore *)"
+    ]
+  }
+}
