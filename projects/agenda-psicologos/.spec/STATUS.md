@@ -2,7 +2,7 @@
 
 ## Fase atual: 4 — Implementação
 
-## Estado: aguardando início
+## Estado: em andamento
 
 ## Fases
 - [x] Fase 0 — Produto (product.md, mvp-scope.md)
@@ -47,6 +47,12 @@
 | prontuario-sessao    | tasks/prontuario-sessao.md    | tasks: aprovadas |
 | controle-financeiro  | tasks/controle-financeiro.md  | tasks: aprovadas |
 
+## Progresso de implementação
+
+| Task                  | Status |
+|-----------------------|--------|
+| autenticacao/TASK-01  | done   |
+
 ## Decisões registradas
 
 | Arquivo | Decisão |
@@ -56,6 +62,7 @@
 | ADR/token-confirmacao.md | Tokens de confirmação gerados com HMAC-SHA256, expiração 72h, uso único |
 | ADR/auth-prontuario-cfp.md | Supabase Auth satisfaz requisito CFP — sem segunda senha no MVP |
 | ADR/user-id-denormalizacao-rls.md | user_id denormalizado em session_notes e session_payments para RLS eficiente |
+| ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
 
 ## Histórico de aprovações de specs
 
@@ -94,3 +101,4 @@
 - 2026-04-29: Tasks de lembretes-consulta criadas pelo tasks-agent — aguardando aprovação
 - 2026-04-29: Tasks de controle-financeiro criadas pelo tasks-agent — aguardando aprovação
 - 2026-04-29: Fase 3 aprovada pelo usuário — todas as 7 tasks aprovadas, Fase 4 liberada
+- 2026-04-29: TASK-01 concluída — projeto Next.js inicializado, NextAuth.js v5 configurado com Credentials Provider e Prisma Adapter (Prisma 7.x + @prisma/adapter-mariadb)
