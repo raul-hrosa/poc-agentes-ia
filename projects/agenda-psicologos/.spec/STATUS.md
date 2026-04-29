@@ -107,3 +107,4 @@
 - 2026-04-29: TASK-01 concluída — projeto Next.js inicializado, NextAuth.js v5 configurado com Credentials Provider e Prisma Adapter (Prisma 7.x + @prisma/adapter-mariadb)
 - 2026-04-29: TASK-02 concluída — modelo PasswordResetToken adicionado ao schema Prisma
 - 2026-04-29: TASK-03 concluída — schemas Zod, getCurrentUser e getUserByEmail criados com testes
+- 2026-04-29: TASK-06 concluída — middleware de proteção de rotas e estrutura (public)/(auth) criados
