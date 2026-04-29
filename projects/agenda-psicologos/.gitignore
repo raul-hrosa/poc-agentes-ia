@@ -1,0 +1,16 @@
+node_modules
+
+# Keep environment variables out of version control
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next/
+out/
+
+# Prisma generated client (regenerated via pnpm db:generate)
+/src/generated/prisma
+
+# Build
+dist/
