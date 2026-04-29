@@ -71,3 +71,16 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+model PasswordResetToken {
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  email     String    @db.VarChar(255)
+  token     String    @unique @db.VarChar(255)
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+
+  @@index([email])
+  @@map("password_reset_tokens")
+}
