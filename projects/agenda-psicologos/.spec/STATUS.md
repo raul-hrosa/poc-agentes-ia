@@ -52,6 +52,9 @@
 | Task                  | Status |
 |-----------------------|--------|
 | autenticacao/TASK-01  | done   |
+| autenticacao/TASK-03  | done   |
+| autenticacao/TASK-02  | done   |
+| autenticacao/TASK-06  | done   |
 
 ## Decisões registradas
 
@@ -102,3 +105,5 @@
 - 2026-04-29: Tasks de controle-financeiro criadas pelo tasks-agent — aguardando aprovação
 - 2026-04-29: Fase 3 aprovada pelo usuário — todas as 7 tasks aprovadas, Fase 4 liberada
 - 2026-04-29: TASK-01 concluída — projeto Next.js inicializado, NextAuth.js v5 configurado com Credentials Provider e Prisma Adapter (Prisma 7.x + @prisma/adapter-mariadb)
+- 2026-04-29: TASK-02 concluída — modelo PasswordResetToken adicionado ao schema Prisma
+- 2026-04-29: TASK-03 concluída — schemas Zod, getCurrentUser e getUserByEmail criados com testes
