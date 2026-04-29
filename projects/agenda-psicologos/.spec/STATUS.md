@@ -56,6 +56,7 @@
 | autenticacao/TASK-02  | done   |
 | autenticacao/TASK-06  | done   |
 | autenticacao/TASK-04  | done   |
+| autenticacao/TASK-05  | done   |
 
 ## Decisões registradas
 
@@ -110,3 +111,4 @@
 - 2026-04-29: TASK-03 concluída — schemas Zod, getCurrentUser e getUserByEmail criados com testes
 - 2026-04-29: TASK-06 concluída — middleware de proteção de rotas e estrutura (public)/(auth) criados
 - 2026-04-29: TASK-04 concluída — Server Action registerUser implementada com testes
+- 2026-04-29: TASK-05 concluída — Server Actions forgotPassword e resetPassword implementadas com testes
