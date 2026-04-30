@@ -2,7 +2,7 @@
 
 **Slug:** `reset-password-missing-success-toast`
 **Prioridade:** high
-**Status:** aberto
+**Status:** corrigido
 **Reportado em:** 2026-04-30
 **Feature relacionada:** autenticacao (AC-26)
 
@@ -46,6 +46,13 @@ Nenhuma biblioteca de toast instalada no projeto. O `ResetPasswordForm` só faz 
 
 ## Critério de aceite do fix
 
-- [ ] Após reset bem-sucedido, toast "Senha redefinida com sucesso" aparece em `/dashboard`
-- [ ] `pnpm typecheck` passa sem erros
+- [x] Após reset bem-sucedido, toast "Senha redefinida com sucesso" aparece em `/dashboard`
+- [x] `pnpm typecheck` passa sem erros
 - [ ] `pnpm build` passa sem erros
+
+## Fix aplicado
+
+- `sonner` instalado (v2.0.7)
+- `<Toaster richColors position="top-right" />` adicionado em `src/app/providers.tsx`
+- `toast.success("Senha redefinida com sucesso")` chamado em `ResetPasswordForm.tsx` antes do redirect
+- Commit: fix(auth): exibir toast de sucesso após redefinição de senha (AC-26)

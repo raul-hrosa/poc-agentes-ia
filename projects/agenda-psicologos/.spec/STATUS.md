@@ -64,9 +64,7 @@
 
 ## Blockers ativos
 
-| tipo | slug                                 | descrição                                  | arquivo                                      |
-|------|--------------------------------------|--------------------------------------------|----------------------------------------------|
-| bug  | reset-password-missing-success-toast | Toast ausente após reset de senha (AC-26)  | bugs/reset-password-missing-success-toast.md |
+Nenhum.
 
 ## Decisões registradas
 
