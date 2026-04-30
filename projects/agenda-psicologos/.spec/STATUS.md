@@ -57,6 +57,10 @@
 | autenticacao/TASK-06  | done   |
 | autenticacao/TASK-04  | done   |
 | autenticacao/TASK-05  | done   |
+| autenticacao/TASK-07  | done   |
+| autenticacao/TASK-08  | done   |
+| autenticacao/TASK-09  | done   |
+| autenticacao/TASK-10  | done   |
 
 ## Decisões registradas
 
@@ -112,3 +116,8 @@
 - 2026-04-29: TASK-06 concluída — middleware de proteção de rotas e estrutura (public)/(auth) criados
 - 2026-04-29: TASK-04 concluída — Server Action registerUser implementada com testes
 - 2026-04-29: TASK-05 concluída — Server Actions forgotPassword e resetPassword implementadas com testes
+- 2026-04-30: TASK-07 concluída — página /register e componente RegisterForm criados
+- 2026-04-30: TASK-08 concluída — página /login, LoginForm e SessionProvider criados
+- 2026-04-30: TASK-09 concluída — páginas /forgot-password e /reset-password com formulários criados
+- 2026-04-30: TASK-10 concluída — UserMenu com logout e layout (auth) implementados
+- 2026-04-30: Feature autenticacao — todas as 10 tasks concluídas, acionando review-agent
