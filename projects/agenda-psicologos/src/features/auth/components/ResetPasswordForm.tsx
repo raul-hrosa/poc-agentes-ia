@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { z } from "zod"
+import { toast } from "sonner"
 import { ResetPasswordSchema } from "@/features/auth/schema"
 import { resetPassword } from "@/features/auth/actions/resetPassword"
 
@@ -34,6 +35,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
     const result = await resetPassword(values)
 
     if ("success" in result) {
+      toast.success("Senha redefinida com sucesso")
       router.push("/dashboard")
       return
     }
