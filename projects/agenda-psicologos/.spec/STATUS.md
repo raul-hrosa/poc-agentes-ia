@@ -49,18 +49,19 @@
 
 ## Progresso de implementação
 
-| Task                  | Status |
-|-----------------------|--------|
-| autenticacao/TASK-01  | done   |
-| autenticacao/TASK-03  | done   |
-| autenticacao/TASK-02  | done   |
-| autenticacao/TASK-06  | done   |
-| autenticacao/TASK-04  | done   |
-| autenticacao/TASK-05  | done   |
-| autenticacao/TASK-07  | done   |
-| autenticacao/TASK-08  | done   |
-| autenticacao/TASK-09  | done   |
-| autenticacao/TASK-10  | done   |
+| Task                           | Status |
+|--------------------------------|--------|
+| autenticacao/TASK-01           | done   |
+| autenticacao/TASK-03           | done   |
+| autenticacao/TASK-02           | done   |
+| autenticacao/TASK-06           | done   |
+| autenticacao/TASK-04           | done   |
+| autenticacao/TASK-05           | done   |
+| autenticacao/TASK-07           | done   |
+| autenticacao/TASK-08           | done   |
+| autenticacao/TASK-09           | done   |
+| autenticacao/TASK-10           | done   |
+| cadastro-pacientes/TASK-01     | done   |
 
 ## Blockers ativos
 
@@ -76,6 +77,7 @@ Nenhum.
 | ADR/auth-prontuario-cfp.md | Supabase Auth satisfaz requisito CFP — sem segunda senha no MVP |
 | ADR/user-id-denormalizacao-rls.md | user_id denormalizado em session_notes e session_payments para RLS eficiente |
 | ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
+| ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
 
 ## Histórico de aprovações de specs
 
@@ -126,3 +128,4 @@ Nenhum.
 - 2026-04-30: TASK-10 concluída — UserMenu com logout e layout (auth) implementados
 - 2026-04-30: Feature autenticacao — todas as 10 tasks concluídas, acionando review-agent
 - 2026-04-30: Review de autenticacao concluído pelo review-agent — aprovado com ressalva (MAJ-01: toast ausente no AC-26)
+- 2026-04-30: cadastro-pacientes/TASK-01 concluída — tipos TypeScript e schema Zod da feature patients criados
