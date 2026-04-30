@@ -63,6 +63,7 @@
 | autenticacao/TASK-10           | done   |
 | cadastro-pacientes/TASK-01     | done   |
 | cadastro-pacientes/TASK-02     | done   |
+| cadastro-pacientes/TASK-03     | done   |
 
 ## Blockers ativos
 
@@ -79,6 +80,7 @@ Nenhum.
 | ADR/user-id-denormalizacao-rls.md | user_id denormalizado em session_notes e session_payments para RLS eficiente |
 | ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
 | ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
+| ADR/patient-actions-user-plan.md | Buscar plan do usuário via query Prisma nas actions — AuthUser não expõe plan |
 
 ## Histórico de aprovações de specs
 
@@ -131,3 +133,4 @@ Nenhum.
 - 2026-04-30: Review de autenticacao concluído pelo review-agent — aprovado com ressalva (MAJ-01: toast ausente no AC-26)
 - 2026-04-30: cadastro-pacientes/TASK-01 concluída — tipos TypeScript e schema Zod da feature patients criados
 - 2026-04-30: cadastro-pacientes/TASK-02 concluída — queries getActivePatients, getArchivedPatients, getPatientById e countActivePatients criadas
+- 2026-04-30: cadastro-pacientes/TASK-03 concluída — Server Actions createPatient, updatePatient, archivePatient e restorePatient criadas
