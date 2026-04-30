@@ -121,3 +121,4 @@
 - 2026-04-30: TASK-09 concluída — páginas /forgot-password e /reset-password com formulários criados
 - 2026-04-30: TASK-10 concluída — UserMenu com logout e layout (auth) implementados
 - 2026-04-30: Feature autenticacao — todas as 10 tasks concluídas, acionando review-agent
+- 2026-04-30: Review de autenticacao concluído pelo review-agent — aprovado com ressalva (MAJ-01: toast ausente no AC-26)
