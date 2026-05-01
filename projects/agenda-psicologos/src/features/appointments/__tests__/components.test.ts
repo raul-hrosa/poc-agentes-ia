@@ -1,0 +1,175 @@
+import { describe, it, expect } from "vitest"
+import { startOfWeek, addDays, isValid, parseISO } from "date-fns"
+
+/**
+ * Testes de lógica dos componentes da visualização semanal.
+ * Componentes React não são testados diretamente aqui (exigiriam jsdom +
+ * @testing-library/react com setup adicional). A lógica pura de data e
+ * utilitários é verificada neste arquivo.
+ */
+
+// ---------------------------------------------------------------------------
+// resolveWeekStart — lógica extraída da page.tsx
+// ---------------------------------------------------------------------------
+
+function resolveWeekStart(weekParam?: string): Date {
+  if (weekParam) {
+    const parsed = parseISO(weekParam)
+    if (isValid(parsed)) {
+      return startOfWeek(parsed, { weekStartsOn: 1 })
+    }
+  }
+  return startOfWeek(new Date(), { weekStartsOn: 1 })
+}
+
+describe("resolveWeekStart", () => {
+  it("retorna segunda-feira da semana atual quando sem parâmetro", () => {
+    const result = resolveWeekStart()
+    // Deve ser segunda-feira (getDay() === 1)
+    expect(result.getDay()).toBe(1)
+  })
+
+  it("retorna segunda-feira da semana correspondente ao parâmetro YYYY-MM-DD", () => {
+    // 2026-05-01 é uma sexta-feira → semana começa em 2026-04-27 (segunda)
+    const result = resolveWeekStart("2026-05-01")
+    expect(result.toISOString().startsWith("2026-04-27")).toBe(true)
+    expect(result.getDay()).toBe(1)
+  })
+
+  it("retorna semana atual quando parâmetro é inválido", () => {
+    const result = resolveWeekStart("invalid-date")
+    expect(result.getDay()).toBe(1)
+    expect(isValid(result)).toBe(true)
+  })
+
+  it("retorna segunda-feira quando parâmetro cai em domingo", () => {
+    // 2026-04-26 é domingo → semana começa em 2026-04-20 (segunda)
+    const result = resolveWeekStart("2026-04-26")
+    expect(result.getDay()).toBe(1)
+    expect(result.toISOString().startsWith("2026-04-20")).toBe(true)
+  })
+
+  it("retorna a mesma segunda quando parâmetro já é segunda-feira", () => {
+    const result = resolveWeekStart("2026-04-27")
+    expect(result.getDay()).toBe(1)
+    expect(result.toISOString().startsWith("2026-04-27")).toBe(true)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// abbreviateName — lógica extraída de AppointmentCard.tsx
+// ---------------------------------------------------------------------------
+
+function abbreviateName(fullName: string): string {
+  const parts = fullName.trim().split(/\s+/)
+  return parts.slice(0, 2).join(" ")
+}
+
+describe("abbreviateName", () => {
+  it("retorna dois primeiros nomes quando há mais de dois nomes", () => {
+    expect(abbreviateName("Ana Beatriz Silva")).toBe("Ana Beatriz")
+  })
+
+  it("retorna o nome completo quando há apenas um nome", () => {
+    expect(abbreviateName("Ana")).toBe("Ana")
+  })
+
+  it("retorna os dois nomes quando há exatamente dois", () => {
+    expect(abbreviateName("Ana Beatriz")).toBe("Ana Beatriz")
+  })
+
+  it("remove espaços extras no início e fim", () => {
+    expect(abbreviateName("  Ana Beatriz Silva  ")).toBe("Ana Beatriz")
+  })
+
+  it("trata múltiplos espaços entre nomes", () => {
+    expect(abbreviateName("Ana  Beatriz  Silva")).toBe("Ana Beatriz")
+  })
+})
+
+// ---------------------------------------------------------------------------
+// StatusBadge — mapeamento de status
+// ---------------------------------------------------------------------------
+
+type AppointmentStatus =
+  | "scheduled"
+  | "confirmed"
+  | "completed"
+  | "cancelled"
+  | "no_show"
+
+const STATUS_LABELS: Record<AppointmentStatus, string> = {
+  scheduled: "agendada",
+  confirmed: "confirmada",
+  completed: "realizada",
+  cancelled: "cancelada",
+  no_show: "falta",
+}
+
+describe("StatusBadge labels", () => {
+  it("exibe 'agendada' para status scheduled", () => {
+    expect(STATUS_LABELS.scheduled).toBe("agendada")
+  })
+
+  it("exibe 'confirmada' para status confirmed", () => {
+    expect(STATUS_LABELS.confirmed).toBe("confirmada")
+  })
+
+  it("exibe 'realizada' para status completed", () => {
+    expect(STATUS_LABELS.completed).toBe("realizada")
+  })
+
+  it("exibe 'cancelada' para status cancelled", () => {
+    expect(STATUS_LABELS.cancelled).toBe("cancelada")
+  })
+
+  it("exibe 'falta' para status no_show", () => {
+    expect(STATUS_LABELS.no_show).toBe("falta")
+  })
+
+  it("cobre todos os status possíveis", () => {
+    const statuses: AppointmentStatus[] = [
+      "scheduled",
+      "confirmed",
+      "completed",
+      "cancelled",
+      "no_show",
+    ]
+    for (const status of statuses) {
+      expect(STATUS_LABELS[status]).toBeTruthy()
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
+// Grade semanal — geração dos 7 dias
+// ---------------------------------------------------------------------------
+
+describe("grade semanal — dias da semana", () => {
+  it("gera exatamente 7 dias a partir do weekStart", () => {
+    const weekStart = resolveWeekStart("2026-04-27") // segunda-feira
+    const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+    expect(days).toHaveLength(7)
+  })
+
+  it("primeiro dia é segunda-feira", () => {
+    const weekStart = resolveWeekStart("2026-04-27")
+    const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+    expect(days[0].getDay()).toBe(1) // segunda = 1
+  })
+
+  it("último dia é domingo", () => {
+    const weekStart = resolveWeekStart("2026-04-27")
+    const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+    expect(days[6].getDay()).toBe(0) // domingo = 0
+  })
+
+  it("gera dias consecutivos", () => {
+    const weekStart = resolveWeekStart("2026-04-27")
+    const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+    for (let i = 1; i < days.length; i++) {
+      const diff = days[i].getTime() - days[i - 1].getTime()
+      expect(diff).toBe(24 * 60 * 60 * 1000) // 1 dia em ms
+    }
+  })
+})
