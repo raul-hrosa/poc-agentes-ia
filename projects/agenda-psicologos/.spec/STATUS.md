@@ -68,10 +68,11 @@
 | cadastro-pacientes/TASK-05     | done   |
 | cadastro-pacientes/TASK-06     | done   |
 | cadastro-pacientes/TASK-07     | done   |
+| agenda-consultas/TASK-01       | done   |
 
 ## Blockers ativos
 
-_Nenhum blocker ativo em cadastro-pacientes._
+_Nenhum blocker ativo._
 
 ## Decisões registradas
 
@@ -145,3 +146,5 @@ _Nenhum blocker ativo em cadastro-pacientes._
 - 2026-05-01: cadastro-pacientes/TASK-07 concluída — testes de integração de actions, queries e utils criados
 - 2026-05-01: Review de cadastro-pacientes concluído pelo review-agent — needs-fix: 2 blockers (acesso direto ao Prisma em new/page.tsx, cast as unknown as em PatientFormPage.tsx) e 1 major (threshold de busca 1 caractere vs 2 exigidos)
 - 2026-05-01: cadastro-pacientes — BLK-01, BLK-02 e MAJ-01 corrigidos após review
+- 2026-05-01: Re-review de cadastro-pacientes — approved após correções de BLK-01, BLK-02 e MAJ-01
+- 2026-05-01: agenda-consultas/TASK-01 concluída — tipos TypeScript e schemas Zod da feature appointments criados
