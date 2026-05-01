@@ -66,6 +66,7 @@
 | cadastro-pacientes/TASK-03     | done   |
 | cadastro-pacientes/TASK-04     | done   |
 | cadastro-pacientes/TASK-05     | done   |
+| cadastro-pacientes/TASK-06     | done   |
 
 ## Blockers ativos
 
@@ -139,3 +140,4 @@ Nenhum.
 - 2026-04-30: cadastro-pacientes/TASK-03 concluída — Server Actions createPatient, updatePatient, archivePatient e restorePatient criadas
 - 2026-05-01: cadastro-pacientes/TASK-04 concluída — página /patients com listagem, abas, busca e restauração implementadas
 - 2026-05-01: cadastro-pacientes/TASK-05 concluída — página /patients/[id] com perfil e arquivamento implementados
+- 2026-05-01: cadastro-pacientes/TASK-06 concluída — formulários /patients/new e /patients/[id]/edit implementados
