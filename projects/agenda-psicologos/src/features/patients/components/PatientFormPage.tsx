@@ -12,6 +12,7 @@ import {
 } from "@/features/patients/actions/patientActions"
 import type { PatientProfile } from "@/features/patients/types"
 import type { PatientFormInput } from "@/features/patients/schema"
+import type { z } from "zod"
 
 type Props = {
   mode: "create" | "edit"
@@ -19,11 +20,10 @@ type Props = {
   patient?: PatientProfile
 }
 
-// Tipo interno do formulário onde birthDate é string (como retorna o input type="date")
-// O zodResolver faz a coerção via z.coerce.date() no momento da validação
-type PatientFormFields = Omit<PatientFormInput, "birthDate"> & {
-  birthDate?: string | null
-}
+// z.input<> representa o tipo de entrada do schema (antes das coerções).
+// birthDate é aceito como string pelo z.coerce.date() no input type="date"
+// e convertido para Date na validação — por isso usamos o tipo de entrada aqui.
+type PatientFormValues = z.input<typeof PatientFormSchema>
 
 function formatDateForInput(date: Date | null | undefined): string {
   if (!date) return ""
@@ -42,8 +42,8 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PatientFormFields>({
-    resolver: zodResolver(PatientFormSchema) as unknown as import("react-hook-form").Resolver<PatientFormFields>,
+  } = useForm<PatientFormValues>({
+    resolver: zodResolver(PatientFormSchema),
     defaultValues:
       mode === "edit" && patient
         ? {
@@ -69,7 +69,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
   const cancelHref =
     mode === "edit" && patient ? `/patients/${patient.id}` : "/patients"
 
-  async function onSubmit(data: PatientFormFields) {
+  async function onSubmit(data: PatientFormValues) {
     setServerError(null)
 
     const payload = data as PatientFormInput

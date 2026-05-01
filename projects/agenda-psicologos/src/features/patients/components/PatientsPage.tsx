@@ -53,11 +53,12 @@ export function PatientsPage({
   const currentList =
     activeTab === "active" ? activePatients : archivedPatients
 
-  const filteredList = searchQuery
-    ? currentList.filter((p) =>
-        p.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : currentList
+  const filteredList =
+    searchQuery.length >= 2
+      ? currentList.filter((p) =>
+          p.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : currentList
 
   const grouped = groupByInitial(filteredList)
 
