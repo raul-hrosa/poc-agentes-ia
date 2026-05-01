@@ -67,6 +67,7 @@
 | cadastro-pacientes/TASK-04     | done   |
 | cadastro-pacientes/TASK-05     | done   |
 | cadastro-pacientes/TASK-06     | done   |
+| cadastro-pacientes/TASK-07     | done   |
 
 ## Blockers ativos
 
@@ -141,3 +142,4 @@ Nenhum.
 - 2026-05-01: cadastro-pacientes/TASK-04 concluída — página /patients com listagem, abas, busca e restauração implementadas
 - 2026-05-01: cadastro-pacientes/TASK-05 concluída — página /patients/[id] com perfil e arquivamento implementados
 - 2026-05-01: cadastro-pacientes/TASK-06 concluída — formulários /patients/new e /patients/[id]/edit implementados
+- 2026-05-01: cadastro-pacientes/TASK-07 concluída — testes de integração de actions, queries e utils criados
