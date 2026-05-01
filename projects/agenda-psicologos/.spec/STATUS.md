@@ -71,6 +71,7 @@
 | agenda-consultas/TASK-01       | done   |
 | agenda-consultas/TASK-02       | done   |
 | agenda-consultas/TASK-03       | done   |
+| agenda-consultas/TASK-04       | done   |
 
 ## Blockers ativos
 
@@ -152,3 +153,4 @@ _Nenhum blocker ativo._
 - 2026-05-01: agenda-consultas/TASK-01 concluída — tipos TypeScript e schemas Zod da feature appointments criados
 - 2026-05-01: agenda-consultas/TASK-02 concluída — queries getWeekAppointments, getDayAppointments, getAppointmentById, getPatientAppointments e getConflictingAppointments criadas
 - 2026-05-01: agenda-consultas/TASK-03 concluída — Server Actions createAppointment e updateAppointment criadas
+- 2026-05-01: agenda-consultas/TASK-04 concluída — Server Actions cancelAppointment, completeAppointment e markNoShow criadas
