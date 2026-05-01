@@ -65,6 +65,7 @@
 | cadastro-pacientes/TASK-02     | done   |
 | cadastro-pacientes/TASK-03     | done   |
 | cadastro-pacientes/TASK-04     | done   |
+| cadastro-pacientes/TASK-05     | done   |
 
 ## Blockers ativos
 
@@ -82,6 +83,7 @@ Nenhum.
 | ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
 | ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
 | ADR/patient-actions-user-plan.md | Buscar plan do usuário via query Prisma nas actions — AuthUser não expõe plan |
+| ADR/nextjs14-webpack-node-scheme.md | webpack externals para node: scheme do Prisma 7.x + serverComponentsExternalPackages |
 
 ## Histórico de aprovações de specs
 
@@ -136,3 +138,4 @@ Nenhum.
 - 2026-04-30: cadastro-pacientes/TASK-02 concluída — queries getActivePatients, getArchivedPatients, getPatientById e countActivePatients criadas
 - 2026-04-30: cadastro-pacientes/TASK-03 concluída — Server Actions createPatient, updatePatient, archivePatient e restorePatient criadas
 - 2026-05-01: cadastro-pacientes/TASK-04 concluída — página /patients com listagem, abas, busca e restauração implementadas
+- 2026-05-01: cadastro-pacientes/TASK-05 concluída — página /patients/[id] com perfil e arquivamento implementados
