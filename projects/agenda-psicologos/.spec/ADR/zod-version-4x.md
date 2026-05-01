@@ -11,6 +11,7 @@ O Zod v4 introduz mudanças de API relevantes em relação ao v3:
 - O objeto `ZodError` não expõe `.errors` como array — a propriedade correta é `.issues`
 - O formato de `safeParse` permanece o mesmo: `{ success: boolean, data?, error? }`
 - A API de schemas (`.string()`, `.object()`, `.refine()`, etc.) é retrocompatível
+- O parâmetro de mensagem de erro em construtores como `z.coerce.date()` e `z.enum()` usa `error` em vez de `required_error` (mudança de v3 para v4)
 
 Descoberto durante a implementação dos testes de `PatientFormSchema` (TASK-01 de cadastro-pacientes), ao verificar que `result.error.errors` era `undefined` e `result.error.issues` continha os erros esperados.
 
@@ -29,4 +30,5 @@ Em todos os testes e código que inspecionam erros de validação Zod, usar `.is
 - **Positivo:** Usa versão mais recente com melhorias de performance e API mais consistente
 - **Negativo:** Testes precisam usar `.issues` em vez de `.errors` — diferença de API não óbvia para quem vem do Zod v3
 - **Atenção:** Toda verificação de erros Zod em testes futuros deve usar `result.error.issues`, não `result.error.errors`
-- **Neutro:** Os schemas continuam com a mesma API (`.object()`, `.string()`, `.refine()`, etc.)
+- **Atenção:** Parâmetros de erro em construtores Zod usam `{ error: "msg" }` em vez de `{ required_error: "msg" }` — descoberto na TASK-01 de agenda-consultas ao criar `AppointmentFormSchema`
+- **Neutro:** Os schemas continuam com a mesma estrutura geral (`.object()`, `.string()`, `.refine()`, etc.)
