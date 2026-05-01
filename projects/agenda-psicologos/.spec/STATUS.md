@@ -71,7 +71,7 @@
 
 ## Blockers ativos
 
-Nenhum.
+_Nenhum blocker ativo em cadastro-pacientes._
 
 ## Decisões registradas
 
@@ -143,3 +143,5 @@ Nenhum.
 - 2026-05-01: cadastro-pacientes/TASK-05 concluída — página /patients/[id] com perfil e arquivamento implementados
 - 2026-05-01: cadastro-pacientes/TASK-06 concluída — formulários /patients/new e /patients/[id]/edit implementados
 - 2026-05-01: cadastro-pacientes/TASK-07 concluída — testes de integração de actions, queries e utils criados
+- 2026-05-01: Review de cadastro-pacientes concluído pelo review-agent — needs-fix: 2 blockers (acesso direto ao Prisma em new/page.tsx, cast as unknown as em PatientFormPage.tsx) e 1 major (threshold de busca 1 caractere vs 2 exigidos)
+- 2026-05-01: cadastro-pacientes — BLK-01, BLK-02 e MAJ-01 corrigidos após review
