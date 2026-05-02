@@ -3,6 +3,7 @@ import Link from "next/link"
 import { getCurrentUser } from "@/features/auth/queries/getCurrentUser"
 import { getAppointmentById } from "@/features/appointments/queries/getAppointmentById"
 import { AppointmentDetails } from "@/features/appointments/components/AppointmentDetails"
+import { AppointmentPaymentSection } from "@/features/payments/components/AppointmentPaymentSection"
 
 interface AppointmentPageProps {
   params: { id: string }
@@ -32,6 +33,18 @@ export default async function AppointmentPage({
         </div>
 
         <AppointmentDetails appointment={appointment} />
+
+        {/* Seção de pagamento — visível apenas para consultas realizadas (AC-13) */}
+        <div className="mt-4">
+          <AppointmentPaymentSection
+            appointmentId={appointment.id}
+            userId={user.id}
+            appointmentStatus={appointment.status}
+            patientName={appointment.patient.name}
+            scheduledAt={appointment.scheduledAt}
+            durationMinutes={appointment.durationMinutes}
+          />
+        </div>
       </div>
     </div>
   )
