@@ -5,14 +5,14 @@ import { getPatientSessionNotes } from "@/features/notes/queries/getPatientSessi
 import { PatientNotesList } from "@/features/notes/components/PatientNotesList"
 
 interface PatientNotesPageProps {
-  params: Promise<{ patient_id: string }>
+  params: Promise<{ id: string }>
 }
 
 export default async function PatientNotesPage({
   params,
 }: PatientNotesPageProps) {
   const user = await getCurrentUser()
-  const { patient_id } = await params
+  const { id: patient_id } = await params
 
   const patient = await prisma.patient.findFirst({
     where: { id: patient_id, userId: user.id, deletedAt: null },

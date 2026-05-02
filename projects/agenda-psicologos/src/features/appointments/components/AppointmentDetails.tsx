@@ -12,7 +12,7 @@ import { completeAppointment } from "@/features/appointments/actions/completeApp
 import { markNoShow } from "@/features/appointments/actions/markNoShow"
 
 interface AppointmentDetailsProps {
-  appointment: AppointmentWithPatient & { hasNote: boolean }
+  appointment: AppointmentWithPatient & { hasNote: boolean; noteId?: string }
 }
 
 /**
@@ -166,16 +166,16 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
         {/* Ações para consulta realizada (AC-29) */}
         {isCompleted && (
           <div className="border-t border-gray-100 px-6 py-5">
-            {appointment.hasNote ? (
+            {appointment.hasNote && appointment.noteId ? (
               <a
-                href={`/appointments/${appointment.id}/notes`}
+                href={`/notes/${appointment.noteId}`}
                 className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
               >
                 Ver prontuário
               </a>
             ) : (
               <a
-                href={`/appointments/${appointment.id}/notes`}
+                href={`/notes/new?appointment=${appointment.id}`}
                 className="flex w-full items-center justify-center rounded-lg border border-blue-300 bg-white px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
               >
                 Registrar prontuário

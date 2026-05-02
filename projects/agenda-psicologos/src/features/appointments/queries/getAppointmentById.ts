@@ -1,12 +1,15 @@
 import { prisma } from "@/shared/lib/prisma"
 import { AppointmentWithPatient } from "../types"
 
-type AppointmentWithNote = AppointmentWithPatient & { hasNote: boolean }
+type AppointmentWithNote = AppointmentWithPatient & {
+  hasNote: boolean
+  noteId?: string
+}
 
 /**
  * Busca uma consulta pelo id validando pertencimento ao psicólogo.
  * WHERE: id = appointmentId AND userId (segurança — AC-35)
- * INCLUDE: patient (id, name, phone), sessionNote (id — para verificar hasNote)
+ * INCLUDE: patient (id, name, phone), sessionNote (id — para hasNote e noteId)
  * Retorna null se não existir OU pertencer a outro userId.
  */
 export async function getAppointmentById(
@@ -43,5 +46,6 @@ export async function getAppointmentById(
   return {
     ...appointment,
     hasNote: sessionNote !== null,
+    noteId: sessionNote?.id,
   } as AppointmentWithNote
 }
