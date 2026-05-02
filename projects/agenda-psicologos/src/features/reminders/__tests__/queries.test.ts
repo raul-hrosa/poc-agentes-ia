@@ -21,8 +21,8 @@ import { prisma } from "@/shared/lib/prisma"
 import { getLatestReminderForAppointment } from "../queries/getLatestReminderForAppointment"
 import { getTokenForConfirmPage } from "../queries/getTokenForConfirmPage"
 
-const USER_ID = "user-aaa"
-const APPOINTMENT_ID = "appt-111"
+const USER_ID = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+const APPOINTMENT_ID = "b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a22"
 const TOKEN = "a".repeat(64)
 
 const mockAppointmentFind = prisma.appointment.findFirst as ReturnType<typeof vi.fn>
@@ -51,8 +51,8 @@ function makeAppointment(overrides: Partial<Record<string, unknown>> = {}) {
     location: null,
     status: "scheduled",
     cancellationReason: null,
-    patient: { id: "patient-1", name: "Ana Lima", phone: "11999990001" },
-    user: { id: USER_ID, name: "Dr. João" },
+    patient: { id: "c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33", name: "Ana Lima", phone: "11999990001" },
+    user: { id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", name: "Dr. João" },
     ...overrides,
   }
 }
