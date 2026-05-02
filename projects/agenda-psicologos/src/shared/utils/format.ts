@@ -41,3 +41,20 @@ export function calculateAge(birthDate: Date): number {
   }
   return age
 }
+
+/**
+ * Converte centavos para string formatada em BRL: 15000 → "R$ 150,00"
+ */
+export function formatCurrency(amountCents: number): string {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(amountCents / 100)
+}
+
+/**
+ * Converte valor BRL numérico para centavos: 150 → 15000
+ */
+export function parseCurrencyToCents(amountBRL: number): number {
+  return Math.round(amountBRL * 100)
+}

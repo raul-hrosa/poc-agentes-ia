@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest"
-import { formatPhone, calculateAge, truncateNotePreview } from "./format"
+import { formatPhone, calculateAge, truncateNotePreview, formatCurrency, parseCurrencyToCents } from "./format"
 
 // ---------------------------------------------------------------------------
 // truncateNotePreview
@@ -123,5 +123,52 @@ describe("calculateAge", () => {
     const result = calculateAge(new Date("1985-12-15"))
 
     expect(result).toBe(40)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// formatCurrency
+// ---------------------------------------------------------------------------
+describe("formatCurrency", () => {
+  it("formata 15000 centavos como R$ 150,00", () => {
+    const result = formatCurrency(15000)
+    expect(result).toContain("150,00")
+    expect(result).toContain("R$")
+  })
+
+  it("formata 0 centavos como R$ 0,00", () => {
+    const result = formatCurrency(0)
+    expect(result).toContain("0,00")
+  })
+
+  it("formata 100 centavos como R$ 1,00", () => {
+    const result = formatCurrency(100)
+    expect(result).toContain("1,00")
+  })
+
+  it("formata 1999 centavos como R$ 19,99", () => {
+    const result = formatCurrency(1999)
+    expect(result).toContain("19,99")
+  })
+})
+
+// ---------------------------------------------------------------------------
+// parseCurrencyToCents
+// ---------------------------------------------------------------------------
+describe("parseCurrencyToCents", () => {
+  it("converte 150 para 15000 centavos", () => {
+    expect(parseCurrencyToCents(150)).toBe(15000)
+  })
+
+  it("converte 0 para 0 centavos", () => {
+    expect(parseCurrencyToCents(0)).toBe(0)
+  })
+
+  it("arredonda corretamente para evitar problemas de ponto flutuante", () => {
+    expect(parseCurrencyToCents(150.5)).toBe(15050)
+  })
+
+  it("converte 1.99 para 199 centavos", () => {
+    expect(parseCurrencyToCents(1.99)).toBe(199)
   })
 })
