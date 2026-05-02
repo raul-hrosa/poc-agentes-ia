@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/features/auth/queries/getCurrentUser"
 import { getAppointmentById } from "@/features/appointments/queries/getAppointmentById"
 import { AppointmentDetails } from "@/features/appointments/components/AppointmentDetails"
 import { AppointmentPaymentSection } from "@/features/payments/components/AppointmentPaymentSection"
+import { ReminderSection } from "@/features/reminders/components/ReminderSection"
 
 interface AppointmentPageProps {
   params: { id: string }
@@ -33,6 +34,11 @@ export default async function AppointmentPage({
         </div>
 
         <AppointmentDetails appointment={appointment} />
+
+        {/* Seção de lembrete — antes das ações de status */}
+        <div className="mt-4">
+          <ReminderSection appointmentId={appointment.id} userId={user.id} />
+        </div>
 
         {/* Seção de pagamento — visível apenas para consultas realizadas (AC-13) */}
         <div className="mt-4">
