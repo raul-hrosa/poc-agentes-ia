@@ -28,7 +28,7 @@
 | Feature              | Arquivo                          | Status         |
 |----------------------|----------------------------------|----------------|
 | cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada |
-| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada |
+| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: needs-fix |
 | lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada |
 | confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada |
 | prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada |
@@ -77,10 +77,16 @@
 | agenda-consultas/TASK-07       | done   |
 | agenda-consultas/TASK-08       | done   |
 | agenda-consultas/TASK-09       | done   |
+| prontuario-sessao/TASK-01      | done   |
+| prontuario-sessao/TASK-02      | done   |
+| prontuario-sessao/TASK-03      | done   |
+| prontuario-sessao/TASK-04      | done   |
+| prontuario-sessao/TASK-06      | done   |
+| prontuario-sessao/TASK-05      | done   |
 
 ## Blockers ativos
 
-_Nenhum blocker ativo._
+- **BLK-01 (agenda-consultas)** — `WeeklyCalendar.tsx`: clique em consulta navega para DayView em vez de abrir `AppointmentDetailPanel`. Viola AC-10. Ver `.spec/review/agenda-consultas.md`.
 
 ## Decisões registradas
 
@@ -95,6 +101,8 @@ _Nenhum blocker ativo._
 | ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
 | ADR/patient-actions-user-plan.md | Buscar plan do usuário via query Prisma nas actions — AuthUser não expõe plan |
 | ADR/nextjs14-webpack-node-scheme.md | webpack externals para node: scheme do Prisma 7.x + serverComponentsExternalPackages |
+| ADR/notes-url-integration-appointmentdetails.md | URLs de prontuário corrigidas: `/notes/new?appointment=[id]` e `/notes/[noteId]` — AppointmentDetails.tsx atualizado |
+| ADR/patients-dynamic-segment-consistency.md | Rota `patients/[id]/notes` usa `[id]` para consistência com outras rotas do módulo patients |
 
 ## Histórico de aprovações de specs
 
@@ -164,3 +172,12 @@ _Nenhum blocker ativo._
 - 2026-05-02: agenda-consultas/TASK-07 concluída — páginas /appointments/new e /appointments/[id]/edit com AppointmentForm criados
 - 2026-05-02: agenda-consultas/TASK-08 concluída — página /appointments/[id] com AppointmentDetails criada
 - 2026-05-02: agenda-consultas/TASK-09 concluída — testes de integração dos 5 fluxos de agenda criados
+- 2026-05-02: Review de agenda-consultas concluído pelo review-agent — needs-fix: 1 blocker (BLK-01: clique em consulta no WeeklyCalendar navega para DayView em vez de abrir AppointmentDetailPanel, viola AC-10)
+- 2026-05-02: agenda-consultas — BLK-01 corrigido: WeeklyCalendar agora abre AppointmentDetailPanel ao clicar em consulta
+- 2026-05-02: prontuario-sessao/TASK-01 concluída — schema Zod e tipos TypeScript do módulo notes criados
+- 2026-05-02: prontuario-sessao/TASK-02 concluída — queries getSessionNoteByAppointment, getSessionNoteById e getPatientSessionNotes criadas com testes
+- 2026-05-02: prontuario-sessao/TASK-03 concluída — Server Actions createSessionNote, updateSessionNote e deleteSessionNote criadas com testes
+- 2026-05-02: prontuario-sessao/TASK-04 concluída — página /notes/new, SessionNoteForm e AppointmentNotCompletedError criados
+- 2026-05-02: prontuario-sessao/TASK-06 concluída — página /patients/[id]/notes, PatientNotesList e truncateNotePreview criados com testes
+- 2026-05-02: prontuario-sessao/TASK-05 concluída — página /notes/[note_id], SessionNoteView e integração na página de detalhes da consulta
+- 2026-05-02: Feature prontuario-sessao — todas as 6 tasks concluídas
