@@ -76,6 +76,7 @@
 | agenda-consultas/TASK-06       | done   |
 | agenda-consultas/TASK-07       | done   |
 | agenda-consultas/TASK-08       | done   |
+| agenda-consultas/TASK-09       | done   |
 
 ## Blockers ativos
 
@@ -162,3 +163,4 @@ _Nenhum blocker ativo._
 - 2026-05-02: agenda-consultas/TASK-06 concluída — visualização diária /appointments/day/[date], DayView, AppointmentDetailPanel e CancelDialog criados
 - 2026-05-02: agenda-consultas/TASK-07 concluída — páginas /appointments/new e /appointments/[id]/edit com AppointmentForm criados
 - 2026-05-02: agenda-consultas/TASK-08 concluída — página /appointments/[id] com AppointmentDetails criada
+- 2026-05-02: agenda-consultas/TASK-09 concluída — testes de integração dos 5 fluxos de agenda criados
