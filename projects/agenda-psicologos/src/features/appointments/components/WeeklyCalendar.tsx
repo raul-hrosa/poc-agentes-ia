@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   addDays,
@@ -11,6 +12,7 @@ import {
 import { ptBR } from "date-fns/locale"
 import type { AppointmentWithPatient } from "@/features/appointments/types"
 import { AppointmentCard } from "./AppointmentCard"
+import { AppointmentDetailPanel } from "./AppointmentDetailPanel"
 
 interface WeeklyCalendarProps {
   appointments: AppointmentWithPatient[]
@@ -43,6 +45,7 @@ function formatWeekRange(start: Date): string {
 export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps) {
   const router = useRouter()
   const today = new Date()
+  const [selectedAppointment, setSelectedAppointment] = useState<(AppointmentWithPatient & { hasNote: boolean }) | null>(null)
 
   const prevWeekParam = toISODateParam(subWeeks(weekStart, 1))
   const nextWeekParam = toISODateParam(addWeeks(weekStart, 1))
@@ -60,9 +63,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
   }
 
   function handleAppointmentClick(appointment: AppointmentWithPatient) {
-    // Painel de detalhes implementado na TASK-06 — por ora navega para a visualização diária
-    const dayParam = toISODateParam(new Date(appointment.scheduledAt))
-    router.push(`/appointments/day/${dayParam}`)
+    setSelectedAppointment({ ...appointment, hasNote: appointment.hasNote ?? false })
   }
 
   const hasAppointments = appointments.length > 0
@@ -237,6 +238,13 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
           </div>
         )}
       </div>
+
+      {selectedAppointment && (
+        <AppointmentDetailPanel
+          appointment={selectedAppointment}
+          onClose={() => setSelectedAppointment(null)}
+        />
+      )}
     </div>
   )
 }
