@@ -1,5 +1,43 @@
 import { describe, it, expect, vi, afterEach } from "vitest"
-import { formatPhone, calculateAge } from "./format"
+import { formatPhone, calculateAge, truncateNotePreview } from "./format"
+
+// ---------------------------------------------------------------------------
+// truncateNotePreview
+// ---------------------------------------------------------------------------
+describe("truncateNotePreview", () => {
+  it("retorna o conteúdo sem alteração quando é menor que maxLength", () => {
+    const content = "Sessão tranquila."
+    expect(truncateNotePreview(content)).toBe("Sessão tranquila.")
+  })
+
+  it("trunca o conteúdo com '...' quando excede maxLength", () => {
+    const content = "a".repeat(200)
+    const result = truncateNotePreview(content)
+    expect(result).toBe("a".repeat(150) + "...")
+    expect(result.length).toBe(153)
+  })
+
+  it("remove quebras de linha do início antes de truncar (RN-09)", () => {
+    const content = "\n\nConteúdo com quebra de linha no início"
+    const result = truncateNotePreview(content)
+    expect(result).toBe("Conteúdo com quebra de linha no início")
+  })
+
+  it("remove espaços em branco do início antes de truncar", () => {
+    const content = "   Conteúdo com espaços no início"
+    const result = truncateNotePreview(content)
+    expect(result).toBe("Conteúdo com espaços no início")
+  })
+
+  it("usa maxLength personalizado quando fornecido", () => {
+    const content = "abcdefghij"
+    expect(truncateNotePreview(content, 5)).toBe("abcde...")
+  })
+
+  it("retorna string vazia quando conteúdo é apenas espaços", () => {
+    expect(truncateNotePreview("   ")).toBe("")
+  })
+})
 
 // ---------------------------------------------------------------------------
 // formatPhone

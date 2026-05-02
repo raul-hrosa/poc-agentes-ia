@@ -19,6 +19,17 @@ export function formatPhone(phone: string): string {
 }
 
 /**
+ * Gera um preview truncado do conteúdo do prontuário.
+ * Remove espaços e quebras de linha do início antes de truncar (RN-09).
+ * Se o conteúdo tiver mais de maxLength caracteres, adiciona "...".
+ */
+export function truncateNotePreview(content: string, maxLength = 150): string {
+  const trimmed = content.replace(/^\s+/, "")
+  if (trimmed.length <= maxLength) return trimmed
+  return trimmed.slice(0, maxLength) + "..."
+}
+
+/**
  * Calcula a idade em anos completos a partir de uma data de nascimento.
  */
 export function calculateAge(birthDate: Date): number {

@@ -14,11 +14,11 @@ import { getSessionNoteByAppointment } from "../getSessionNoteByAppointment"
 import { getSessionNoteById } from "../getSessionNoteById"
 import { getPatientSessionNotes } from "../getPatientSessionNotes"
 
-const USER_A = "user-a-uuid-0000-0000-000000000001"
-const USER_B = "user-b-uuid-0000-0000-000000000002"
-const APPOINTMENT_ID = "appt-uuid-0000-0000-000000000001"
-const NOTE_ID = "note-uuid-0000-0000-000000000001"
-const PATIENT_ID = "patient-uuid-000-0000-000000000001"
+const USER_A = "a1b2c3d4-1234-4abc-8def-000000000001"
+const USER_B = "a1b2c3d4-1234-4abc-8def-000000000002"
+const APPOINTMENT_ID = "a1b2c3d4-1234-4abc-8def-000000000003"
+const NOTE_ID = "a1b2c3d4-1234-4abc-8def-000000000004"
+const PATIENT_ID = "a1b2c3d4-1234-4abc-8def-000000000005"
 
 function makeNoteWithContext(overrides: Partial<Record<string, unknown>> = {}) {
   return {
