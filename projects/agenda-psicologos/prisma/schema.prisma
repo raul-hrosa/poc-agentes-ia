@@ -98,6 +98,7 @@ model Patient {
   userId                String    @map("user_id") @db.VarChar(36)
   name                  String    @db.VarChar(255)
   phone                 String    @db.VarChar(20)
+  email                 String?   @db.VarChar(255)
   birthDate             DateTime? @map("birth_date") @db.Date
   emergencyContactName  String?   @map("emergency_contact_name") @db.VarChar(255)
   emergencyContactPhone String?   @map("emergency_contact_phone") @db.VarChar(20)
@@ -127,10 +128,11 @@ model Appointment {
   status             String    @default("scheduled") @db.VarChar(20)
   cancellationReason String?   @map("cancellation_reason") @db.Text
 
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  patient        Patient        @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  sessionNote    SessionNote?
-  sessionPayment SessionPayment?
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  patient           Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  sessionNote       SessionNote?
+  sessionPayment    SessionPayment?
+  appointmentTokens AppointmentToken[]
 
   @@index([userId, scheduledAt])
   @@index([userId, status])
@@ -172,4 +174,21 @@ model SessionPayment {
   @@index([userId, status])
   @@index([userId, paidAt])
   @@map("session_payments")
+}
+
+model AppointmentToken {
+  id            String    @id @default(uuid()) @db.VarChar(36)
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  appointmentId String    @map("appointment_id") @db.VarChar(36)
+  token         String    @unique @db.VarChar(64)
+  expiresAt     DateTime  @map("expires_at")
+  usedAt        DateTime? @map("used_at")
+  action        String?   @db.VarChar(20)
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@index([appointmentId])
+  @@index([token])
+  @@map("appointment_tokens")
 }
