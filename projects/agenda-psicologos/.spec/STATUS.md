@@ -83,15 +83,23 @@
 | prontuario-sessao/TASK-04      | done   |
 | prontuario-sessao/TASK-06      | done   |
 | prontuario-sessao/TASK-05      | done   |
+| controle-financeiro/TASK-01    | done   |
+| controle-financeiro/TASK-02    | done   |
+| controle-financeiro/TASK-03    | done   |
+| controle-financeiro/TASK-04    | done   |
+| controle-financeiro/TASK-05    | done   |
+| controle-financeiro/TASK-06    | done   |
+| controle-financeiro/TASK-07    | done   |
 
 ## Blockers ativos
 
-- **BLK-01 (agenda-consultas)** — `WeeklyCalendar.tsx`: clique em consulta navega para DayView em vez de abrir `AppointmentDetailPanel`. Viola AC-10. Ver `.spec/review/agenda-consultas.md`.
+Nenhum blocker ativo.
 
 ## Decisões registradas
 
 | Arquivo | Decisão |
 |---|---|
+| ADR/session-payments-schema-missing.md | SessionPayment ausente no schema Prisma — adicionado modelo e migration |
 | ADR/monolito-vs-microsservicos.md | Monolito modular Next.js — sem backend separado |
 | ADR/multitenancy-rls.md | Isolamento por user_id com Row Level Security no PostgreSQL |
 | ADR/token-confirmacao.md | Tokens de confirmação gerados com HMAC-SHA256, expiração 72h, uso único |
@@ -181,3 +189,11 @@
 - 2026-05-02: prontuario-sessao/TASK-06 concluída — página /patients/[id]/notes, PatientNotesList e truncateNotePreview criados com testes
 - 2026-05-02: prontuario-sessao/TASK-05 concluída — página /notes/[note_id], SessionNoteView e integração na página de detalhes da consulta
 - 2026-05-02: Feature prontuario-sessao — todas as 6 tasks concluídas
+- 2026-05-02: controle-financeiro/TASK-01 concluída — tipos TypeScript, schemas Zod e utilitários formatCurrency/parseCurrencyToCents criados; modelo SessionPayment adicionado ao schema Prisma
+- 2026-05-02: controle-financeiro/TASK-02 concluída — queries getFinancialSummary, getSessionPaymentsByPeriod e getSessionPaymentByAppointment criadas com testes
+- 2026-05-02: controle-financeiro/TASK-03 concluída — Server Actions createSessionPayment e updateSessionPayment criadas com testes
+- 2026-05-02: controle-financeiro/TASK-04 concluída — componente PaymentSheet criado como sheet lateral com formulário de criação e edição
+- 2026-05-02: controle-financeiro/TASK-05 concluída — AppointmentPaymentSection integrado em /appointments/[id] para consultas realizadas
+- 2026-05-02: controle-financeiro/TASK-06 concluída — página /financeiro com UpgradeGate (plano free) e FinancialDashboard (plano pro) criados
+- 2026-05-02: controle-financeiro/TASK-07 concluída — testes de integração createSessionPayment, updateSessionPayment e getFinancialSummary criados
+- 2026-05-02: Feature controle-financeiro — todas as tasks concluídas
