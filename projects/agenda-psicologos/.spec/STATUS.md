@@ -91,6 +91,14 @@
 | controle-financeiro/TASK-06    | done   |
 | controle-financeiro/TASK-07    | done   |
 
+| lembretes-consulta/TASK-01   | done   |
+| lembretes-consulta/TASK-02   | done   |
+| lembretes-consulta/TASK-03   | done   |
+| lembretes-consulta/TASK-04   | done   |
+| lembretes-consulta/TASK-05   | done   |
+| lembretes-consulta/TASK-06   | done   |
+| lembretes-consulta/TASK-07   | done   |
+
 ## Blockers ativos
 
 Nenhum blocker ativo.
