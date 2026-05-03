@@ -154,6 +154,7 @@ describe("getAppointmentById", () => {
     const row = {
       ...makeAppointment(),
       sessionNote: { id: "note-1" },
+      appointmentTokens: [],
     }
     vi.mocked(prisma.appointment.findFirst).mockResolvedValue(row as any)
 
@@ -168,6 +169,7 @@ describe("getAppointmentById", () => {
     const row = {
       ...makeAppointment(),
       sessionNote: null,
+      appointmentTokens: [],
     }
     vi.mocked(prisma.appointment.findFirst).mockResolvedValue(row as any)
 
