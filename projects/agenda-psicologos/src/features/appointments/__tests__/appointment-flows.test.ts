@@ -14,7 +14,12 @@ vi.mock("@/shared/lib/prisma", () => ({
       create: vi.fn(),
       update: vi.fn(),
       findFirst: vi.fn(),
+      findUnique: vi.fn(),
     },
+    appointmentToken: {
+      updateMany: vi.fn(),
+    },
+    $transaction: vi.fn(),
   },
 }))
 
@@ -255,10 +260,19 @@ describe("Fluxo 2 — Edição de consulta", () => {
 describe("Fluxo 3 — Cancelamento", () => {
   beforeEach(() => {
     vi.mocked(getCurrentUser).mockResolvedValue(USER_1)
+    vi.mocked(prisma.$transaction).mockImplementation(
+      async (ops: unknown) => {
+        if (Array.isArray(ops)) {
+          return Promise.all(ops)
+        }
+        return (ops as () => Promise<unknown>)()
+      }
+    )
+    vi.mocked(prisma.appointmentToken.updateMany).mockResolvedValue({ count: 0 } as any)
   })
 
   it("cancelar 'scheduled' com motivo → status = 'cancelled', cancellationReason preenchido", async () => {
-    vi.mocked(getAppointmentById).mockResolvedValue(
+    vi.mocked(prisma.appointment.findUnique).mockResolvedValue(
       makeAppointment({ status: "scheduled" }) as any
     )
     vi.mocked(prisma.appointment.update).mockResolvedValue({} as any)
@@ -271,7 +285,7 @@ describe("Fluxo 3 — Cancelamento", () => {
     expect(result).toEqual({ success: true })
     expect(prisma.appointment.update).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { id: APPT_UUID, userId: USER_1.id },
+        where: { id: APPT_UUID },
         data: {
           status: "cancelled",
           cancellationReason: "Paciente solicitou cancelamento",
@@ -281,7 +295,7 @@ describe("Fluxo 3 — Cancelamento", () => {
   })
 
   it("cancelar 'scheduled' sem motivo → cancellationReason = null", async () => {
-    vi.mocked(getAppointmentById).mockResolvedValue(
+    vi.mocked(prisma.appointment.findUnique).mockResolvedValue(
       makeAppointment({ status: "scheduled" }) as any
     )
     vi.mocked(prisma.appointment.update).mockResolvedValue({} as any)
@@ -300,18 +314,18 @@ describe("Fluxo 3 — Cancelamento", () => {
   })
 
   it("cancelar 'completed' → lança erro", async () => {
-    vi.mocked(getAppointmentById).mockResolvedValue(
+    vi.mocked(prisma.appointment.findUnique).mockResolvedValue(
       makeAppointment({ status: "completed" }) as any
     )
 
     await expect(cancelAppointment({ appointmentId: APPT_UUID })).rejects.toThrow(
-      "Esta consulta não pode ser cancelada."
+      "Não é possível cancelar esta consulta"
     )
-    expect(prisma.appointment.update).not.toHaveBeenCalled()
+    expect(prisma.$transaction).not.toHaveBeenCalled()
   })
 
   it("deletedAt NÃO é preenchido ao cancelar (RN-08)", async () => {
-    vi.mocked(getAppointmentById).mockResolvedValue(
+    vi.mocked(prisma.appointment.findUnique).mockResolvedValue(
       makeAppointment({ status: "scheduled" }) as any
     )
     vi.mocked(prisma.appointment.update).mockResolvedValue({} as any)
@@ -405,21 +419,20 @@ describe("Fluxo 4 — Transições de status", () => {
 // Fluxo 5 — Isolamento de dados
 // ===========================================================================
 describe("Fluxo 5 — Isolamento de dados", () => {
-  it("getAppointmentById com userId diferente do dono → retorna null (getAppointmentById mockado retorna null)", async () => {
-    // Simula o que acontece quando Prisma filtra por userId:
-    // a consulta pertence ao USER_1 mas a busca é feita com USER_2 → Prisma retorna null
-    // O mock de getAppointmentById já cobre esse comportamento — retorna null quando não autorizado
+  it("cancelAppointment com consulta pertencente a outro psicólogo → lança 'Consulta não encontrada'", async () => {
+    // Simula o que acontece quando a consulta pertence ao USER_1 mas USER_2 tenta cancelar:
+    // prisma.appointment.findUnique retorna a consulta com userId = USER_1
+    // a action verifica appointment.userId !== user.id e lança erro
     vi.mocked(getCurrentUser).mockResolvedValue(USER_2)
-    // A action busca a consulta via getAppointmentById(userId, appointmentId)
-    // Com userId = USER_2 e appointmentId pertencendo ao USER_1, a query retorna null
-    vi.mocked(getAppointmentById).mockResolvedValue(null)
+    vi.mocked(prisma.appointment.findUnique).mockResolvedValue(
+      makeAppointment({ userId: USER_1.id, status: "scheduled" }) as any
+    )
 
     await expect(
       cancelAppointment({ appointmentId: APPT_UUID })
     ).rejects.toThrow("Consulta não encontrada")
 
-    // Verifica que getAppointmentById foi chamado com o userId do usuário autenticado (USER_2)
-    expect(getAppointmentById).toHaveBeenCalledWith(USER_2.id, APPT_UUID)
+    expect(prisma.$transaction).not.toHaveBeenCalled()
     expect(prisma.appointment.update).not.toHaveBeenCalled()
   })
 
