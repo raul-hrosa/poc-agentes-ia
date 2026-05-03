@@ -17,8 +17,11 @@ export const AppointmentFormSchema = z.object({
 })
 
 export const CancelAppointmentSchema = z.object({
-  appointmentId: z.string().uuid(),
-  cancellationReason: z.string().max(1000).optional().nullable(),
+  appointmentId: z.string().uuid("ID de consulta inválido"),
+  cancellationReason: z
+    .string()
+    .max(500, "Motivo deve ter no máximo 500 caracteres")
+    .optional(),
 })
 
 export const UpdateStatusSchema = z.object({

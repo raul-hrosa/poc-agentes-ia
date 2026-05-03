@@ -36,7 +36,7 @@ export function CancelDialog({
     try {
       await cancelAppointment({
         appointmentId: appointment.id,
-        cancellationReason: cancellationReason.trim() || null,
+        cancellationReason: cancellationReason.trim() || undefined,
       })
       toast.success("Consulta cancelada")
       onCancelled()

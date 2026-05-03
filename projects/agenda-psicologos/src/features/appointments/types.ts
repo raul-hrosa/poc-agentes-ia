@@ -49,3 +49,28 @@ export type AppointmentFormData = {
   modality: AppointmentModality
   location?: string | null
 }
+
+// Origem do cancelamento — inferida a partir de appointment_tokens
+export type CancellationOrigin = "patient" | "psychologist" | null
+
+// Dados do token mais recente de uma consulta (para inferir origem e status)
+export type AppointmentTokenSummary = {
+  action: "confirmed" | "cancelled" | null
+  usedAt: Date | null
+  expiresAt: Date
+}
+
+// Consulta enriquecida com dados do token para exibição na agenda
+export type AppointmentWithTokenStatus = {
+  id: string
+  patientId: string
+  patientName: string
+  scheduledAt: Date
+  durationMinutes: number
+  modality: "in_person" | "online"
+  location: string | null
+  status: "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show"
+  cancellationReason: string | null
+  cancellationOrigin: CancellationOrigin
+  latestToken: AppointmentTokenSummary | null
+}
