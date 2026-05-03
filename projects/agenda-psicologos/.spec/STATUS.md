@@ -101,6 +101,7 @@
 | lembretes-consulta/TASK-08   | done   |
 | confirmacao-paciente/TASK-01 | done   |
 | confirmacao-paciente/TASK-02 | done   |
+| confirmacao-paciente/TASK-03 | done   |
 
 ## Blockers ativos
 
@@ -212,3 +213,4 @@ Nenhum blocker ativo.
 - 2026-05-03: Review de lembretes-consulta concluído pelo review-agent — approved
 - 2026-05-03: confirmacao-paciente/TASK-01 concluída — tipos TypeScript e schema Zod para cancelamento de consulta criados
 - 2026-05-03: confirmacao-paciente/TASK-02 concluída — queries getAppointmentsForWeek e getAppointmentById atualizadas com join em appointment_tokens
+- 2026-05-03: confirmacao-paciente/TASK-03 concluída — Server Action cancelAppointment criada com transação atômica
