@@ -29,7 +29,7 @@
 |----------------------|----------------------------------|----------------|
 | cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada |
 | agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: needs-fix |
-| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada |
+| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada — review: approved |
 | confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada |
 | prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada |
 | autenticacao         | features/autenticacao.md         | spec: aprovada |
@@ -98,6 +98,9 @@
 | lembretes-consulta/TASK-05   | done   |
 | lembretes-consulta/TASK-06   | done   |
 | lembretes-consulta/TASK-07   | done   |
+| lembretes-consulta/TASK-08   | done   |
+| confirmacao-paciente/TASK-01 | done   |
+| confirmacao-paciente/TASK-02 | done   |
 
 ## Blockers ativos
 
@@ -205,3 +208,7 @@ Nenhum blocker ativo.
 - 2026-05-02: controle-financeiro/TASK-06 concluída — página /financeiro com UpgradeGate (plano free) e FinancialDashboard (plano pro) criados
 - 2026-05-02: controle-financeiro/TASK-07 concluída — testes de integração createSessionPayment, updateSessionPayment e getFinancialSummary criados
 - 2026-05-02: Feature controle-financeiro — todas as tasks concluídas
+- 2026-05-03: lembretes-consulta — todas as 8 tasks concluídas
+- 2026-05-03: Review de lembretes-consulta concluído pelo review-agent — approved
+- 2026-05-03: confirmacao-paciente/TASK-01 concluída — tipos TypeScript e schema Zod para cancelamento de consulta criados
+- 2026-05-03: confirmacao-paciente/TASK-02 concluída — queries getAppointmentsForWeek e getAppointmentById atualizadas com join em appointment_tokens
