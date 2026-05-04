@@ -103,6 +103,7 @@
 | confirmacao-paciente/TASK-02 | done   |
 | confirmacao-paciente/TASK-03 | done   |
 | confirmacao-paciente/TASK-04 | done   |
+| confirmacao-paciente/TASK-05 | done   |
 
 ## Blockers ativos
 
@@ -216,3 +217,4 @@ Nenhum blocker ativo.
 - 2026-05-03: confirmacao-paciente/TASK-02 concluída — queries getAppointmentsForWeek e getAppointmentById atualizadas com join em appointment_tokens
 - 2026-05-03: confirmacao-paciente/TASK-03 concluída — Server Action cancelAppointment criada com transação atômica
 - 2026-05-04: confirmacao-paciente/TASK-04 concluída — AppointmentStatusBadge criado e blocos da agenda atualizados com indicadores visuais de status
+- 2026-05-04: confirmacao-paciente/TASK-05 concluída — CancelAppointmentDialog criado e painel de detalhes atualizado com botão de cancelamento, badge de status e dados do token
