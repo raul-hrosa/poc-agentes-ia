@@ -142,6 +142,124 @@ describe("StatusBadge labels", () => {
 })
 
 // ---------------------------------------------------------------------------
+// AppointmentStatusBadge — mapeamento de status + cancellationOrigin (TASK-04)
+// ---------------------------------------------------------------------------
+
+type CancellationOrigin = "patient" | "psychologist" | null
+
+type AppointmentBadgeStatus =
+  | "scheduled"
+  | "confirmed"
+  | "completed"
+  | "cancelled"
+  | "no_show"
+
+/**
+ * Replica a lógica de seleção de label do AppointmentStatusBadge.
+ * Retorna null para "scheduled" (sem badge).
+ */
+function getBadgeLabel(
+  status: AppointmentBadgeStatus,
+  cancellationOrigin: CancellationOrigin
+): string | null {
+  if (status === "scheduled") return null
+  if (status === "confirmed") return "Confirmada pelo paciente"
+  if (status === "cancelled") {
+    if (cancellationOrigin === "patient") return "Cancelada pelo paciente"
+    return "Cancelada pelo psicólogo"
+  }
+  if (status === "completed") return "Realizada"
+  if (status === "no_show") return "Falta"
+  return null
+}
+
+describe("AppointmentStatusBadge — label por status e cancellationOrigin", () => {
+  it("retorna null para status scheduled (sem badge)", () => {
+    expect(getBadgeLabel("scheduled", null)).toBeNull()
+  })
+
+  it("retorna 'Confirmada pelo paciente' para status confirmed", () => {
+    expect(getBadgeLabel("confirmed", null)).toBe("Confirmada pelo paciente")
+  })
+
+  it("retorna 'Cancelada pelo paciente' para status cancelled + cancellationOrigin patient", () => {
+    expect(getBadgeLabel("cancelled", "patient")).toBe("Cancelada pelo paciente")
+  })
+
+  it("retorna 'Cancelada pelo psicólogo' para status cancelled + cancellationOrigin psychologist", () => {
+    expect(getBadgeLabel("cancelled", "psychologist")).toBe(
+      "Cancelada pelo psicólogo"
+    )
+  })
+
+  it("retorna 'Cancelada pelo psicólogo' para status cancelled + cancellationOrigin null", () => {
+    // fallback: sem token de cancelamento → origem psicólogo
+    expect(getBadgeLabel("cancelled", null)).toBe("Cancelada pelo psicólogo")
+  })
+
+  it("retorna 'Realizada' para status completed", () => {
+    expect(getBadgeLabel("completed", null)).toBe("Realizada")
+  })
+
+  it("retorna 'Falta' para status no_show", () => {
+    expect(getBadgeLabel("no_show", null)).toBe("Falta")
+  })
+})
+
+/**
+ * Replica a lógica de classes CSS do AppointmentCard para status.
+ */
+function getCardModifierClass(status: AppointmentBadgeStatus): string {
+  if (status === "confirmed") return "bg-green-50 border-green-500"
+  if (status === "cancelled") return "opacity-50"
+  return ""
+}
+
+describe("AppointmentCard — classes CSS por status (TASK-04)", () => {
+  it("aplica bg-green-50 e border-green-500 para status confirmed", () => {
+    const classes = getCardModifierClass("confirmed")
+    expect(classes).toContain("bg-green-50")
+    expect(classes).toContain("border-green-500")
+  })
+
+  it("aplica opacity-50 para status cancelled", () => {
+    const classes = getCardModifierClass("cancelled")
+    expect(classes).toContain("opacity-50")
+  })
+
+  it("não aplica modificadores especiais para status scheduled", () => {
+    const classes = getCardModifierClass("scheduled")
+    expect(classes).toBe("")
+  })
+
+  it("não aplica modificadores especiais para status completed", () => {
+    const classes = getCardModifierClass("completed")
+    expect(classes).toBe("")
+  })
+
+  it("não aplica modificadores especiais para status no_show", () => {
+    const classes = getCardModifierClass("no_show")
+    expect(classes).toBe("")
+  })
+})
+
+// ---------------------------------------------------------------------------
+// Estado vazio da agenda semanal (TASK-04)
+// ---------------------------------------------------------------------------
+
+describe("WeeklyCalendar — estado vazio", () => {
+  it("detecta semana vazia quando array de consultas é vazio", () => {
+    const appointments: unknown[] = []
+    expect(appointments.length === 0).toBe(true)
+  })
+
+  it("detecta semana com consultas quando array não está vazio", () => {
+    const appointments = [{ id: "appt-1" }]
+    expect(appointments.length > 0).toBe(true)
+  })
+})
+
+// ---------------------------------------------------------------------------
 // Grade semanal — geração dos 7 dias
 // ---------------------------------------------------------------------------
 

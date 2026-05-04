@@ -46,7 +46,7 @@ export default async function AppointmentPage({
             appointmentId={appointment.id}
             userId={user.id}
             appointmentStatus={appointment.status}
-            patientName={appointment.patient.name}
+            patientName={appointment.patientName}
             scheduledAt={appointment.scheduledAt}
             durationMinutes={appointment.durationMinutes}
           />

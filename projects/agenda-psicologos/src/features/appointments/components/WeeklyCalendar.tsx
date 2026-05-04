@@ -10,12 +10,12 @@ import {
   format,
 } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
 import { AppointmentCard } from "./AppointmentCard"
 import { AppointmentDetailPanel } from "./AppointmentDetailPanel"
 
 interface WeeklyCalendarProps {
-  appointments: AppointmentWithPatient[]
+  appointments: AppointmentWithTokenStatus[]
   weekStart: Date
 }
 
@@ -45,7 +45,7 @@ function formatWeekRange(start: Date): string {
 export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps) {
   const router = useRouter()
   const today = new Date()
-  const [selectedAppointment, setSelectedAppointment] = useState<(AppointmentWithPatient & { hasNote: boolean }) | null>(null)
+  const [selectedAppointment, setSelectedAppointment] = useState<AppointmentWithTokenStatus | null>(null)
 
   const prevWeekParam = toISODateParam(subWeeks(weekStart, 1))
   const nextWeekParam = toISODateParam(addWeeks(weekStart, 1))
@@ -54,7 +54,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
 
   // Filtra consultas para um dia específico
-  function getAppointmentsForDay(day: Date): AppointmentWithPatient[] {
+  function getAppointmentsForDay(day: Date): AppointmentWithTokenStatus[] {
     return appointments.filter((apt) => isSameDay(new Date(apt.scheduledAt), day))
   }
 
@@ -62,8 +62,8 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
     router.push(`/appointments/day/${toISODateParam(day)}`)
   }
 
-  function handleAppointmentClick(appointment: AppointmentWithPatient) {
-    setSelectedAppointment({ ...appointment, hasNote: appointment.hasNote ?? false })
+  function handleAppointmentClick(appointment: AppointmentWithTokenStatus) {
+    setSelectedAppointment(appointment)
   }
 
   const hasAppointments = appointments.length > 0
@@ -165,7 +165,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
               />
             </svg>
             <p className="text-gray-500 text-sm mb-4">
-              Nenhuma consulta nesta semana.
+              Nenhuma consulta agendada para esta semana.
             </p>
             <button
               type="button"
@@ -241,7 +241,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
 
       {selectedAppointment && (
         <AppointmentDetailPanel
-          appointment={selectedAppointment}
+          appointment={{ ...selectedAppointment, hasNote: false }}
           onClose={() => setSelectedAppointment(null)}
         />
       )}

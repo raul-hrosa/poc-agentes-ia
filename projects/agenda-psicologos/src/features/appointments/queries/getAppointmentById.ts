@@ -1,34 +1,31 @@
 import { prisma } from "@/shared/lib/prisma"
 import {
-  AppointmentWithPatient,
+  AppointmentWithTokenStatus,
   AppointmentTokenSummary,
   CancellationOrigin,
 } from "../types"
 import { computeCancellationOrigin } from "./getAppointmentsForWeek"
 
-type AppointmentWithNote = AppointmentWithPatient & {
+export type AppointmentDetails = AppointmentWithTokenStatus & {
   hasNote: boolean
   noteId?: string
-  latestToken: AppointmentTokenSummary | null
-  cancellationOrigin: CancellationOrigin
 }
 
 /**
  * Busca uma consulta pelo id validando pertencimento ao psicólogo.
  * WHERE: id = appointmentId AND userId (segurança — AC-35)
- * INCLUDE: patient (id, name, phone), sessionNote (id — para hasNote e noteId),
+ * INCLUDE: patient (id, name), sessionNote (id — para hasNote e noteId),
  *          appointmentTokens (token mais recente — para latestToken e cancellationOrigin)
  * Retorna null se não existir OU pertencer a outro userId.
  */
 export async function getAppointmentById(
   userId: string,
   appointmentId: string
-): Promise<AppointmentWithNote | null> {
+): Promise<AppointmentDetails | null> {
   const row = await prisma.appointment.findFirst({
     where: { id: appointmentId, userId },
     select: {
       id: true,
-      userId: true,
       patientId: true,
       scheduledAt: true,
       durationMinutes: true,
@@ -36,10 +33,8 @@ export async function getAppointmentById(
       location: true,
       status: true,
       cancellationReason: true,
-      createdAt: true,
-      updatedAt: true,
       patient: {
-        select: { id: true, name: true, phone: true },
+        select: { id: true, name: true },
       },
       sessionNote: {
         select: { id: true },
@@ -54,7 +49,7 @@ export async function getAppointmentById(
 
   if (!row) return null
 
-  const { sessionNote, appointmentTokens, ...appointment } = row
+  const { sessionNote, appointmentTokens, patient, ...appointment } = row
 
   const latestTokenRow = appointmentTokens[0] ?? null
   const latestToken: AppointmentTokenSummary | null = latestTokenRow
@@ -65,16 +60,20 @@ export async function getAppointmentById(
       }
     : null
 
-  const cancellationOrigin = computeCancellationOrigin(
+  const cancellationOrigin: CancellationOrigin = computeCancellationOrigin(
     appointment.status,
     latestTokenRow
   )
 
   return {
     ...appointment,
+    patientId: patient.id,
+    patientName: patient.name,
+    modality: appointment.modality as "in_person" | "online",
+    status: appointment.status as AppointmentWithTokenStatus["status"],
     hasNote: sessionNote !== null,
     noteId: sessionNote?.id,
     latestToken,
     cancellationOrigin,
-  } as AppointmentWithNote
+  }
 }

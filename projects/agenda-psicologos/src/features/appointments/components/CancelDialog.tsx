@@ -4,11 +4,11 @@ import { useState } from "react"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { toast } from "sonner"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
 import { cancelAppointment } from "@/features/appointments/actions/cancelAppointment"
 
 interface CancelDialogProps {
-  appointment: AppointmentWithPatient
+  appointment: AppointmentWithTokenStatus
   onClose: () => void
   onCancelled: () => void
 }
@@ -73,7 +73,7 @@ export function CancelDialog({
         {/* Contexto da consulta (Tela 5 da spec) */}
         <div className="mt-3 rounded-md bg-gray-50 px-3 py-3">
           <p className="text-sm font-medium text-gray-900">
-            {appointment.patient.name}
+            {appointment.patientName}
           </p>
           <p className="text-xs text-gray-500 mt-0.5 capitalize">
             {formattedDate} às {formattedTime}

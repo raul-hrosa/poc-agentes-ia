@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation"
 import { format, addMinutes } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { toast } from "sonner"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
-import { StatusBadge } from "./StatusBadge"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
+import { AppointmentStatusBadge } from "./AppointmentStatusBadge"
 import { CancelDialog } from "./CancelDialog"
 import { completeAppointment } from "@/features/appointments/actions/completeAppointment"
 import { markNoShow } from "@/features/appointments/actions/markNoShow"
 
 interface AppointmentDetailsProps {
-  appointment: AppointmentWithPatient & { hasNote: boolean; noteId?: string }
+  appointment: AppointmentWithTokenStatus & { hasNote: boolean; noteId?: string }
 }
 
 /**
@@ -82,10 +82,10 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
               Paciente
             </p>
             <a
-              href={`/patients/${appointment.patient.id}`}
+              href={`/patients/${appointment.patientId}`}
               className="text-sm font-semibold text-blue-600 hover:underline"
             >
-              {appointment.patient.name}
+              {appointment.patientName}
             </a>
           </div>
 
@@ -118,7 +118,10 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
             <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
               Status
             </p>
-            <StatusBadge status={appointment.status} />
+            <AppointmentStatusBadge
+              status={appointment.status}
+              cancellationOrigin={appointment.cancellationOrigin}
+            />
           </div>
         </div>
 

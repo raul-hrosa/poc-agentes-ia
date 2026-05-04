@@ -4,12 +4,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { format, addDays, subDays, addMinutes } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
-import { StatusBadge } from "./StatusBadge"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
+import { AppointmentStatusBadge } from "./AppointmentStatusBadge"
 import { AppointmentDetailPanel } from "./AppointmentDetailPanel"
 
 interface DayViewProps {
-  appointments: AppointmentWithPatient[]
+  appointments: AppointmentWithTokenStatus[]
   date: Date
 }
 
@@ -42,17 +42,14 @@ function formatTime(date: Date): string {
 export function DayView({ appointments, date }: DayViewProps) {
   const router = useRouter()
   const [selectedAppointment, setSelectedAppointment] =
-    useState<(AppointmentWithPatient & { hasNote: boolean }) | null>(null)
+    useState<AppointmentWithTokenStatus | null>(null)
 
   const prevDayParam = toDateParam(subDays(date, 1))
   const nextDayParam = toDateParam(addDays(date, 1))
   const currentDateParam = toDateParam(date)
 
-  function handleViewDetails(appointment: AppointmentWithPatient) {
-    setSelectedAppointment({
-      ...appointment,
-      hasNote: appointment.hasNote ?? false,
-    })
+  function handleViewDetails(appointment: AppointmentWithTokenStatus) {
+    setSelectedAppointment(appointment)
   }
 
   function handleClosePanel() {
@@ -172,7 +169,7 @@ export function DayView({ appointments, date }: DayViewProps) {
                       {/* Dados principais */}
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-900 truncate">
-                          {appointment.patient.name}
+                          {appointment.patientName}
                         </p>
                         <p className="text-xs text-gray-500 mt-0.5">
                           {appointment.modality === "in_person"
@@ -186,7 +183,10 @@ export function DayView({ appointments, date }: DayViewProps) {
 
                       {/* Badge */}
                       <div className="shrink-0">
-                        <StatusBadge status={appointment.status} />
+                        <AppointmentStatusBadge
+                          status={appointment.status}
+                          cancellationOrigin={appointment.cancellationOrigin}
+                        />
                       </div>
                     </div>
 
@@ -228,7 +228,7 @@ export function DayView({ appointments, date }: DayViewProps) {
       {/* Painel de detalhes */}
       {selectedAppointment && (
         <AppointmentDetailPanel
-          appointment={selectedAppointment}
+          appointment={{ ...selectedAppointment, hasNote: false }}
           onClose={handleClosePanel}
         />
       )}

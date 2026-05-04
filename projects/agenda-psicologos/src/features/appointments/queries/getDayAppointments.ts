@@ -1,17 +1,29 @@
 import { prisma } from "@/shared/lib/prisma"
-import { AppointmentWithPatient } from "../types"
+import {
+  AppointmentWithTokenStatus,
+  CancellationOrigin,
+} from "../types"
+import { computeCancellationOrigin } from "./getAppointmentsForWeek"
+
+type TokenRow = {
+  action: string | null
+  usedAt: Date | null
+  expiresAt: Date
+}
 
 /**
- * Retorna todas as consultas de um dia específico.
+ * Retorna todas as consultas de um dia específico enriquecidas com dados
+ * do token mais recente (AppointmentWithTokenStatus).
+ *
  * Parâmetros: userId, date (hora ignorada — range é 00:00:00–23:59:59)
  * WHERE: userId, scheduledAt >= início do dia, scheduledAt <= fim do dia, deletedAt IS NULL
  * ORDER BY: scheduledAt ASC
- * INCLUDE: patient (id, name, phone)
+ * INCLUDE: patient (id, name), appointmentTokens (mais recente)
  */
 export async function getDayAppointments(
   userId: string,
   date: Date
-): Promise<AppointmentWithPatient[]> {
+): Promise<AppointmentWithTokenStatus[]> {
   const dayStart = new Date(date)
   dayStart.setHours(0, 0, 0, 0)
 
@@ -28,23 +40,45 @@ export async function getDayAppointments(
       deletedAt: null,
     },
     orderBy: { scheduledAt: "asc" },
-    select: {
-      id: true,
-      userId: true,
-      patientId: true,
-      scheduledAt: true,
-      durationMinutes: true,
-      modality: true,
-      location: true,
-      status: true,
-      cancellationReason: true,
-      createdAt: true,
-      updatedAt: true,
+    include: {
       patient: {
-        select: { id: true, name: true, phone: true },
+        select: { id: true, name: true },
+      },
+      appointmentTokens: {
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { action: true, usedAt: true, expiresAt: true },
       },
     },
   })
 
-  return rows as AppointmentWithPatient[]
+  return rows.map((row) => {
+    const latestTokenRow: TokenRow | null = row.appointmentTokens[0] ?? null
+    const latestToken = latestTokenRow
+      ? {
+          action: latestTokenRow.action as "confirmed" | "cancelled" | null,
+          usedAt: latestTokenRow.usedAt,
+          expiresAt: latestTokenRow.expiresAt,
+        }
+      : null
+
+    const cancellationOrigin: CancellationOrigin = computeCancellationOrigin(
+      row.status,
+      latestTokenRow
+    )
+
+    return {
+      id: row.id,
+      patientId: row.patientId,
+      patientName: row.patient.name,
+      scheduledAt: row.scheduledAt,
+      durationMinutes: row.durationMinutes,
+      modality: row.modality as "in_person" | "online",
+      location: row.location,
+      status: row.status as AppointmentWithTokenStatus["status"],
+      cancellationReason: row.cancellationReason,
+      cancellationOrigin,
+      latestToken,
+    }
+  })
 }

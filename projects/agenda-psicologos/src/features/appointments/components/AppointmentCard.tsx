@@ -1,11 +1,11 @@
 "use client"
 
 import { format } from "date-fns"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
-import { StatusBadge } from "./StatusBadge"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
+import { AppointmentStatusBadge } from "./AppointmentStatusBadge"
 
 interface AppointmentCardProps {
-  appointment: AppointmentWithPatient
+  appointment: AppointmentWithTokenStatus
   onClick: () => void
 }
 
@@ -18,22 +18,47 @@ function abbreviateName(fullName: string): string {
   return parts.slice(0, 2).join(" ")
 }
 
+/**
+ * Retorna as classes de estilo do bloco conforme o status da consulta.
+ *
+ * confirmed → borda e fundo verde sutil
+ * cancelled → opacidade reduzida
+ * demais    → estilo padrão
+ */
+function getCardClasses(status: AppointmentWithTokenStatus["status"]): string {
+  const base =
+    "w-full text-left rounded-md px-2 py-1.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset min-h-[44px] min-w-[44px] flex flex-col gap-0.5"
+
+  if (status === "confirmed") {
+    return `${base} bg-green-50 border border-green-500 hover:bg-green-100`
+  }
+
+  if (status === "cancelled") {
+    return `${base} bg-white border border-gray-200 hover:bg-gray-50 opacity-50`
+  }
+
+  return `${base} bg-white border border-gray-200 hover:bg-gray-50`
+}
+
 export function AppointmentCard({ appointment, onClick }: AppointmentCardProps) {
   const startTime = format(new Date(appointment.scheduledAt), "HH:mm")
-  const patientName = abbreviateName(appointment.patient.name)
+  const patientName = abbreviateName(appointment.patientName)
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="w-full text-left rounded-md bg-white border border-gray-200 px-2 py-1.5 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset min-h-[44px] min-w-[44px] flex flex-col gap-0.5"
+      className={getCardClasses(appointment.status)}
       aria-label={`Consulta de ${patientName} às ${startTime}`}
     >
       <span className="text-xs font-semibold text-gray-800">{startTime}</span>
       <span className="text-xs text-gray-700 truncate leading-tight">
         {patientName}
       </span>
-      <StatusBadge status={appointment.status} />
+      <AppointmentStatusBadge
+        status={appointment.status}
+        cancellationOrigin={appointment.cancellationOrigin}
+      />
     </button>
   )
 }

@@ -1,6 +1,6 @@
-import { startOfWeek, parseISO, isValid } from "date-fns"
+import { startOfWeek, addDays, parseISO, isValid } from "date-fns"
 import { getCurrentUser } from "@/features/auth/queries/getCurrentUser"
-import { getWeekAppointments } from "@/features/appointments/queries/getWeekAppointments"
+import { getAppointmentsForWeek } from "@/features/appointments/queries/getAppointmentsForWeek"
 import { getPatientAppointments } from "@/features/appointments/queries/getPatientAppointments"
 import { WeeklyCalendar } from "@/features/appointments/components/WeeklyCalendar"
 import type { AppointmentWithPatient } from "@/features/appointments/types"
@@ -50,7 +50,8 @@ export default async function AppointmentsPage({
 
   // Modo semanal padrão
   const weekStart = resolveWeekStart(searchParams.week)
-  const appointments = await getWeekAppointments(user.id, weekStart)
+  const weekEnd = addDays(weekStart, 6)
+  const appointments = await getAppointmentsForWeek(user.id, weekStart, weekEnd)
 
   return (
     <WeeklyCalendar appointments={appointments} weekStart={weekStart} />

@@ -10,7 +10,7 @@ import { format } from "date-fns"
 import { AppointmentFormSchema } from "@/features/appointments/schema"
 import { createAppointment } from "@/features/appointments/actions/createAppointment"
 import { updateAppointment } from "@/features/appointments/actions/updateAppointment"
-import type { AppointmentWithPatient } from "@/features/appointments/types"
+import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
 
 // Schema para o formulário: data e horário separados para inputs nativos.
 // durationMinutes usa z.number() (não coerce) para que o tipo inferido seja
@@ -37,7 +37,7 @@ type ConflictError = {
 
 interface AppointmentFormProps {
   patients: { id: string; name: string }[]
-  appointment?: AppointmentWithPatient
+  appointment?: AppointmentWithTokenStatus
   defaultDate?: string
 }
 
