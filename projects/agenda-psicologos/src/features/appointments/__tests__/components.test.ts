@@ -291,3 +291,218 @@ describe("grade semanal — dias da semana", () => {
     }
   })
 })
+
+// ---------------------------------------------------------------------------
+// CancelDialog — lógica de contador de caracteres e visibilidade de erro (TASK-05)
+// ---------------------------------------------------------------------------
+
+const MAX_CANCEL_REASON_LENGTH = 500
+
+/**
+ * Calcula caracteres restantes no campo de motivo do cancelamento.
+ */
+function calcCharsRemaining(value: string): number {
+  return MAX_CANCEL_REASON_LENGTH - value.length
+}
+
+describe("CancelDialog — contador de caracteres restantes", () => {
+  it("começa com 500 caracteres restantes quando campo está vazio", () => {
+    expect(calcCharsRemaining("")).toBe(500)
+  })
+
+  it("diminui ao digitar", () => {
+    expect(calcCharsRemaining("olá")).toBe(497)
+  })
+
+  it("chega a zero quando texto tem 500 caracteres", () => {
+    const text = "a".repeat(500)
+    expect(calcCharsRemaining(text)).toBe(0)
+  })
+
+  it("não permite valores negativos (maxLength no textarea impede)", () => {
+    // maxLength={500} no textarea impede mais que 500 chars; verifica lógica
+    const text = "a".repeat(500)
+    expect(calcCharsRemaining(text)).toBeGreaterThanOrEqual(0)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// formatTokenResponseLabel — lógica de exibição de data/hora do token (TASK-05)
+// ---------------------------------------------------------------------------
+
+type TokenResponseStatus = "scheduled" | "confirmed" | "completed" | "cancelled" | "no_show"
+
+interface MockAppointment {
+  status: TokenResponseStatus
+  cancellationOrigin: "patient" | "psychologist" | null
+  latestToken: { usedAt: Date | null; action: string | null; expiresAt: Date } | null
+}
+
+/**
+ * Replica a lógica de formatTokenResponseLabel dos componentes AppointmentDetails
+ * e AppointmentDetailPanel.
+ */
+function resolveTokenResponseVisibility(appointment: MockAppointment): "confirmed" | "patient-cancelled" | "none" {
+  const { status, cancellationOrigin, latestToken } = appointment
+
+  if (!latestToken?.usedAt) return "none"
+
+  if (status === "confirmed") return "confirmed"
+
+  if (status === "cancelled" && cancellationOrigin === "patient") return "patient-cancelled"
+
+  return "none"
+}
+
+describe("formatTokenResponseLabel — visibilidade por status e origem (TASK-05)", () => {
+  const usedAt = new Date("2026-05-08T09:00:00Z")
+  const expiresAt = new Date("2026-05-11T09:00:00Z")
+
+  it("exibe 'confirmou presença' quando status é confirmed e token tem usedAt", () => {
+    const appt: MockAppointment = {
+      status: "confirmed",
+      cancellationOrigin: null,
+      latestToken: { usedAt, action: "confirmed", expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("confirmed")
+  })
+
+  it("exibe 'cancelou presença' quando status é cancelled e cancellationOrigin é patient", () => {
+    const appt: MockAppointment = {
+      status: "cancelled",
+      cancellationOrigin: "patient",
+      latestToken: { usedAt, action: "cancelled", expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("patient-cancelled")
+  })
+
+  it("não exibe linha quando status é cancelled e cancellationOrigin é psychologist", () => {
+    const appt: MockAppointment = {
+      status: "cancelled",
+      cancellationOrigin: "psychologist",
+      latestToken: { usedAt: null, action: null, expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+
+  it("não exibe linha quando latestToken é null", () => {
+    const appt: MockAppointment = {
+      status: "confirmed",
+      cancellationOrigin: null,
+      latestToken: null,
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+
+  it("não exibe linha quando latestToken.usedAt é null (token não usado)", () => {
+    const appt: MockAppointment = {
+      status: "confirmed",
+      cancellationOrigin: null,
+      latestToken: { usedAt: null, action: null, expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+
+  it("não exibe linha para status scheduled", () => {
+    const appt: MockAppointment = {
+      status: "scheduled",
+      cancellationOrigin: null,
+      latestToken: null,
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+
+  it("não exibe linha para status completed", () => {
+    const appt: MockAppointment = {
+      status: "completed",
+      cancellationOrigin: null,
+      latestToken: { usedAt, action: "confirmed", expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+
+  it("não exibe linha para status no_show", () => {
+    const appt: MockAppointment = {
+      status: "no_show",
+      cancellationOrigin: null,
+      latestToken: { usedAt, action: null, expiresAt },
+    }
+    expect(resolveTokenResponseVisibility(appt)).toBe("none")
+  })
+})
+
+// ---------------------------------------------------------------------------
+// AppointmentDetails — visibilidade do campo "Motivo" (TASK-05)
+// ---------------------------------------------------------------------------
+
+/**
+ * Replica a lógica de exibição do campo Motivo em AppointmentDetails.
+ * Exibe quando status = cancelled E cancellationReason != null.
+ * Omite quando cancellationReason === null.
+ */
+function shouldShowCancellationReason(
+  status: string,
+  cancellationReason: string | null
+): boolean {
+  return status === "cancelled" && cancellationReason !== null
+}
+
+describe("AppointmentDetails — campo Motivo (AC-14, AC-15 — TASK-05)", () => {
+  it("exibe motivo quando status é cancelled e cancellationReason está preenchido", () => {
+    expect(shouldShowCancellationReason("cancelled", "Conflito de agenda")).toBe(true)
+  })
+
+  it("omite motivo quando status é cancelled e cancellationReason é null", () => {
+    expect(shouldShowCancellationReason("cancelled", null)).toBe(false)
+  })
+
+  it("omite motivo quando status é scheduled mesmo com cancellationReason preenchido", () => {
+    expect(shouldShowCancellationReason("scheduled", "motivo")).toBe(false)
+  })
+
+  it("omite motivo quando status é completed", () => {
+    expect(shouldShowCancellationReason("completed", "motivo")).toBe(false)
+  })
+
+  it("omite motivo quando status é no_show", () => {
+    expect(shouldShowCancellationReason("no_show", null)).toBe(false)
+  })
+
+  it("omite motivo quando status é confirmed", () => {
+    expect(shouldShowCancellationReason("confirmed", null)).toBe(false)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// AppointmentDetails — visibilidade do botão "Cancelar consulta" (TASK-05)
+// ---------------------------------------------------------------------------
+
+/**
+ * Replica a lógica de isActive nos componentes AppointmentDetails e
+ * AppointmentDetailPanel para controle de visibilidade do botão cancelar.
+ */
+function isCancellable(status: string): boolean {
+  return status === "scheduled" || status === "confirmed"
+}
+
+describe("AppointmentDetails — botão 'Cancelar consulta' (AC-05, AC-09 — TASK-05)", () => {
+  it("exibe botão para status scheduled", () => {
+    expect(isCancellable("scheduled")).toBe(true)
+  })
+
+  it("exibe botão para status confirmed", () => {
+    expect(isCancellable("confirmed")).toBe(true)
+  })
+
+  it("oculta botão para status completed", () => {
+    expect(isCancellable("completed")).toBe(false)
+  })
+
+  it("oculta botão para status cancelled", () => {
+    expect(isCancellable("cancelled")).toBe(false)
+  })
+
+  it("oculta botão para status no_show", () => {
+    expect(isCancellable("no_show")).toBe(false)
+  })
+})

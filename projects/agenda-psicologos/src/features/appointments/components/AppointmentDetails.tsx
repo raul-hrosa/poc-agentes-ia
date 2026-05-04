@@ -16,6 +16,33 @@ interface AppointmentDetailsProps {
 }
 
 /**
+ * Formata a data e hora em que o paciente respondeu ao token.
+ */
+function formatTokenResponseLabel(
+  appointment: AppointmentWithTokenStatus
+): string | null {
+  const { status, cancellationOrigin, latestToken } = appointment
+
+  if (!latestToken?.usedAt) return null
+
+  if (status === "confirmed") {
+    const formatted = format(new Date(latestToken.usedAt), "d 'de' MMMM 'de' yyyy 'às' HH:mm", {
+      locale: ptBR,
+    })
+    return `Paciente confirmou presença em ${formatted}`
+  }
+
+  if (status === "cancelled" && cancellationOrigin === "patient") {
+    const formatted = format(new Date(latestToken.usedAt), "d 'de' MMMM 'de' yyyy 'às' HH:mm", {
+      locale: ptBR,
+    })
+    return `Paciente cancelou presença em ${formatted}`
+  }
+
+  return null
+}
+
+/**
  * Componente de detalhes completos de uma consulta exibido como página.
  * Equivalente ao AppointmentDetailPanel mas sem sheet — página inteira (Tela 3 da spec).
  */
@@ -122,7 +149,26 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
               status={appointment.status}
               cancellationOrigin={appointment.cancellationOrigin}
             />
+            {/* Linha de data/hora da resposta do paciente (AC-01, AC-02) */}
+            {formatTokenResponseLabel(appointment) && (
+              <p className="mt-1 text-xs text-gray-500">
+                {formatTokenResponseLabel(appointment)}
+              </p>
+            )}
           </div>
+
+          {/* Motivo de cancelamento (AC-14, AC-15) */}
+          {appointment.status === "cancelled" &&
+            appointment.cancellationReason != null && (
+              <div>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                  Motivo
+                </p>
+                <p className="text-sm text-gray-700">
+                  {appointment.cancellationReason}
+                </p>
+              </div>
+            )}
         </div>
 
         {/* Ações conforme status (RN-03, RN-04) */}
@@ -187,11 +233,11 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
           </div>
         )}
 
-        {/* Consulta terminal: apenas badge de status, sem ações (AC-26, AC-30) */}
+        {/* Consulta terminal: nenhuma ação disponível (AC-09, AC-26, AC-30) */}
         {isTerminal && (
           <div className="border-t border-gray-100 px-6 py-4">
             <p className="text-xs text-gray-500 text-center">
-              Esta consulta não permite mais ações.
+              (nenhuma ação disponível)
             </p>
           </div>
         )}

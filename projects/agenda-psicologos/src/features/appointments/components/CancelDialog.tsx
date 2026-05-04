@@ -7,6 +7,8 @@ import { toast } from "sonner"
 import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
 import { cancelAppointment } from "@/features/appointments/actions/cancelAppointment"
 
+const MAX_REASON_LENGTH = 500
+
 interface CancelDialogProps {
   appointment: AppointmentWithTokenStatus
   onClose: () => void
@@ -15,7 +17,9 @@ interface CancelDialogProps {
 
 /**
  * Dialog de confirmação de cancelamento de consulta.
- * Exibe contexto (paciente + data/hora) e campo opcional para motivo (AC-25).
+ * Exibe contexto (paciente + data/hora) e campo opcional para motivo (AC-06).
+ * maxLength=500 com contador de caracteres restantes (AC-06).
+ * Erro inline quando cancelamento falha (AC-10).
  */
 export function CancelDialog({
   appointment,
@@ -24,15 +28,18 @@ export function CancelDialog({
 }: CancelDialogProps) {
   const [cancellationReason, setCancellationReason] = useState("")
   const [isPending, setIsPending] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const startTime = new Date(appointment.scheduledAt)
   const formattedDate = format(startTime, "EEEE, d 'de' MMMM 'de' yyyy", {
     locale: ptBR,
   })
   const formattedTime = format(startTime, "HH:mm")
+  const charsRemaining = MAX_REASON_LENGTH - cancellationReason.length
 
   async function handleConfirm() {
     setIsPending(true)
+    setErrorMessage(null)
     try {
       await cancelAppointment({
         appointmentId: appointment.id,
@@ -40,9 +47,12 @@ export function CancelDialog({
       })
       toast.success("Consulta cancelada")
       onCancelled()
-    } catch {
-      toast.error("Não foi possível cancelar a consulta.")
-    } finally {
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Não foi possível cancelar a consulta."
+      setErrorMessage(message)
       setIsPending(false)
     }
   }
@@ -70,7 +80,7 @@ export function CancelDialog({
           Cancelar consulta
         </h2>
 
-        {/* Contexto da consulta (Tela 5 da spec) */}
+        {/* Contexto da consulta (AC-06) */}
         <div className="mt-3 rounded-md bg-gray-50 px-3 py-3">
           <p className="text-sm font-medium text-gray-900">
             {appointment.patientName}
@@ -80,7 +90,7 @@ export function CancelDialog({
           </p>
         </div>
 
-        {/* Campo de motivo (opcional — AC-25) */}
+        {/* Campo de motivo (opcional — AC-06) */}
         <div className="mt-4">
           <label
             htmlFor="cancellation-reason"
@@ -95,11 +105,25 @@ export function CancelDialog({
             onChange={(e) => setCancellationReason(e.target.value)}
             placeholder="Descreva o motivo..."
             rows={3}
-            maxLength={1000}
+            maxLength={MAX_REASON_LENGTH}
             disabled={isPending}
             className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-50 disabled:text-gray-500 resize-none"
           />
+          {/* Contador de caracteres restantes (AC-06) */}
+          <p className="mt-1 text-xs text-gray-400 text-right">
+            {charsRemaining} caracteres restantes
+          </p>
         </div>
+
+        {/* Mensagem de erro inline (AC-10) */}
+        {errorMessage && (
+          <p
+            role="alert"
+            className="mt-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+          >
+            {errorMessage}
+          </p>
+        )}
 
         {/* Botões */}
         <div className="mt-5 flex gap-3">
