@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/shared/lib/prisma"
+import { authConfig } from "@/shared/lib/auth.config"
 
 /**
  * Lógica de autorização por credenciais, extraída para permitir testes unitários.
@@ -29,12 +30,8 @@ export async function authorizeCredentials(
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma as Parameters<typeof PrismaAdapter>[0]),
-  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
-  pages: {
-    signIn: "/login",
-    error: "/login",
-  },
   providers: [
     Credentials({
       credentials: {
@@ -49,45 +46,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-      }
-      return token
-    },
-    session({ session, token }) {
-      if (token.id) {
-        session.user.id = token.id as string
-      }
-      return session
-    },
-    authorized({ auth: session, request: { nextUrl } }) {
-      const isLoggedIn = !!session?.user
-      const protectedPaths = [
-        "/dashboard",
-        "/patients",
-        "/appointments",
-        "/notes",
-        "/payments",
-        "/settings",
-      ]
-      const isProtectedRoute = protectedPaths.some((p) =>
-        nextUrl.pathname.startsWith(p)
-      )
-      const isPublicAuthPage = ["/login", "/register"].includes(
-        nextUrl.pathname
-      )
-
-      if (isProtectedRoute && !isLoggedIn) {
-        return Response.redirect(
-          new URL(`/login?callbackUrl=${nextUrl.pathname}`, nextUrl)
-        )
-      }
-      if (isPublicAuthPage && isLoggedIn) {
-        return Response.redirect(new URL("/dashboard", nextUrl))
-      }
-      return true
-    },
-  },
 })

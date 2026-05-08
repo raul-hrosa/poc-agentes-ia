@@ -25,6 +25,7 @@
 - tarefas_aprovadas: true
 - implementacao_aprovada: true
 - revisao_aprovada: true
+- build_gate_polimento-visual: passed (typecheck ✅ | build ✅ | test ✅ 451/451)
 
 ## Blockers ativos
 
@@ -35,16 +36,16 @@ Nenhum blocker ativo.
 
 ## Specs criadas
 
-| Feature              | Arquivo                          | Status                                             |
-|----------------------|----------------------------------|----------------------------------------------------|
-| autenticacao         | features/autenticacao.md         | spec: aprovada — review: approved (com ressalvas)  |
-| cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada — review: approved                  |
-| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: approved                  |
-| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada — review: approved                  |
-| confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada — review: approved                  |
-| prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada — review: approved                  |
-| controle-financeiro  | features/controle-financeiro.md  | spec: aprovada — review: approved                  |
-| polimento-visual     | features/polimento-visual.md     | spec: aprovada — tasks: aprovadas |
+| Feature              | Arquivo                          | Status                                                                          |
+|----------------------|----------------------------------|---------------------------------------------------------------------------------|
+| autenticacao         | features/autenticacao.md         | spec: aprovada — review: approved (com ressalvas)                               |
+| cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada — review: approved                                               |
+| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: approved                                               |
+| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada — review: approved                                               |
+| confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada — review: approved                                               |
+| prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada — review: approved                                               |
+| controle-financeiro  | features/controle-financeiro.md  | spec: aprovada — review: approved                                               |
+| polimento-visual     | features/polimento-visual.md     | spec: aprovada — review: approved                                               |
 
 ## Tasks criadas
 
@@ -139,6 +140,7 @@ Nenhum blocker ativo.
 | ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
 | ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
 | ADR/dashboard-sem-shadcn-card.md | Dashboard usa divs Tailwind em vez de Card/Skeleton shadcn/ui — dependências ausentes no projeto |
+| ADR/skeleton-manual-sem-shadcn.md | Skeleton component criado manualmente — components.json ausente, impossibilita uso do CLI shadcn |
 | ADR/patient-actions-user-plan.md | Buscar plan do usuário via query Prisma nas actions — AuthUser não expõe plan |
 | ADR/nextjs14-webpack-node-scheme.md | webpack externals para node: scheme do Prisma 7.x + serverComponentsExternalPackages |
 | ADR/notes-url-integration-appointmentdetails.md | URLs de prontuário corrigidas: `/notes/new?appointment=[id]` e `/notes/[noteId]` — AppointmentDetails.tsx atualizado |
@@ -251,3 +253,6 @@ Nenhum blocker ativo.
 - 2026-05-08: polimento-visual/TASK-03 concluída — skeleton loaders e Suspense adicionados no dashboard
 - 2026-05-08: polimento-visual/TASK-04 concluída — skeletons criados para patients, appointments, notes e financeiro via loading.tsx
 - 2026-05-08: polimento-visual/TASK-05 concluída — toasts de sucesso e erro adicionados em appointments, notes, payments e reminders
+- 2026-05-08: Build gate polimento-visual: passed (typecheck ✅ | build ✅ | test ✅ 451/451)
+- 2026-05-08: polimento-visual — BLK-01, BLK-02 e BLK-03 corrigidos após review
+- 2026-05-08: Re-review de polimento-visual — approved (zero blockers, 2 warnings mantidos)

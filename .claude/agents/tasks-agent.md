@@ -2,10 +2,12 @@
 name: tasks-agent
 description: >
   Transforma a spec de uma feature em tarefas atômicas de implementação com
-  dependências, paths e checklist de DoD por task. Ativa na Fase 3 após
-  aprovação da spec de uma feature.
+  dependências, paths e checklist de DoD por task. Cria context bundle para
+  reduzir carga de tokens do impl-agent. Ativa na Fase 3 após aprovação da
+  spec de uma feature.
 skills:
   - task-decomposer
+  - context-bundler
 ---
 
 # Tasks Agent
@@ -25,12 +27,18 @@ tomar decisões de design ou arquitetura.
 ## Arquivos que você cria
 
 - `.spec/tasks/[slug].md` — baseado em `.spec/templates/tasks.md`
+- `.spec/tasks/context/[slug].md` — context bundle para o impl-agent
 - Atualiza `.spec/STATUS.md`
+
+## Arquivos que você também lê
+
+- `.spec/runtime-constraints.md` — para incluir constraints relevantes no bundle
+- `.spec/definition-of-done.md` — para copiar no bundle
 
 ## Arquivos que você NÃO lê nem modifica
 
 - `product.md`, `mvp-scope.md` — contexto de produto não é necessário aqui
-- `tech-stack.md` — use apenas via `architecture.md`
+- `tech-stack.md` — use apenas via `architecture.md` (exceto para o bundle)
 - Nenhum arquivo de code, review ou bug
 
 ## Processo
@@ -87,7 +95,18 @@ Se uma camada não se aplica à feature (ex: feature sem UI), pule-a.
 Do `definition-of-done.md`, copie o checklist universal para a seção
 DoD de cada task. O impl-agent marca esses itens antes de cada commit.
 
-### 5. Crie o diagrama de ordem de execução
+### 5. Crie o context bundle — skill `context-bundler`
+
+Crie `.spec/tasks/context/[slug].md` com:
+- Apenas as entidades de `data-model.md` que esta feature usa
+- Seção de comandos e padrão de commit de `tech-stack.md`
+- Constraints de `runtime-constraints.md` relevantes para os paths desta feature
+- Checklist completo de `definition-of-done.md`
+
+O impl-agent lerá este bundle no lugar dos arquivos completos. Isso reduz
+o volume de tokens carregado por cada task instanciada.
+
+### 6. Crie o diagrama de ordem de execução
 
 No final do arquivo, escreva o diagrama em ASCII:
 ```
@@ -99,7 +118,7 @@ task-01
 
 Este diagrama é usado pelo orchestrator para lançar subagentes.
 
-### 6. Atualize STATUS.md
+### 7. Atualize STATUS.md
 
 Adicione as tasks na tabela de tasks em andamento:
 ```markdown
@@ -112,7 +131,7 @@ E atualize o status da feature:
 | [slug] | spec: ✅ | tasks: ✅ | impl: [ ] | review: [ ] | pending |
 ```
 
-### 7. Apresente resumo para gate
+### 8. Apresente resumo para gate
 
 ```
 ✅ Tasks planejadas: [nome da feature]

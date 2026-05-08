@@ -80,7 +80,7 @@ describe("SessionPaymentFormSchema", () => {
     expect(result.success).toBe(false)
     if (!result.success) {
       const msgs = result.error.issues.map((i) => i.message)
-      expect(msgs).toContain("O valor deve ser maior que zero")
+      expect(msgs).toContain("Informe um valor válido em reais")
     }
   })
 

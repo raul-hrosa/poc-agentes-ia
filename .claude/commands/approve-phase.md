@@ -30,15 +30,52 @@ Aciona: `tech-agent`
 
 ---
 
-### Aprovando Fase 1 → inicia Fase 2
+### Aprovando Fase 1 → inicia Fase 1.5 (Bootstrap)
 
-Pré-condição: `tech-stack.md`, `architecture.md` e `data-model.md` existem.
+Pré-condição: `tech-stack.md`, `architecture.md`, `data-model.md`,
+`runtime-constraints.md` e `design-tokens.md` existem.
 
-Identifica a primeira feature não especificada em `mvp-scope.md` e aciona
-o `spec-agent` para ela.
+Se `runtime-constraints.md` ou `design-tokens.md` não existirem:
+```
+⚠️  Fase 1 incompleta
 
+Os seguintes arquivos estão faltando:
+  [lista dos arquivos ausentes]
+
+O tech-agent deve criá-los antes de avançar.
+Esses arquivos são necessários para o bootstrap e para o impl-agent.
+```
+
+Se todos existem:
 ```
 ✅ Fase 1 aprovada — Arquitetura
+
+Acionando bootstrap-agent para Fase 1.5...
+O bootstrap cria o app shell, seed, .env.example e valida o build.
+```
+
+Aciona: `bootstrap-agent`
+
+---
+
+### Aprovando Fase 1.5 → inicia Fase 2
+
+Pré-condição: `build_gate_bootstrap: passed` no STATUS.md.
+
+Se o build falhou:
+```
+⚠️  Bootstrap com erros
+
+build_gate_bootstrap: failed
+Corrija os erros reportados em bugs/ antes de avançar.
+Use /bug para acionar o debug-agent se necessário.
+```
+
+Se o build passou:
+```
+✅ Fase 1.5 aprovada — Bootstrap
+
+App shell criado e build validado.
 
 Próxima feature para especificar: [slug] — [descrição]
 Acionando spec-agent...

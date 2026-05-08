@@ -90,20 +90,31 @@ Após cada task concluída (verificado via STATUS.md):
 ```
 
 Quando todas as tasks estiverem `done: true`:
+
 ```
 ✅ Todas as tasks concluídas para [slug]
 
-Acionando review-agent automaticamente...
+Acionando build-agent (Fase 4.5)...
 ```
 
-Aciona automaticamente o `review-agent` via comando `/review "[slug]"`.
+Aciona automaticamente o `build-agent` para validar o build antes do review.
 
-**Importante:** o review é sempre acionado ao final do implement — não
-aguarda confirmação do usuário. Se o review encontrar blockers, o resultado
-é apresentado e o usuário decide como proceder.
+```
+Para cada task:
+  todas as tasks done: true
+    → aciona build-agent
+      build_gate_[slug]: passed
+        → aciona review-agent
+      build_gate_[slug]: failed
+        → informa usuário, bloqueia review
+```
 
-Se por qualquer motivo o review automático não rodar (sessão encerrada,
-timeout), use `/review "[slug]"` para acioná-lo manualmente.
+**Importante:** o build gate é sempre executado antes do review — não
+aguarda confirmação do usuário. Se o build falhar, o resultado é apresentado
+e o usuário deve corrigir os erros antes que o review possa rodar.
+
+Se por qualquer motivo o build gate não rodar (sessão encerrada, timeout),
+use `/build "[slug]"` para acioná-lo manualmente antes de `/review`.
 
 ## Progresso em tempo real
 

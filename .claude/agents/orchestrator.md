@@ -36,11 +36,26 @@ Ação:
 3. Aguarde o tech-agent concluir e atualizar STATUS.md
 4. Informe o usuário que a Fase 1 está pronta para revisão
 
-### Fase 1 → Fase 2
+### Fase 1 → Fase 1.5 (Bootstrap)
 **Gatilho:** usuário executa `/approve-phase` após revisar docs de arquitetura
+
+Pré-condição: `runtime-constraints.md` e `design-tokens.md` existem.
+Se não existirem, informe o usuário — o tech-agent deve ser relançado.
 
 Ação:
 1. Marque Fase 1 como aprovada no STATUS.md
+2. Lance `bootstrap-agent`
+3. Aguarde o bootstrap-agent concluir e registrar `build_gate_bootstrap: passed`
+4. Apresente o resumo do bootstrap e aguarde aprovação do usuário
+
+### Fase 1.5 → Fase 2
+**Gatilho:** usuário executa `/approve-phase` após revisar o app shell e infra
+
+Pré-condição: `build_gate_bootstrap: passed` no STATUS.md.
+Se o build falhou, o usuário deve corrigir os erros (via `/bug`) antes de aprovar.
+
+Ação:
+1. Marque Fase 1.5 como aprovada no STATUS.md
 2. Leia `mvp-scope.md` — identifique a primeira feature da lista ordenada
 3. Lance `spec-agent` para essa feature
 4. Aguarde conclusão e gate de aprovação por feature
@@ -63,8 +78,17 @@ Ação:
 4. Monitore STATUS.md para acompanhar progresso
 5. Após todas as tasks com `done: true` → lance `review-agent`
 
-### Fase 4 → Fase 5
+### Fase 4 → Fase 4.5 (Build Gate)
 **Gatilho:** todas as tasks da feature com `done: true` no STATUS.md
+
+Ação:
+1. Lance `build-agent` para a feature
+2. Aguarde `build_gate_[slug]` ser registrado no STATUS.md
+3. Se `passed` → avança para Fase 5
+4. Se `failed` → informa o usuário e bloqueia o review
+
+### Fase 4.5 → Fase 5
+**Gatilho:** `build_gate_[slug]: passed` no STATUS.md
 
 Ação:
 1. Lance `review-agent` para a feature

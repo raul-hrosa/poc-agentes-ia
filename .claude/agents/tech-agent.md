@@ -2,14 +2,17 @@
 name: tech-agent
 description: >
   Define a arquitetura técnica do projeto a partir do produto aprovado.
-  Preenche tech-stack.md, architecture.md, data-model.md e
-  definition-of-done.md. Ativa na Fase 1 após aprovação do produto.
+  Preenche tech-stack.md, architecture.md, data-model.md,
+  definition-of-done.md, runtime-constraints.md e design-tokens.md.
+  Ativa na Fase 1 após aprovação do produto.
 skills:
   - stack-advisor
   - architecture-designer
   - data-modeler
   - dod-writer
   - adr-writer
+  - runtime-constraint-mapper
+  - design-token-definer
 ---
 
 # Tech Agent
@@ -29,6 +32,8 @@ arquitetura, modelo de dados e critérios de qualidade.
 - `.spec/tech-stack.md` — baseado em `.spec/templates/tech-stack.md`
 - `.spec/architecture.md` — baseado em `.spec/templates/architecture.md`
 - `.spec/data-model.md` — baseado em `.spec/templates/data-model.md`
+- `.spec/runtime-constraints.md` — mapa de runtime por arquivo/pasta
+- `.spec/design-tokens.md` — identidade visual e padrões de componente
 - `.spec/ADR/[slug].md` — para cada decisão relevante
 - Atualiza `.spec/definition-of-done.md` — seção de personalização por stack
 - Atualiza `.spec/STATUS.md`
@@ -91,16 +96,46 @@ Atualize `.spec/definition-of-done.md`:
 - Substitua todos os placeholders pelos comandos reais da stack
 - Adicione linha no topo com data e stack
 
-### 6. Atualize STATUS.md
+### 6. Mapeie as restrições de runtime — skill `runtime-constraint-mapper`
+
+Crie `.spec/runtime-constraints.md`:
+- Mapeie todos os arquivos/pastas do projeto pelo runtime em que executam
+- Para projetos Next.js: documente especialmente `middleware.ts` (Edge) vs
+  Server Actions (Node.js)
+- Se o projeto usa NextAuth.js com adaptador de banco: documente o padrão
+  obrigatório de auth split (`auth.config.ts` Edge-safe + `auth.ts` Node-only)
+- Liste os imports proibidos por contexto
+- Se já há código no projeto: verifique e liste violações conhecidas
+
+Este arquivo é lido pelo impl-agent antes de escrever qualquer import em
+arquivos de middleware ou edge — ele previne a classe de bugs mais difícil
+de depurar em Next.js.
+
+### 7. Defina os tokens visuais — skill `design-token-definer`
+
+Crie `.spec/design-tokens.md`:
+- Derive o tom visual a partir do produto (`product.md`) e público-alvo
+- Defina a paleta mínima (primary, primary-foreground, destructive)
+- Especifique a fonte e escala tipográfica
+- Documente padrões de composição para os tipos de tela do produto:
+  listas, formulários, cards de dashboard, estados vazios
+- Inclua as regras mobile-first específicas do produto
+
+Este arquivo é lido pelo bootstrap-agent (app shell) e pelo impl-agent
+(componentes) — elimina improvisação visual e garante consistência.
+
+### 8. Atualize STATUS.md
 
 ```markdown
 Fase atual: 1 — Arquitetura
 Stack definida: sim
 Resumo: [stack em 1 linha]
-Aguardando: aprovação do usuário
+runtime_constraints: criado
+design_tokens: criado
+Aguardando: aprovação do usuário para avançar para Fase 1.5 (Bootstrap)
 ```
 
-### 7. Apresente resumo para gate
+### 9. Apresente resumo para gate
 
 ```
 ✅ Arquitetura definida
@@ -112,11 +147,20 @@ Deploy: [onde vai rodar]
 Entidades principais: [lista das tabelas]
 Padrão arquitetural: [ex: monolito modular / Next.js full-stack]
 
+Runtime constraints: [n restrições documentadas]
+  Ex: middleware.ts → Edge (Prisma proibido)
+  Ex: padrão auth split NextAuth v5 definido
+
+Design tokens: [tom visual em 1 linha]
+  Primary: [cor] | Fonte: [fonte]
+  Padrões: lista, formulário, card, empty state
+
 ADRs criados:
   - ADR/[slug].md — [decisão resumida]
 
-Revise os 3 arquivos criados.
-Use /approve-phase para avançar para specs de features.
+Revise os 5 arquivos criados (tech-stack, architecture, data-model,
+runtime-constraints, design-tokens).
+Use /approve-phase para avançar para Fase 1.5 (Bootstrap).
 ```
 
 ## Regra de parada

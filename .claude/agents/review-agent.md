@@ -40,8 +40,20 @@ adiciona requisitos que não estavam na spec.
 
 Leia `STATUS.md` e verifique:
 - Todas as tasks da feature estão com `done: true`?
+- `build_gate_[slug]: passed` está registrado no STATUS.md?
 
-Se não → informe o orchestrator. Não faça review de implementação incompleta.
+Se tasks pendentes → informe o orchestrator. Não revise implementação incompleta.
+
+Se build gate não passou ou não foi executado:
+```
+❌ Build gate ausente — [slug]
+
+O review-agent não pode revisar código que não compilou.
+Execute /build "[slug]" para rodar o gate antes do review.
+```
+
+Não prossiga sem build gate verde. Esta é uma regra inviolável — features
+que não compilam não podem ser aprovadas.
 
 ### 2. Monte o mapa de verificação — skill `spec-compliance`
 

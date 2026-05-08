@@ -19,23 +19,36 @@ produto, não refatora código adjacente e não implementa features futuras.
 
 ## Arquivos que você lê
 
+**Preferencial (leia primeiro):**
+- `.spec/tasks/context/[slug].md` — context bundle com entidades, comandos,
+  runtime constraints e DoD já filtrados para esta feature
+
+**Obrigatórios:**
 - `.spec/tasks/[slug].md` — a task específica que deve implementar
-- `.spec/data-model.md` — schema e relações das entidades
-- `.spec/tech-stack.md` — stack, comandos, padrões de commit
-- `.spec/definition-of-done.md` — checklist obrigatório antes do commit
 - `.spec/STATUS.md` — para verificar depends_on antes de começar
-- `.spec/architecture.md` — estrutura de pastas e convenções (se necessário)
+- `.spec/runtime-constraints.md` — **leia antes de escrever qualquer import
+  em middleware.ts ou arquivos edge**
+
+**Consulta se o bundle for insuficiente:**
+- `.spec/data-model.md` — schema completo das entidades
+- `.spec/tech-stack.md` — stack, comandos, padrões de commit
+- `.spec/architecture.md` — estrutura de pastas e convenções
 
 ## Arquivos que você NÃO lê
 
 - `product.md`, `mvp-scope.md` — contexto de produto não é sua função
 - `features/[slug].md` — você implementa a task, não a spec completa
+- `design-tokens.md` — para UI, leia o bundle (contém o necessário)
 - Arquivos de tasks de outras features
 
 ## Primeira ação obrigatória
 
 Carregue a skill `code-conventions` antes de escrever qualquer código.
-Leia `tech-stack.md` e `architecture.md` para internalizar os padrões.
+
+Se o context bundle `.spec/tasks/context/[slug].md` existir, leia-o — ele
+contém os padrões e constraints necessários de forma compacta.
+
+Se o bundle não existir, leia `tech-stack.md` e `architecture.md`.
 
 ## Processo
 
@@ -55,11 +68,25 @@ Identifique:
 - Critérios de aceite da task
 - DoD checklist
 
-### 3. Implemente dentro do `target_path`
+### 3. Verifique runtime constraints antes de implementar
 
-Siga as convenções de `tech-stack.md` e `architecture.md`:
+Se a task criar ou modificar arquivos em:
+- `src/middleware.ts`
+- Qualquer arquivo com `export const runtime = 'edge'`
+
+→ Leia `.spec/runtime-constraints.md` **antes de escrever qualquer linha**.
+→ Verifique a lista de imports proibidos para o contexto Edge.
+→ Se o projeto usa NextAuth: use apenas `auth.config.ts` no middleware,
+  nunca `auth.ts`.
+
+Para tasks em Server Actions, Server Components e API Routes (Node.js):
+Prisma e módulos Node podem ser usados livremente — sem restrição.
+
+### 4. Implemente dentro do `target_path`
+
+Siga as convenções do context bundle ou de `tech-stack.md`/`architecture.md`:
 - Crie os arquivos nos paths corretos conforme `architecture.md`
-- Use os tipos e entidades de `data-model.md`
+- Use os tipos e entidades do bundle ou de `data-model.md`
 - Aplique validação no edge (antes de chegar ao service)
 - Trate todos os casos de erro descritos na task
 - Não implemente nada que não esteja na task
@@ -68,7 +95,7 @@ Siga as convenções de `tech-stack.md` e `architecture.md`:
 → Carregue a skill `adr-writer` e crie `ADR/[slug].md` antes de implementar.
 → Nunca tome uma decisão técnica silenciosamente.
 
-### 4. Escreva os testes
+### 5. Escreva os testes
 
 Para cada critério de aceite da task, escreva pelo menos um teste.
 Não deixe testes para depois — fazem parte da task.
@@ -78,7 +105,7 @@ Cubra obrigatoriamente:
 - Pelo menos um caso de erro relevante
 - Edge cases mencionados na task
 
-### 5. Verifique o DoD — skill `dod-checker`
+### 6. Verifique o DoD — skill `dod-checker`
 
 Antes de qualquer commit, percorra o checklist completo:
 
@@ -97,7 +124,7 @@ Antes de qualquer commit, percorra o checklist completo:
 
 Se qualquer item falhar → resolva antes de continuar. Não existe commit parcial.
 
-### 6. Faça o commit atômico
+### 7. Faça o commit atômico
 
 Formato exato de `tech-stack.md` seção "Padrão de commit":
 ```
@@ -109,14 +136,14 @@ Ex: fix(billing): correct proration on mid-cycle upgrade
 
 Um commit por task. Nunca misture tasks no mesmo commit.
 
-### 7. Atualize STATUS.md
+### 8. Atualize STATUS.md
 
 Após o commit, atualize imediatamente:
 ```markdown
 | task-NN | ... | done: true |
 ```
 
-### 8. Informe o orchestrator
+### 9. Informe o orchestrator
 
 Após atualizar STATUS.md, informe:
 ```

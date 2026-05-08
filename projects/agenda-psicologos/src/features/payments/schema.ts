@@ -6,7 +6,8 @@ export const SessionPaymentFormSchema = z.object({
     .string()
     .min(1, "O valor da sessão é obrigatório")
     .transform((val) => parseFloat(val.replace(",", ".")))
-    .refine((val) => !isNaN(val) && val > 0, "O valor deve ser maior que zero"),
+    .refine((val) => !isNaN(val), "Informe um valor válido em reais")
+    .refine((val) => val > 0, "O valor deve ser maior que zero"),
   status: z.enum(["pending", "paid"], {
     error: "Selecione o status do pagamento",
   }),
@@ -23,7 +24,8 @@ export const UpdateSessionPaymentSchema = z.object({
     .string()
     .min(1, "O valor da sessão é obrigatório")
     .transform((val) => parseFloat(val.replace(",", ".")))
-    .refine((val) => !isNaN(val) && val > 0, "O valor deve ser maior que zero"),
+    .refine((val) => !isNaN(val), "Informe um valor válido em reais")
+    .refine((val) => val > 0, "O valor deve ser maior que zero"),
   status: z.enum(["pending", "paid"], {
     error: "Selecione o status do pagamento",
   }),

@@ -8,19 +8,30 @@ antes de qualquer código ser escrito. Agentes executam, humanos aprovam.
 
 ## Como funciona
 
-O desenvolvimento segue 6 fases sequenciais com gates de aprovação entre elas:
+O desenvolvimento segue fases sequenciais com gates de aprovação entre elas:
 
 ```
-Fase 0  Produto       product-agent     → product.md, mvp-scope.md
-Fase 1  Arquitetura   tech-agent        → tech-stack.md, architecture.md, data-model.md, definition-of-done.md
-Fase 2  Specs         spec-agent        → features/[slug].md
-Fase 3  Tarefas       tasks-agent       → tasks/[slug].md
-Fase 4  Implementação impl-agent        → código + testes + commits
-Fase 5  Revisão       review-agent      → review/[slug].md
-Fase 6  Bug fix       debug-agent       → bugs/[slug].md
+Fase 0    Produto        product-agent      → product.md, mvp-scope.md
+Fase 1    Arquitetura    tech-agent         → tech-stack.md, architecture.md, data-model.md,
+                                              definition-of-done.md, runtime-constraints.md,
+                                              design-tokens.md
+Fase 1.5  Bootstrap      bootstrap-agent   → app shell, seed, .env.example, build gate
+Fase 2    Specs          spec-agent        → features/[slug].md
+Fase 3    Tarefas        tasks-agent       → tasks/[slug].md + tasks/context/[slug].md
+Fase 4    Implementação  impl-agent        → código + testes + commits
+Fase 4.5  Build Gate     build-agent       → pnpm build + test + typecheck
+Fase 5    Revisão        review-agent      → review/[slug].md (só após build gate verde)
+Fase 6    Bug fix        debug-agent       → bugs/[slug].md
 ```
 
 Nenhuma fase começa sem aprovação explícita da fase anterior.
+
+**Fase 1.5 — Bootstrap** garante que o projeto funciona do zero antes das
+features: app shell (homepage, layout, dashboard), seed, .env.example e
+build verde. Elimina os bugs de "primeiro run".
+
+**Fase 4.5 — Build Gate** garante que o código compila e os testes passam
+antes de qualquer revisão. O review-agent nunca vê código que não compila.
 
 ## Regras que todos os agentes seguem
 

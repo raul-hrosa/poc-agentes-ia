@@ -163,11 +163,25 @@ completamente diferentes. Esse escopo não será perseguido.
 
 ---
 
+### 8. Polimento visual
+**Prioridade:** should-have
+**Justificativa:** O produto funciona corretamente mas a interface parece genérica. Para um psicólogo solo mostrar o sistema a pacientes e colegas, a aparência profissional e acolhedora é parte da proposta de valor.
+**Critério de corte:** Filtro 2 — impacta percepção de qualidade e conversão freemium.
+**Complexidade:** Média
+**Adicionada pós-MVP**
+
+**Escopo:**
+
+- Nova paleta de cores warm-sage (substituir azul-teal por verde-sálvia/índigo suave)
+- Dashboard redesenhado: agenda do dia, consultas pendentes de confirmação, resumo semanal
+- Skeleton loaders em todas as listas e queries com loading state
+- Micro-interações em ações críticas (agendar, cancelar, confirmar, salvar prontuário)
+
+---
+
 ## Notas de escopo
 
-O MVP tem 7 features (6 must-have + 1 should-have). Está dentro do limite saudável
-de 5-7 features. A feature 7 (controle financeiro) foi incluída como should-have
-porque diferencia o plano pago do free — sem ela, a conversão freemium fica comprometida.
+O MVP tem 7 features (6 must-have + 1 should-have), mais 1 feature de polimento adicionada pós-MVP. Está dentro do limite saudável de 5-7 features. A feature 7 (controle financeiro) foi incluída como should-have porque diferencia o plano pago do free — sem ela, a conversão freemium fica comprometida.
 
 O fluxo principal que um usuário pode completar sem suporte:
 1. Cadastrar-se (autenticação)
