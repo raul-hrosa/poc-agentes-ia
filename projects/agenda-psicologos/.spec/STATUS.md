@@ -118,6 +118,7 @@ Nenhum blocker ativo.
 | confirmacao-paciente/TASK-05 | done   |
 | polimento-visual/TASK-01     | done   |
 | polimento-visual/TASK-02     | done   |
+| polimento-visual/TASK-03     | done   |
 
 ## Blockers ativos
 
@@ -245,3 +246,4 @@ Nenhum blocker ativo.
 - 2026-05-07: Spec de polimento-visual criada pelo spec-agent — aguardando aprovação
 - 2026-05-08: polimento-visual/TASK-01 concluída — paleta warm-sage aplicada, Toaster global configurado
 - 2026-05-08: polimento-visual/TASK-02 concluída — dashboard redesenhado com saudação dinâmica, agenda do dia, pendentes e resumo semanal
+- 2026-05-08: polimento-visual/TASK-03 concluída — skeleton loaders e Suspense adicionados no dashboard
