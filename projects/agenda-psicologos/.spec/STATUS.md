@@ -120,6 +120,7 @@ Nenhum blocker ativo.
 | polimento-visual/TASK-02     | done   |
 | polimento-visual/TASK-03     | done   |
 | polimento-visual/TASK-04     | done   |
+| polimento-visual/TASK-05     | done   |
 
 ## Blockers ativos
 
@@ -249,3 +250,4 @@ Nenhum blocker ativo.
 - 2026-05-08: polimento-visual/TASK-02 concluída — dashboard redesenhado com saudação dinâmica, agenda do dia, pendentes e resumo semanal
 - 2026-05-08: polimento-visual/TASK-03 concluída — skeleton loaders e Suspense adicionados no dashboard
 - 2026-05-08: polimento-visual/TASK-04 concluída — skeletons criados para patients, appointments, notes e financeiro via loading.tsx
+- 2026-05-08: polimento-visual/TASK-05 concluída — toasts de sucesso e erro adicionados em appointments, notes, payments e reminders
