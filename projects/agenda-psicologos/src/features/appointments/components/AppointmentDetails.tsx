@@ -110,10 +110,22 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
     <>
       <div className="rounded-xl bg-background shadow-sm border border-border">
         {/* Header */}
-        <div className="border-b border-border px-6 py-5">
+        <div className="border-b border-border px-6 py-5 flex items-center justify-between">
           <h1 className="text-lg font-semibold text-foreground">
             Detalhes da consulta
           </h1>
+          {isActive && (
+            <button
+              type="button"
+              onClick={() => router.push(`/appointments/${appointment.id}/edit`)}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              Editar
+            </button>
+          )}
         </div>
 
         {/* Informações */}

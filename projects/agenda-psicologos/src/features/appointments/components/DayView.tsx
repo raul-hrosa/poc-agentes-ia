@@ -190,12 +190,21 @@ export function DayView({ appointments, date }: DayViewProps) {
                       </div>
                     </div>
 
-                    {/* Botão Ver detalhes */}
-                    <div className="mt-3 flex justify-end">
+                    {/* Ações */}
+                    <div className="mt-3 flex items-center justify-end gap-2">
+                      {(appointment.status === "scheduled" || appointment.status === "confirmed") && (
+                        <button
+                          type="button"
+                          onClick={() => router.push(`/appointments/${appointment.id}/edit`)}
+                          className="rounded-md border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] min-w-[44px]"
+                        >
+                          Editar
+                        </button>
+                      )}
                       <button
                         type="button"
                         onClick={() => handleViewDetails(appointment)}
-                        className="rounded-md border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] min-w-[44px]"
+                        className="rounded-md bg-primary px-3 py-2 text-xs font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] min-w-[44px]"
                       >
                         Ver detalhes
                       </button>
