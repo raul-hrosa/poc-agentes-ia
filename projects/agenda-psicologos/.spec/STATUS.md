@@ -1,39 +1,50 @@
 # STATUS — agenda-psicologos
 
-## Fase atual: 4 — Implementação
+## Fase atual: Concluído — MVP entregue
 
-## Estado: em andamento
+## Estado: mvp-done
 
 ## Fases
 - [x] Fase 0 — Produto (product.md, mvp-scope.md)
 - [x] Fase 1 — Arquitetura (tech-stack.md, architecture.md, data-model.md, definition-of-done.md)
+- [x] Fase 1.5 — Bootstrap (runtime-constraints.md ✅ | design-tokens.md ✅ | bootstrap.md ✅ | bootstrap-agent: concluído)
 - [x] Fase 2 — Specs
 - [x] Fase 3 — Tarefas
-- [ ] Fase 4 — Implementação
-- [ ] Fase 5 — Revisão
+- [x] Fase 4 — Implementação
+- [x] Fase 4.5 — Build Gate (passed — typecheck ✅ | build ✅ | test ✅ 438/438)
+- [x] Fase 5 — Revisão (todas as features aprovadas)
 
 ## Gates
 - produto_aprovado: true
 - arquitetura_aprovada: true
+- runtime_constraints: criado (2026-05-07)
+- design_tokens: criado (2026-05-07)
+- bootstrap_aprovado: true (2026-05-07)
+- build_gate_bootstrap: passed (typecheck ✅ | build ✅ | test 438/438 ✅)
 - specs_aprovadas: true
 - tarefas_aprovadas: true
-- implementacao_aprovada: false
-- revisao_aprovada: false
+- implementacao_aprovada: true
+- revisao_aprovada: true
+
+## Blockers ativos
+
+Nenhum blocker ativo.
 
 ## Stack definida: sim
 ## Resumo: Next.js 14 + TypeScript + Prisma + PostgreSQL (Supabase) + Vercel
 
 ## Specs criadas
 
-| Feature              | Arquivo                          | Status         |
-|----------------------|----------------------------------|----------------|
-| cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada |
-| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: needs-fix |
-| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada — review: approved |
-| confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada |
-| prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada |
-| autenticacao         | features/autenticacao.md         | spec: aprovada |
-| controle-financeiro  | features/controle-financeiro.md  | spec: aprovada |
+| Feature              | Arquivo                          | Status                                             |
+|----------------------|----------------------------------|----------------------------------------------------|
+| autenticacao         | features/autenticacao.md         | spec: aprovada — review: approved (com ressalvas)  |
+| cadastro-pacientes   | features/cadastro-pacientes.md   | spec: aprovada — review: approved                  |
+| agenda-consultas     | features/agenda-consultas.md     | spec: aprovada — review: approved                  |
+| lembretes-consulta   | features/lembretes-consulta.md   | spec: aprovada — review: approved                  |
+| confirmacao-paciente | features/confirmacao-paciente.md | spec: aprovada — review: approved                  |
+| prontuario-sessao    | features/prontuario-sessao.md    | spec: aprovada — review: approved                  |
+| controle-financeiro  | features/controle-financeiro.md  | spec: aprovada — review: approved                  |
+| polimento-visual     | features/polimento-visual.md     | spec: aprovada — tasks: aprovadas |
 
 ## Tasks criadas
 
@@ -46,6 +57,7 @@
 | confirmacao-paciente | tasks/confirmacao-paciente.md | tasks: aprovadas |
 | prontuario-sessao    | tasks/prontuario-sessao.md    | tasks: aprovadas |
 | controle-financeiro  | tasks/controle-financeiro.md  | tasks: aprovadas |
+| polimento-visual     | tasks/polimento-visual.md     | tasks: aprovadas |
 
 ## Progresso de implementação
 
@@ -104,6 +116,7 @@
 | confirmacao-paciente/TASK-03 | done   |
 | confirmacao-paciente/TASK-04 | done   |
 | confirmacao-paciente/TASK-05 | done   |
+| polimento-visual/TASK-01     | done   |
 
 ## Blockers ativos
 
@@ -196,6 +209,7 @@ Nenhum blocker ativo.
 - 2026-05-02: agenda-consultas/TASK-09 concluída — testes de integração dos 5 fluxos de agenda criados
 - 2026-05-02: Review de agenda-consultas concluído pelo review-agent — needs-fix: 1 blocker (BLK-01: clique em consulta no WeeklyCalendar navega para DayView em vez de abrir AppointmentDetailPanel, viola AC-10)
 - 2026-05-02: agenda-consultas — BLK-01 corrigido: WeeklyCalendar agora abre AppointmentDetailPanel ao clicar em consulta
+- 2026-05-07: Re-review de agenda-consultas — approved após correção de BLK-01
 - 2026-05-02: prontuario-sessao/TASK-01 concluída — schema Zod e tipos TypeScript do módulo notes criados
 - 2026-05-02: prontuario-sessao/TASK-02 concluída — queries getSessionNoteByAppointment, getSessionNoteById e getPatientSessionNotes criadas com testes
 - 2026-05-02: prontuario-sessao/TASK-03 concluída — Server Actions createSessionNote, updateSessionNote e deleteSessionNote criadas com testes
@@ -218,3 +232,13 @@ Nenhum blocker ativo.
 - 2026-05-03: confirmacao-paciente/TASK-03 concluída — Server Action cancelAppointment criada com transação atômica
 - 2026-05-04: confirmacao-paciente/TASK-04 concluída — AppointmentStatusBadge criado e blocos da agenda atualizados com indicadores visuais de status
 - 2026-05-04: confirmacao-paciente/TASK-05 concluída — CancelAppointmentDialog criado e painel de detalhes atualizado com botão de cancelamento, badge de status e dados do token
+- 2026-05-07: Review de prontuario-sessao concluído pelo review-agent — approved (2 minors sem blockers)
+- 2026-05-07: Review de controle-financeiro concluído pelo review-agent — needs-fix: BLK-01 (mensagem de erro para valor não numérico incorreta em AC-19)
+- 2026-05-07: controle-financeiro — BLK-01 corrigido: schema Zod separado em dois .refine() sequenciais; 8/8 testes passando
+- 2026-05-07: MVP concluído — todas as 7 features implementadas e aprovadas
+- 2026-05-07: Bootstrap retroativo executado — homepage, layout autenticado, dashboard, seed.ts, .env.example e migration init criados
+- 2026-05-07: Build gate bootstrap: typecheck ✅ | build ✅ | test 438/438 ✅ | runtime violation corrigida (middleware → auth.config)
+- 2026-05-07: Bootstrap aprovado pelo usuário — gate bootstrap_aprovado: true
+- 2026-05-07: MVP concluído e aprovado — todas as fases entregues, projeto em estado final
+- 2026-05-07: Spec de polimento-visual criada pelo spec-agent — aguardando aprovação
+- 2026-05-08: polimento-visual/TASK-01 concluída — paleta warm-sage aplicada, Toaster global configurado
