@@ -117,6 +117,7 @@ Nenhum blocker ativo.
 | confirmacao-paciente/TASK-04 | done   |
 | confirmacao-paciente/TASK-05 | done   |
 | polimento-visual/TASK-01     | done   |
+| polimento-visual/TASK-02     | done   |
 
 ## Blockers ativos
 
@@ -134,6 +135,7 @@ Nenhum blocker ativo.
 | ADR/user-id-denormalizacao-rls.md | user_id denormalizado em session_notes e session_payments para RLS eficiente |
 | ADR/prisma-version-7x.md | Prisma 7.x com @prisma/adapter-mariadb para MySQL — breaking changes documentados |
 | ADR/zod-version-4x.md | Zod 4.x instalado pelo pnpm — usar .issues em vez de .errors nos testes |
+| ADR/dashboard-sem-shadcn-card.md | Dashboard usa divs Tailwind em vez de Card/Skeleton shadcn/ui — dependências ausentes no projeto |
 | ADR/patient-actions-user-plan.md | Buscar plan do usuário via query Prisma nas actions — AuthUser não expõe plan |
 | ADR/nextjs14-webpack-node-scheme.md | webpack externals para node: scheme do Prisma 7.x + serverComponentsExternalPackages |
 | ADR/notes-url-integration-appointmentdetails.md | URLs de prontuário corrigidas: `/notes/new?appointment=[id]` e `/notes/[noteId]` — AppointmentDetails.tsx atualizado |
@@ -242,3 +244,4 @@ Nenhum blocker ativo.
 - 2026-05-07: MVP concluído e aprovado — todas as fases entregues, projeto em estado final
 - 2026-05-07: Spec de polimento-visual criada pelo spec-agent — aguardando aprovação
 - 2026-05-08: polimento-visual/TASK-01 concluída — paleta warm-sage aplicada, Toaster global configurado
+- 2026-05-08: polimento-visual/TASK-02 concluída — dashboard redesenhado com saudação dinâmica, agenda do dia, pendentes e resumo semanal
