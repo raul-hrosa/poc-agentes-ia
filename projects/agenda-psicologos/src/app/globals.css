@@ -5,6 +5,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* warm-sage — substitui azul-teal padrão */
+  --primary: 152 38% 35%;
+  --primary-foreground: 0 0% 98%;
+  --accent: 240 20% 60%;
+  --accent-foreground: 0 0% 98%;
+
+  /* Destrutivo — inalterado */
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
 }
 
 @media (prefers-color-scheme: dark) {
