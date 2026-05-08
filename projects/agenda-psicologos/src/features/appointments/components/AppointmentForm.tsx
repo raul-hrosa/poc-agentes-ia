@@ -16,6 +16,14 @@ import type { AppointmentWithTokenStatus } from "@/features/appointments/types"
 // durationMinutes usa z.number() (não coerce) para que o tipo inferido seja
 // `number` no input e no output — o valueAsNumber do react-hook-form converte
 // o valor do input numérico antes de chegar no resolver.
+const STATUS_OPTIONS = [
+  { value: "scheduled", label: "Agendada" },
+  { value: "confirmed", label: "Confirmada" },
+  { value: "completed", label: "Realizada" },
+  { value: "cancelled", label: "Cancelada" },
+  { value: "no_show", label: "Não compareceu" },
+] as const
+
 const FormSchema = z.object({
   patientId: z.string().uuid("Selecione um paciente"),
   date: z.string().min(1, "Data é obrigatória"),
@@ -26,6 +34,9 @@ const FormSchema = z.object({
     .min(1, "Duração deve ser de pelo menos 1 minuto"),
   modality: z.enum(["in_person", "online"]),
   location: z.string().max(500).optional(),
+  status: z
+    .enum(["scheduled", "confirmed", "completed", "cancelled", "no_show"])
+    .optional(),
 })
 
 type FormValues = z.infer<typeof FormSchema>
@@ -77,6 +88,7 @@ export function AppointmentForm({
           durationMinutes: appointment.durationMinutes,
           modality: appointment.modality,
           location: appointment.location ?? "",
+          status: appointment.status as FormValues["status"],
         }
       })()
     : {
@@ -131,6 +143,7 @@ export function AppointmentForm({
       const result = await updateAppointment({
         appointmentId: appointment.id,
         ...parsed.data,
+        status: data.status,
       })
 
       if (result.success) {
@@ -439,6 +452,29 @@ export function AppointmentForm({
             </p>
           )}
         </div>
+
+        {/* Status — só ao editar */}
+        {isEditing && (
+          <div>
+            <label
+              htmlFor="status"
+              className="block text-sm font-medium text-foreground mb-1"
+            >
+              Status
+            </label>
+            <select
+              id="status"
+              className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring bg-background"
+              {...register("status")}
+            >
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* Botões */}
         <div className="flex flex-col gap-3 pt-2">

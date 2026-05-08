@@ -8,10 +8,11 @@ import { getAppointmentById } from "@/features/appointments/queries/getAppointme
 import { getConflictingAppointments } from "@/features/appointments/queries/getConflictingAppointments"
 import type { AppointmentActionResult } from "@/features/appointments/types"
 
-const TERMINAL_STATUSES = ["completed", "cancelled", "no_show"] as const
-
 const UpdateAppointmentInputSchema = AppointmentFormSchema.extend({
   appointmentId: z.string().uuid("ID de consulta inválido"),
+  status: z
+    .enum(["scheduled", "confirmed", "completed", "cancelled", "no_show"])
+    .optional(),
 })
 
 export async function updateAppointment(
@@ -28,14 +29,7 @@ export async function updateAppointment(
     throw new Error("Consulta não encontrada")
   }
 
-  if (TERMINAL_STATUSES.includes(existing.status as (typeof TERMINAL_STATUSES)[number])) {
-    return {
-      success: false,
-      error: "Consultas finalizadas não podem ser editadas.",
-    }
-  }
-
-  const { patientId, scheduledAt, durationMinutes, modality, location } = fields
+  const { patientId, scheduledAt, durationMinutes, modality, location, status } = fields
 
   const timeChanged =
     scheduledAt.getTime() !== existing.scheduledAt.getTime() ||
@@ -74,6 +68,7 @@ export async function updateAppointment(
       durationMinutes,
       modality,
       location: location ?? null,
+      ...(status ? { status } : {}),
     },
   })
 
