@@ -1,3 +1,5 @@
+import { Skeleton } from "@/components/ui/skeleton"
+
 export function DashboardPendingSkeleton() {
-  return <div className="animate-pulse bg-muted rounded h-16 w-48" />
+  return <Skeleton className="h-16 w-48" />
 }

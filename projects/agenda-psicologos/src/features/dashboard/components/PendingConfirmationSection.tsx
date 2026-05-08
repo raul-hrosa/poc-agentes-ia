@@ -28,7 +28,7 @@ export async function PendingConfirmationSection({
           </Link>
         ) : (
           <span className="inline-flex items-center bg-gray-100 text-gray-600 rounded-full px-3 py-1 text-sm font-medium">
-            Nenhuma consulta aguardando confirmação
+            0 consultas aguardando confirmação
           </span>
         )}
       </div>

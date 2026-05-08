@@ -1,9 +1,11 @@
+import { Skeleton } from "@/components/ui/skeleton"
+
 export function DashboardTodaySkeleton() {
   return (
     <div className="space-y-2">
-      <div className="animate-pulse bg-muted rounded h-12 w-full" />
-      <div className="animate-pulse bg-muted rounded h-12 w-full" />
-      <div className="animate-pulse bg-muted rounded h-12 w-full" />
+      <Skeleton className="h-12 w-full" />
+      <Skeleton className="h-12 w-full" />
+      <Skeleton className="h-12 w-full" />
     </div>
   )
 }

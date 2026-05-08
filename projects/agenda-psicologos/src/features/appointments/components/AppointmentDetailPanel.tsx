@@ -10,6 +10,7 @@ import { AppointmentStatusBadge } from "./AppointmentStatusBadge"
 import { CancelDialog } from "./CancelDialog"
 import { completeAppointment } from "@/features/appointments/actions/completeAppointment"
 import { markNoShow } from "@/features/appointments/actions/markNoShow"
+import { confirmAppointment } from "@/features/appointments/actions/confirmAppointment"
 
 interface AppointmentDetailPanelProps {
   appointment: AppointmentWithTokenStatus & { hasNote: boolean }
@@ -54,6 +55,7 @@ export function AppointmentDetailPanel({
   const router = useRouter()
   const [isPendingComplete, setIsPendingComplete] = useState(false)
   const [isPendingNoShow, setIsPendingNoShow] = useState(false)
+  const [isPendingConfirm, setIsPendingConfirm] = useState(false)
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false)
 
   const startTime = new Date(appointment.scheduledAt)
@@ -94,6 +96,20 @@ export function AppointmentDetailPanel({
       toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     } finally {
       setIsPendingNoShow(false)
+    }
+  }
+
+  async function handleConfirm() {
+    setIsPendingConfirm(true)
+    try {
+      await confirmAppointment({ appointmentId: appointment.id })
+      toast.success("Consulta confirmada")
+      onClose()
+      router.refresh()
+    } catch {
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
+    } finally {
+      setIsPendingConfirm(false)
     }
   }
 
@@ -216,10 +232,21 @@ export function AppointmentDetailPanel({
           {/* Ações conforme status (RN-03, RN-04) */}
           {isActive && (
             <div className="space-y-2 pt-2 border-t border-gray-100">
+              {appointment.status === "scheduled" && (
+                <button
+                  type="button"
+                  onClick={handleConfirm}
+                  disabled={isPendingConfirm || isPendingComplete || isPendingNoShow}
+                  className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                >
+                  {isPendingConfirm ? "Confirmando..." : "Confirmar consulta"}
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={handleComplete}
-                disabled={isPendingComplete || isPendingNoShow}
+                disabled={isPendingConfirm || isPendingComplete || isPendingNoShow}
                 className="w-full rounded-lg bg-green-600 px-4 py-3 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 min-h-[44px]"
               >
                 {isPendingComplete ? "Salvando..." : "Marcar como realizada"}
@@ -228,7 +255,7 @@ export function AppointmentDetailPanel({
               <button
                 type="button"
                 onClick={handleNoShow}
-                disabled={isPendingComplete || isPendingNoShow}
+                disabled={isPendingConfirm || isPendingComplete || isPendingNoShow}
                 className="w-full rounded-lg bg-orange-100 px-4 py-3 text-sm font-medium text-orange-700 hover:bg-orange-200 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 min-h-[44px]"
               >
                 {isPendingNoShow ? "Salvando..." : "Marcar como no-show"}
