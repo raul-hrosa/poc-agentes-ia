@@ -65,21 +65,21 @@ export function CancelDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="cancel-dialog-title"
-        className="fixed left-1/2 top-1/2 z-[70] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-xl"
+        className="fixed left-1/2 top-1/2 z-[70] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg bg-background p-6 shadow-xl"
       >
         <h2
           id="cancel-dialog-title"
-          className="text-base font-semibold text-gray-900"
+          className="text-base font-semibold text-foreground"
         >
           Cancelar consulta
         </h2>
 
         {/* Contexto da consulta (AC-06) */}
-        <div className="mt-3 rounded-md bg-gray-50 px-3 py-3">
-          <p className="text-sm font-medium text-gray-900">
+        <div className="mt-3 rounded-md bg-secondary px-3 py-3">
+          <p className="text-sm font-medium text-foreground">
             {appointment.patientName}
           </p>
-          <p className="text-xs text-gray-500 mt-0.5 capitalize">
+          <p className="text-xs text-muted-foreground mt-0.5 capitalize">
             {formattedDate} às {formattedTime}
           </p>
         </div>
@@ -88,10 +88,10 @@ export function CancelDialog({
         <div className="mt-4">
           <label
             htmlFor="cancellation-reason"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Motivo do cancelamento{" "}
-            <span className="text-gray-400 font-normal">(opcional)</span>
+            <span className="text-muted-foreground font-normal">(opcional)</span>
           </label>
           <textarea
             id="cancellation-reason"
@@ -101,10 +101,10 @@ export function CancelDialog({
             rows={3}
             maxLength={MAX_REASON_LENGTH}
             disabled={isPending}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-50 disabled:text-gray-500 resize-none"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring disabled:bg-secondary disabled:text-muted-foreground resize-none"
           />
           {/* Contador de caracteres restantes (AC-06) */}
-          <p className="mt-1 text-xs text-gray-400 text-right">
+          <p className="mt-1 text-xs text-muted-foreground text-right">
             {charsRemaining} caracteres restantes
           </p>
         </div>
@@ -115,7 +115,7 @@ export function CancelDialog({
             type="button"
             onClick={onClose}
             disabled={isPending}
-            className="flex-1 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-gray-300 min-h-[44px]"
+            className="flex-1 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-secondary disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
           >
             Voltar
           </button>

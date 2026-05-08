@@ -32,19 +32,19 @@ export function AppointmentPaymentSectionClient({
   const [sheetOpen, setSheetOpen] = useState(false)
 
   return (
-    <div className="rounded-xl bg-white shadow-sm border border-gray-200">
-      <div className="border-b border-gray-200 px-6 py-4">
-        <h2 className="text-base font-semibold text-gray-900">Pagamento</h2>
+    <div className="rounded-xl bg-background shadow-sm border border-border">
+      <div className="border-b border-border px-6 py-4">
+        <h2 className="text-base font-semibold text-foreground">Pagamento</h2>
       </div>
 
       <div className="px-6 py-5">
         {payment === null ? (
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm text-gray-500">Nenhum pagamento registrado.</p>
+            <p className="text-sm text-muted-foreground">Nenhum pagamento registrado.</p>
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
-              className="rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px] whitespace-nowrap"
+              className="rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] whitespace-nowrap"
             >
               Registrar pagamento
             </button>
@@ -65,16 +65,16 @@ export function AppointmentPaymentSectionClient({
                 </span>
 
                 {/* Valor */}
-                <p className="text-lg font-semibold text-gray-900">
+                <p className="text-lg font-semibold text-foreground">
                   {formatCurrency(payment.amountCents)}
                 </p>
 
                 {/* Forma de pagamento */}
                 <div>
-                  <span className="text-xs font-medium text-gray-500">
+                  <span className="text-xs font-medium text-muted-foreground">
                     Forma:{" "}
                   </span>
-                  <span className="text-xs text-gray-700">
+                  <span className="text-xs text-foreground">
                     {payment.paymentMethod
                       ? PAYMENT_METHOD_LABELS[payment.paymentMethod]
                       : "-"}
@@ -83,7 +83,7 @@ export function AppointmentPaymentSectionClient({
 
                 {/* Data de recebimento */}
                 {payment.paidAt && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Recebido em{" "}
                     {format(new Date(payment.paidAt), "dd/MM/yyyy", {
                       locale: ptBR,
@@ -93,14 +93,14 @@ export function AppointmentPaymentSectionClient({
 
                 {/* Observações */}
                 {payment.notes && (
-                  <p className="text-xs text-gray-600 italic">{payment.notes}</p>
+                  <p className="text-xs text-muted-foreground italic">{payment.notes}</p>
                 )}
               </div>
 
               <button
                 type="button"
                 onClick={() => setSheetOpen(true)}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px] whitespace-nowrap"
+                className="rounded-lg border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] whitespace-nowrap"
               >
                 Editar pagamento
               </button>

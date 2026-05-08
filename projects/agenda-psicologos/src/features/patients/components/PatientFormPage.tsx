@@ -107,12 +107,12 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         <button
           type="button"
           onClick={() => router.push("/patients")}
-          className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 min-h-[44px] px-2 -ml-2"
+          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground min-h-[44px] px-2 -ml-2"
           aria-label="Voltar para lista de pacientes"
         >
           &larr; Voltar
         </button>
-        <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-xl font-semibold text-foreground">{title}</h1>
       </div>
 
       {/* Limite banner */}
@@ -150,7 +150,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Nome *
           </label>
@@ -158,7 +158,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
             id="name"
             type="text"
             autoComplete="off"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={errors.name ? "name-error" : undefined}
             {...register("name")}
           />
@@ -177,7 +177,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Telefone (WhatsApp) *
           </label>
@@ -186,13 +186,13 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
             type="tel"
             autoComplete="tel"
             inputMode="numeric"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={
               errors.phone ? "phone-error phone-hint" : "phone-hint"
             }
             {...register("phone")}
           />
-          <p id="phone-hint" className="mt-1 text-xs text-gray-500">
+          <p id="phone-hint" className="mt-1 text-xs text-muted-foreground">
             Formato: 11999999999 (somente números)
           </p>
           {errors.phone && (
@@ -210,14 +210,14 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         <div>
           <label
             htmlFor="birthDate"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Data de nascimento
           </label>
           <input
             id="birthDate"
             type="date"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={errors.birthDate ? "birthDate-error" : undefined}
             {...register("birthDate")}
           />
@@ -236,14 +236,14 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         <div>
           <label
             htmlFor="notes"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Observações gerais
           </label>
           <textarea
             id="notes"
             rows={4}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-y"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring resize-y"
             aria-describedby={errors.notes ? "notes-error" : undefined}
             {...register("notes")}
           />
@@ -259,15 +259,15 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
         </div>
 
         {/* Contato de emergência */}
-        <fieldset className="border border-gray-200 rounded-md p-4 space-y-4">
-          <legend className="text-sm font-medium text-gray-700 px-1">
+        <fieldset className="border border-border rounded-md p-4 space-y-4">
+          <legend className="text-sm font-medium text-foreground px-1">
             Contato de emergência
           </legend>
 
           <div>
             <label
               htmlFor="emergencyContactName"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-foreground mb-1"
             >
               Nome do contato
             </label>
@@ -275,7 +275,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
               id="emergencyContactName"
               type="text"
               autoComplete="off"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               aria-describedby={
                 errors.emergencyContactName
                   ? "emergencyContactName-error"
@@ -297,7 +297,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
           <div>
             <label
               htmlFor="emergencyContactPhone"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-foreground mb-1"
             >
               Telefone do contato
             </label>
@@ -306,7 +306,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
               type="tel"
               autoComplete="tel"
               inputMode="numeric"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               aria-describedby={
                 errors.emergencyContactPhone
                   ? "emergencyContactPhone-error"
@@ -331,7 +331,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
           <button
             type="submit"
             disabled={isSubmitting || isAtLimit}
-            className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] flex items-center justify-center gap-2"
+            className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] flex items-center justify-center gap-2"
           >
             {isSubmitting && (
               <span
@@ -345,7 +345,7 @@ export function PatientFormPage({ mode, isAtLimit, patient }: Props) {
           <button
             type="button"
             onClick={() => router.push(cancelHref)}
-            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+            className="w-full rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
           >
             Cancelar
           </button>

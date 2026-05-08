@@ -68,10 +68,10 @@ function PatientAppointmentsList({
   patientName,
 }: PatientAppointmentsListProps) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 px-4 py-4">
+    <div className="min-h-screen bg-secondary">
+      <div className="bg-background border-b border-border px-4 py-4">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-xl font-semibold text-gray-900">
+          <h1 className="text-xl font-semibold text-foreground">
             Consultas de {patientName}
           </h1>
         </div>
@@ -80,7 +80,7 @@ function PatientAppointmentsList({
       <div className="max-w-2xl mx-auto px-4 py-4">
         {appointments.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-muted-foreground text-sm">
               Nenhuma consulta registrada para este paciente.
             </p>
           </div>
@@ -89,18 +89,18 @@ function PatientAppointmentsList({
             {appointments.map((appointment) => (
               <div
                 key={appointment.id}
-                className="rounded-lg bg-white border border-gray-200 px-4 py-3 shadow-sm"
+                className="rounded-lg bg-background border border-border px-4 py-3 shadow-sm"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-foreground">
                       {format(
                         new Date(appointment.scheduledAt),
                         "EEEE, d 'de' MMMM 'de' yyyy",
                         { locale: ptBR }
                       )}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {format(new Date(appointment.scheduledAt), "HH:mm")} •{" "}
                       {appointment.durationMinutes} min •{" "}
                       {appointment.modality === "in_person"
@@ -132,15 +132,15 @@ function AppointmentStatusBadge({
     string,
     { label: string; className: string; lineThrough?: boolean }
   > = {
-    scheduled: { label: "agendada", className: "bg-gray-100 text-gray-700" },
-    confirmed: { label: "confirmada", className: "bg-blue-100 text-blue-700" },
-    completed: { label: "realizada", className: "bg-green-100 text-green-700" },
+    scheduled: { label: "agendada", className: "bg-primary/10 text-primary" },
+    confirmed: { label: "confirmada", className: "bg-green-100 text-green-700" },
+    completed: { label: "realizada", className: "bg-secondary text-secondary-foreground" },
     cancelled: {
       label: "cancelada",
       className: "bg-red-100 text-red-700",
       lineThrough: true,
     },
-    no_show: { label: "falta", className: "bg-orange-100 text-orange-700" },
+    no_show: { label: "falta", className: "bg-muted text-muted-foreground" },
   }
 
   const c = config[status] ?? config.scheduled

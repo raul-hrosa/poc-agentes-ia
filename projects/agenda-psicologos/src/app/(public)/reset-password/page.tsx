@@ -13,18 +13,18 @@ export default function ResetPasswordPage({
 
   if (!token) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+      <main className="min-h-screen flex items-center justify-center bg-secondary px-4 py-8">
         <div className="w-full max-w-md text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold text-foreground mb-4">
             Link inválido
           </h1>
-          <p className="text-sm text-gray-600 mb-6">
+          <p className="text-sm text-muted-foreground mb-6">
             Este link de redefinição é inválido ou expirou. Solicite um novo
             link.
           </p>
           <a
             href="/forgot-password"
-            className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 min-h-[44px]"
+            className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 min-h-[44px]"
           >
             Solicitar novo link
           </a>
@@ -34,15 +34,15 @@ export default function ResetPasswordPage({
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <main className="min-h-screen flex items-center justify-center bg-secondary px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Nova senha</h1>
-          <p className="mt-2 text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-foreground">Nova senha</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Digite sua nova senha abaixo
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-background rounded-lg shadow-sm border border-border p-6">
           <ResetPasswordForm token={token} />
         </div>
       </div>

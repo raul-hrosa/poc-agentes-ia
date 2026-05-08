@@ -173,12 +173,12 @@ export function AppointmentForm({
         <button
           type="button"
           onClick={() => router.back()}
-          className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 min-h-[44px] px-2 -ml-2"
+          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground min-h-[44px] px-2 -ml-2"
           aria-label="Voltar"
         >
           &larr; Voltar
         </button>
-        <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-xl font-semibold text-foreground">{title}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
@@ -186,7 +186,7 @@ export function AppointmentForm({
         <div>
           <label
             htmlFor="patient-search"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Paciente *
           </label>
@@ -219,7 +219,7 @@ export function AppointmentForm({
                 // Delay para permitir click no dropdown
                 setTimeout(() => setDropdownOpen(false), 150)
               }}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               aria-describedby={
                 errors.patientId ? "patientId-error" : undefined
               }
@@ -234,10 +234,10 @@ export function AppointmentForm({
               <ul
                 id="patient-listbox"
                 role="listbox"
-                className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg max-h-48 overflow-y-auto"
+                className="absolute z-10 mt-1 w-full rounded-md border border-border bg-background shadow-lg max-h-48 overflow-y-auto"
               >
                 {filteredPatients.length === 0 ? (
-                  <li className="px-3 py-2 text-sm text-gray-500">
+                  <li className="px-3 py-2 text-sm text-muted-foreground">
                     Nenhum paciente encontrado
                   </li>
                 ) : (
@@ -253,10 +253,10 @@ export function AppointmentForm({
                         setPatientSearch("")
                         setDropdownOpen(false)
                       }}
-                      className={`cursor-pointer px-3 py-2 text-sm hover:bg-blue-50 min-h-[44px] flex items-center ${
+                      className={`cursor-pointer px-3 py-2 text-sm hover:bg-accent min-h-[44px] flex items-center ${
                         patient.id === selectedPatientId
-                          ? "bg-blue-50 font-medium text-blue-700"
-                          : "text-gray-900"
+                          ? "bg-accent font-medium text-accent-foreground"
+                          : "text-foreground"
                       }`}
                     >
                       {patient.name}
@@ -282,14 +282,14 @@ export function AppointmentForm({
         <div>
           <label
             htmlFor="date"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Data *
           </label>
           <input
             id="date"
             type="date"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={errors.date ? "date-error" : undefined}
             {...register("date")}
           />
@@ -308,14 +308,14 @@ export function AppointmentForm({
         <div>
           <label
             htmlFor="time"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Horário *
           </label>
           <input
             id="time"
             type="time"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={
               errors.time
                 ? "time-error"
@@ -351,7 +351,7 @@ export function AppointmentForm({
         <div>
           <label
             htmlFor="durationMinutes"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Duração *
           </label>
@@ -361,13 +361,13 @@ export function AppointmentForm({
               type="number"
               min={1}
               inputMode="numeric"
-              className="w-32 rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-32 rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
               aria-describedby={
                 errors.durationMinutes ? "duration-error" : undefined
               }
               {...register("durationMinutes", { valueAsNumber: true })}
             />
-            <span className="text-sm text-gray-600">minutos</span>
+            <span className="text-sm text-muted-foreground">minutos</span>
           </div>
           {errors.durationMinutes && (
             <p
@@ -382,7 +382,7 @@ export function AppointmentForm({
 
         {/* Modalidade */}
         <fieldset>
-          <legend className="block text-sm font-medium text-gray-700 mb-2">
+          <legend className="block text-sm font-medium text-foreground mb-2">
             Modalidade *
           </legend>
           <div className="flex gap-6">
@@ -390,19 +390,19 @@ export function AppointmentForm({
               <input
                 type="radio"
                 value="in_person"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 text-primary focus:ring-ring"
                 {...register("modality")}
               />
-              <span className="text-sm text-gray-900">Presencial</span>
+              <span className="text-sm text-foreground">Presencial</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer min-h-[44px]">
               <input
                 type="radio"
                 value="online"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                className="h-4 w-4 text-primary focus:ring-ring"
                 {...register("modality")}
               />
-              <span className="text-sm text-gray-900">Online</span>
+              <span className="text-sm text-foreground">Online</span>
             </label>
           </div>
           {errors.modality && (
@@ -416,16 +416,16 @@ export function AppointmentForm({
         <div>
           <label
             htmlFor="location"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-foreground mb-1"
           >
             Local / Link{" "}
-            <span className="text-gray-400 font-normal">(opcional)</span>
+            <span className="text-muted-foreground font-normal">(opcional)</span>
           </label>
           <input
             id="location"
             type="text"
             placeholder="Endereço (presencial) ou link de reunião (online)"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={errors.location ? "location-error" : undefined}
             {...register("location")}
           />
@@ -445,7 +445,7 @@ export function AppointmentForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] flex items-center justify-center gap-2"
+            className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px] flex items-center justify-center gap-2"
           >
             {isSubmitting && (
               <span
@@ -463,7 +463,7 @@ export function AppointmentForm({
           <button
             type="button"
             onClick={() => router.back()}
-            className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+            className="w-full rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
           >
             Cancelar
           </button>

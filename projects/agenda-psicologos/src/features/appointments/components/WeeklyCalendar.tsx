@@ -69,15 +69,15 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
   const hasAppointments = appointments.length > 0
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-secondary">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4">
+      <div className="bg-background border-b border-border px-4 py-4">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
-          <h1 className="text-xl font-semibold text-gray-900">Agenda</h1>
+          <h1 className="text-xl font-semibold text-foreground">Agenda</h1>
           <button
             type="button"
             onClick={() => router.push("/appointments/new")}
-            className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+            className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
           >
             <span aria-hidden="true">+</span> Nova Consulta
           </button>
@@ -90,7 +90,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
           <button
             type="button"
             onClick={() => router.push(`/appointments?week=${prevWeekParam}`)}
-            className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+            className="flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
             aria-label="Semana anterior"
           >
             <svg
@@ -111,13 +111,13 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-900 text-center">
+            <span className="text-sm font-medium text-foreground text-center">
               {formatWeekRange(weekStart)}
             </span>
             <button
               type="button"
               onClick={() => router.push("/appointments")}
-              className="rounded-md border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[32px]"
+              className="rounded-md border border-border bg-background px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[32px]"
             >
               Hoje
             </button>
@@ -126,7 +126,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
           <button
             type="button"
             onClick={() => router.push(`/appointments?week=${nextWeekParam}`)}
-            className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+            className="flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
             aria-label="Próxima semana"
           >
             <span className="hidden sm:inline">Próxima</span>
@@ -151,7 +151,7 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
         {!hasAppointments && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <svg
-              className="h-12 w-12 text-gray-300 mb-4"
+              className="h-12 w-12 text-muted-foreground mb-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -164,13 +164,13 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p className="text-gray-500 text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4">
               Nenhuma consulta agendada para esta semana.
             </p>
             <button
               type="button"
               onClick={() => router.push("/appointments/new")}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Agendar consulta
             </button>
@@ -193,8 +193,8 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
                 return (
                   <div
                     key={day.toISOString()}
-                    className={`border-r border-gray-200 last:border-r-0 ${
-                      isToday ? "bg-blue-50" : "bg-white"
+                    className={`border-r border-border last:border-r-0 ${
+                      isToday ? "bg-accent" : "bg-background"
                     }`}
                     role="gridcell"
                   >
@@ -202,19 +202,19 @@ export function WeeklyCalendar({ appointments, weekStart }: WeeklyCalendarProps)
                     <button
                       type="button"
                       onClick={() => handleDayClick(day)}
-                      className={`w-full px-1 py-2 text-center border-b border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset min-h-[44px] ${
+                      className={`w-full px-1 py-2 text-center border-b border-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-inset min-h-[44px] ${
                         isToday
-                          ? "bg-blue-100 hover:bg-blue-200"
-                          : "hover:bg-gray-50"
+                          ? "bg-accent hover:bg-accent/80"
+                          : "hover:bg-secondary"
                       }`}
                       aria-label={`Ver consultas de ${format(day, "EEEE, d 'de' MMMM", { locale: ptBR })}`}
                     >
-                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                      <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                         {DAY_NAMES[index]}
                       </div>
                       <div
                         className={`text-sm font-semibold mt-0.5 ${
-                          isToday ? "text-blue-700" : "text-gray-900"
+                          isToday ? "text-accent-foreground" : "text-foreground"
                         }`}
                       >
                         {format(day, "d")}

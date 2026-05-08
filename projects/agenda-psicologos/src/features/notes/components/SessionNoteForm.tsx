@@ -118,25 +118,25 @@ export function SessionNoteForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Contexto da sessão — somente leitura */}
-      <div className="rounded-xl border border-gray-200 bg-white px-6 py-5 space-y-3">
-        <h2 className="text-xs font-medium uppercase tracking-wide text-gray-500">
+      <div className="rounded-xl border border-border bg-background px-6 py-5 space-y-3">
+        <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
           Sessão
         </h2>
         <div>
-          <p className="text-sm font-semibold text-gray-900">
+          <p className="text-sm font-semibold text-foreground">
             {appointment.patient.name}
           </p>
-          <p className="text-sm text-gray-600 capitalize">{dateLabel}</p>
-          <p className="text-sm text-gray-600">{timeLabel}</p>
-          <p className="text-sm text-gray-600">{modalityLabel}</p>
+          <p className="text-sm text-muted-foreground capitalize">{dateLabel}</p>
+          <p className="text-sm text-muted-foreground">{timeLabel}</p>
+          <p className="text-sm text-muted-foreground">{modalityLabel}</p>
         </div>
       </div>
 
       {/* Campo de conteúdo */}
-      <div className="rounded-xl border border-gray-200 bg-white px-6 py-5 space-y-2">
+      <div className="rounded-xl border border-border bg-background px-6 py-5 space-y-2">
         <label
           htmlFor="note-content"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-foreground"
         >
           Anotações da sessão
         </label>
@@ -149,7 +149,7 @@ export function SessionNoteForm({
             setContent(e.target.value)
             if (contentError) setContentError("")
           }}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px] resize-y"
+          className="w-full rounded-lg border border-border px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring min-h-[44px] resize-y"
           placeholder="Descreva as principais observações, tópicos abordados e encaminhamentos da sessão..."
           disabled={isSubmitting}
         />
@@ -163,7 +163,7 @@ export function SessionNoteForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px] sm:w-auto sm:min-w-[160px]"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] sm:w-auto sm:min-w-[160px]"
         >
           {isSubmitting && (
             <span
@@ -178,7 +178,7 @@ export function SessionNoteForm({
           type="button"
           onClick={handleCancel}
           disabled={isSubmitting}
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px] sm:w-auto"
+          className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] sm:w-auto"
         >
           Cancelar
         </button>

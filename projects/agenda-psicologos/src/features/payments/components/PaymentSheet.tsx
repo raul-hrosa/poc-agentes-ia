@@ -114,16 +114,16 @@ export function PaymentSheet({
       />
 
       {/* Panel */}
-      <div className="relative z-10 w-full max-w-md bg-white flex flex-col h-full shadow-xl">
+      <div className="relative z-10 w-full max-w-md bg-background flex flex-col h-full shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-4">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="flex items-center justify-between border-b border-border px-4 py-4">
+          <h2 className="text-lg font-semibold text-foreground">
             {isEditing ? "Editar pagamento" : "Registrar pagamento"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             aria-label="Fechar"
           >
             ✕
@@ -131,10 +131,10 @@ export function PaymentSheet({
         </div>
 
         {/* Context (read-only) */}
-        <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-          <p className="text-sm font-medium text-gray-900">{patientName}</p>
-          <p className="text-xs text-gray-500 capitalize mt-0.5">{dateLabel}</p>
-          <p className="text-xs text-gray-500">{timeLabel}</p>
+        <div className="px-4 py-3 bg-secondary border-b border-border">
+          <p className="text-sm font-medium text-foreground">{patientName}</p>
+          <p className="text-xs text-muted-foreground capitalize mt-0.5">{dateLabel}</p>
+          <p className="text-xs text-muted-foreground">{timeLabel}</p>
         </div>
 
         {/* Form */}
@@ -144,7 +144,7 @@ export function PaymentSheet({
             <div>
               <label
                 htmlFor="amount"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-foreground mb-1"
               >
                 Valor (R$) <span className="text-red-500">*</span>
               </label>
@@ -155,7 +155,7 @@ export function PaymentSheet({
                 placeholder="0,00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+                className="w-full rounded-lg border border-border px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
                 aria-describedby={fieldErrors.amountBRL ? "amount-error" : undefined}
               />
               {fieldErrors.amountBRL && (
@@ -167,17 +167,17 @@ export function PaymentSheet({
 
             {/* Status */}
             <div>
-              <p className="block text-sm font-medium text-gray-700 mb-2">
+              <p className="block text-sm font-medium text-foreground mb-2">
                 Status <span className="text-red-500">*</span>
               </p>
               <div className="flex gap-3">
                 <button
                   type="button"
                   onClick={() => setStatus("pending")}
-                  className={`flex-1 rounded-lg border px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px] ${
+                  className={`flex-1 rounded-lg border px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] ${
                     status === "pending"
                       ? "border-yellow-400 bg-yellow-50 text-yellow-800"
-                      : "border-gray-300 bg-white text-gray-700"
+                      : "border-border bg-background text-foreground"
                   }`}
                 >
                   Pendente
@@ -185,10 +185,10 @@ export function PaymentSheet({
                 <button
                   type="button"
                   onClick={() => setStatus("paid")}
-                  className={`flex-1 rounded-lg border px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px] ${
+                  className={`flex-1 rounded-lg border px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] ${
                     status === "paid"
                       ? "border-green-400 bg-green-50 text-green-800"
-                      : "border-gray-300 bg-white text-gray-700"
+                      : "border-border bg-background text-foreground"
                   }`}
                 >
                   Pago
@@ -200,7 +200,7 @@ export function PaymentSheet({
             <div>
               <label
                 htmlFor="paymentMethod"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-foreground mb-1"
               >
                 Forma de pagamento
               </label>
@@ -208,7 +208,7 @@ export function PaymentSheet({
                 id="paymentMethod"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+                className="w-full rounded-lg border border-border px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
               >
                 <option value="">Não informar</option>
                 {Object.entries(PAYMENT_METHOD_LABELS).map(([value, label]) => (
@@ -223,7 +223,7 @@ export function PaymentSheet({
             <div>
               <label
                 htmlFor="notes"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-foreground mb-1"
               >
                 Observações
               </label>
@@ -233,17 +233,17 @@ export function PaymentSheet({
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}
                 placeholder="Ex: paciente pagou metade"
-                className="w-full rounded-lg border border-gray-300 px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full rounded-lg border border-border px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none"
               />
             </div>
           </div>
 
           {/* Footer buttons */}
-          <div className="border-t border-gray-200 px-4 py-4 space-y-3">
+          <div className="border-t border-border px-4 py-4 space-y-3">
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               {submitting ? "Salvando..." : "Salvar"}
             </button>
@@ -251,7 +251,7 @@ export function PaymentSheet({
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 min-h-[44px]"
+              className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Cancelar
             </button>

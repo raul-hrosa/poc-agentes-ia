@@ -44,7 +44,7 @@ export function AppointmentStatusBadge({
       )
     }
     return (
-      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground border border-border">
         Cancelada pelo psicólogo
       </span>
     )
@@ -52,7 +52,7 @@ export function AppointmentStatusBadge({
 
   if (status === "completed") {
     return (
-      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
+      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-secondary text-secondary-foreground border border-border">
         Realizada
       </span>
     )
@@ -60,7 +60,7 @@ export function AppointmentStatusBadge({
 
   if (status === "no_show") {
     return (
-      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-orange-100 text-orange-700 border border-orange-200">
+      <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-muted text-muted-foreground border border-border">
         Falta
       </span>
     )

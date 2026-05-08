@@ -127,20 +127,20 @@ export function AppointmentDetailPanel({
         role="dialog"
         aria-modal="true"
         aria-labelledby="detail-panel-title"
-        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-xl"
+        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-background shadow-xl"
       >
         {/* Header do painel */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-4">
+        <div className="flex items-center justify-between border-b border-border px-4 py-4">
           <h2
             id="detail-panel-title"
-            className="text-base font-semibold text-gray-900"
+            className="text-base font-semibold text-foreground"
           >
             Detalhes da consulta
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="rounded-md p-2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Fechar painel"
           >
             <svg
@@ -164,12 +164,12 @@ export function AppointmentDetailPanel({
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
           {/* Paciente */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Paciente
             </p>
             <a
               href={`/patients/${appointment.patientId}`}
-              className="text-sm font-semibold text-blue-600 hover:underline"
+              className="text-sm font-semibold text-primary hover:underline"
             >
               {appointment.patientName}
             </a>
@@ -177,23 +177,23 @@ export function AppointmentDetailPanel({
 
           {/* Data e horário */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Data e horário
             </p>
-            <p className="text-sm text-gray-900 capitalize">{dateLabel}</p>
-            <p className="text-sm text-gray-600">{timeLabel}</p>
+            <p className="text-sm text-foreground capitalize">{dateLabel}</p>
+            <p className="text-sm text-muted-foreground">{timeLabel}</p>
           </div>
 
           {/* Modalidade e local */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Modalidade
             </p>
-            <p className="text-sm text-gray-900">
+            <p className="text-sm text-foreground">
               {appointment.modality === "in_person" ? "Presencial" : "Online"}
             </p>
             {appointment.location && (
-              <p className="text-sm text-gray-600 mt-0.5">
+              <p className="text-sm text-muted-foreground mt-0.5">
                 {appointment.location}
               </p>
             )}
@@ -201,7 +201,7 @@ export function AppointmentDetailPanel({
 
           {/* Status */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Status
             </p>
             <AppointmentStatusBadge
@@ -210,7 +210,7 @@ export function AppointmentDetailPanel({
             />
             {/* Linha de data/hora da resposta do paciente (AC-01, AC-02) */}
             {formatTokenResponseLabel(appointment) && (
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {formatTokenResponseLabel(appointment)}
               </p>
             )}
@@ -220,10 +220,10 @@ export function AppointmentDetailPanel({
           {appointment.status === "cancelled" &&
             appointment.cancellationReason != null && (
               <div>
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
                   Motivo
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-foreground">
                   {appointment.cancellationReason}
                 </p>
               </div>
@@ -231,13 +231,13 @@ export function AppointmentDetailPanel({
 
           {/* Ações conforme status (RN-03, RN-04) */}
           {isActive && (
-            <div className="space-y-2 pt-2 border-t border-gray-100">
+            <div className="space-y-2 pt-2 border-t border-border">
               {appointment.status === "scheduled" && (
                 <button
                   type="button"
                   onClick={handleConfirm}
                   disabled={isPendingConfirm || isPendingComplete || isPendingNoShow}
-                  className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                  className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
                 >
                   {isPendingConfirm ? "Confirmando..." : "Confirmar consulta"}
                 </button>
@@ -266,7 +266,7 @@ export function AppointmentDetailPanel({
                 onClick={() =>
                   router.push(`/appointments/${appointment.id}/edit`)
                 }
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
               >
                 Editar consulta
               </button>
@@ -283,18 +283,18 @@ export function AppointmentDetailPanel({
 
           {/* Ações para consulta realizada (AC-29) */}
           {isCompleted && (
-            <div className="pt-2 border-t border-gray-100">
+            <div className="pt-2 border-t border-border">
               {appointment.hasNote ? (
                 <a
                   href={`/appointments/${appointment.id}/notes`}
-                  className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                  className="flex w-full items-center justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
                 >
                   Ver prontuário
                 </a>
               ) : (
                 <a
                   href={`/appointments/${appointment.id}/notes`}
-                  className="flex w-full items-center justify-center rounded-lg border border-blue-300 bg-white px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                  className="flex w-full items-center justify-center rounded-lg border border-primary/30 bg-background px-4 py-3 text-sm font-medium text-primary hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
                 >
                   Registrar prontuário
                 </a>
@@ -304,8 +304,8 @@ export function AppointmentDetailPanel({
 
           {/* Consulta terminal: nenhuma ação disponível (AC-09, AC-26, AC-30) */}
           {isTerminal && (
-            <div className="pt-2 border-t border-gray-100">
-              <p className="text-xs text-gray-500 text-center">
+            <div className="pt-2 border-t border-border">
+              <p className="text-xs text-muted-foreground text-center">
                 (nenhuma ação disponível)
               </p>
             </div>

@@ -27,17 +27,17 @@ function abbreviateName(fullName: string): string {
  */
 function getCardClasses(status: AppointmentWithTokenStatus["status"]): string {
   const base =
-    "w-full text-left rounded-md px-2 py-1.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset min-h-[44px] min-w-[44px] flex flex-col gap-0.5"
+    "w-full text-left rounded-md px-2 py-1.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-inset min-h-[44px] min-w-[44px] flex flex-col gap-0.5"
 
   if (status === "confirmed") {
     return `${base} bg-green-50 border border-green-500 hover:bg-green-100`
   }
 
   if (status === "cancelled") {
-    return `${base} bg-white border border-gray-200 hover:bg-gray-50 opacity-50`
+    return `${base} bg-background border border-border hover:bg-secondary opacity-50`
   }
 
-  return `${base} bg-white border border-gray-200 hover:bg-gray-50`
+  return `${base} bg-background border border-border hover:bg-secondary`
 }
 
 export function AppointmentCard({ appointment, onClick }: AppointmentCardProps) {
@@ -51,8 +51,8 @@ export function AppointmentCard({ appointment, onClick }: AppointmentCardProps) 
       className={getCardClasses(appointment.status)}
       aria-label={`Consulta de ${patientName} às ${startTime}`}
     >
-      <span className="text-xs font-semibold text-gray-800">{startTime}</span>
-      <span className="text-xs text-gray-700 truncate leading-tight">
+      <span className="text-xs font-semibold text-foreground">{startTime}</span>
+      <span className="text-xs text-foreground truncate leading-tight">
         {patientName}
       </span>
       <AppointmentStatusBadge

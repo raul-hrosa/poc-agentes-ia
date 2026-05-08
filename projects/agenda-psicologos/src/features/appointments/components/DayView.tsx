@@ -57,15 +57,15 @@ export function DayView({ appointments, date }: DayViewProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-secondary">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4">
+      <div className="bg-background border-b border-border px-4 py-4">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between gap-2">
             <button
               type="button"
               onClick={() => router.push(`/appointments/day/${prevDayParam}`)}
-              className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+              className="flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
               aria-label="Dia anterior"
             >
               <svg
@@ -85,14 +85,14 @@ export function DayView({ appointments, date }: DayViewProps) {
               <span className="hidden sm:inline">Anterior</span>
             </button>
 
-            <h1 className="text-base font-semibold text-gray-900 text-center">
+            <h1 className="text-base font-semibold text-foreground text-center">
               {formatDayHeader(date)}
             </h1>
 
             <button
               type="button"
               onClick={() => router.push(`/appointments/day/${nextDayParam}`)}
-              className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+              className="flex items-center gap-1 rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
               aria-label="Próximo dia"
             >
               <span className="hidden sm:inline">Próximo</span>
@@ -121,7 +121,7 @@ export function DayView({ appointments, date }: DayViewProps) {
           /* Estado vazio (AC-08) */
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <svg
-              className="h-12 w-12 text-gray-300 mb-4"
+              className="h-12 w-12 text-muted-foreground mb-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -134,7 +134,7 @@ export function DayView({ appointments, date }: DayViewProps) {
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p className="text-gray-500 text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4">
               Nenhuma consulta nesta data.
             </p>
             <button
@@ -142,7 +142,7 @@ export function DayView({ appointments, date }: DayViewProps) {
               onClick={() =>
                 router.push(`/appointments/new?date=${currentDateParam}`)
               }
-              className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Agendar consulta para este dia
             </button>
@@ -157,21 +157,21 @@ export function DayView({ appointments, date }: DayViewProps) {
               return (
                 <div
                   key={appointment.id}
-                  className="rounded-lg bg-white border border-gray-200 shadow-sm overflow-hidden"
+                  className="rounded-lg bg-background border border-border shadow-sm overflow-hidden"
                 >
                   <div className="px-4 py-4">
                     <div className="flex items-start justify-between gap-3">
                       {/* Horário */}
-                      <div className="shrink-0 text-sm font-medium text-gray-900 min-w-[80px]">
+                      <div className="shrink-0 text-sm font-medium text-foreground min-w-[80px]">
                         {formatTime(startTime)} – {formatTime(endTime)}
                       </div>
 
                       {/* Dados principais */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 truncate">
+                        <p className="text-sm font-semibold text-foreground truncate">
                           {appointment.patientName}
                         </p>
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-muted-foreground mt-0.5">
                           {appointment.modality === "in_person"
                             ? "Presencial"
                             : "Online"}
@@ -195,7 +195,7 @@ export function DayView({ appointments, date }: DayViewProps) {
                       <button
                         type="button"
                         onClick={() => handleViewDetails(appointment)}
-                        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px] min-w-[44px]"
+                        className="rounded-md border border-border bg-background px-3 py-2 text-xs font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px] min-w-[44px]"
                       >
                         Ver detalhes
                       </button>
@@ -210,14 +210,14 @@ export function DayView({ appointments, date }: DayViewProps) {
 
       {/* Rodapé: agendar neste dia */}
       {appointments.length > 0 && (
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-3">
+        <div className="sticky bottom-0 bg-background border-t border-border px-4 py-3">
           <div className="max-w-2xl mx-auto">
             <button
               type="button"
               onClick={() =>
                 router.push(`/appointments/new?date=${currentDateParam}`)
               }
-              className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Agendar neste dia
             </button>

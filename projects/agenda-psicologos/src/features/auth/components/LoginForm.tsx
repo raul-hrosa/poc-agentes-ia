@@ -59,7 +59,7 @@ export function LoginForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-foreground mb-1"
         >
           E-mail *
         </label>
@@ -67,7 +67,7 @@ export function LoginForm() {
           id="email"
           type="email"
           autoComplete="email"
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-md border border-border px-3 py-2 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
           aria-describedby={errors.email ? "email-error" : undefined}
           {...register("email")}
         />
@@ -82,13 +82,13 @@ export function LoginForm() {
         <div className="flex items-center justify-between mb-1">
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-foreground"
           >
             Senha *
           </label>
           <Link
             href="/forgot-password"
-            className="text-xs font-medium text-blue-600 hover:text-blue-500"
+            className="text-xs font-medium text-primary hover:text-primary/80"
           >
             Esqueci minha senha
           </Link>
@@ -98,14 +98,14 @@ export function LoginForm() {
             id="password"
             type={showPassword ? "text" : "password"}
             autoComplete="current-password"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 pr-10 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-md border border-border px-3 py-2 pr-10 text-sm shadow-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
             aria-describedby={errors.password ? "password-error" : undefined}
             {...register("password")}
           />
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-0 top-0 flex h-full min-h-[44px] w-10 items-center justify-center text-gray-500 hover:text-gray-700"
+            className="absolute right-0 top-0 flex h-full min-h-[44px] w-10 items-center justify-center text-muted-foreground hover:text-foreground"
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
           >
             {showPassword ? "🙈" : "👁️"}
@@ -125,7 +125,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
+        className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[44px]"
       >
         {isSubmitting ? "Entrando..." : "Entrar"}
       </button>

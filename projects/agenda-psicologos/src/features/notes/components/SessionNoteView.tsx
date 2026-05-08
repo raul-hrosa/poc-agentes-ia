@@ -74,19 +74,19 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
 
   if (isEditing) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-secondary">
         <div className="mx-auto max-w-2xl px-4 py-6">
           {/* Header modo edição */}
           <div className="mb-6 flex items-center gap-3">
             <button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+              className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
             >
               <span aria-hidden="true">←</span> Cancelar edição
             </button>
           </div>
-          <h1 className="mb-6 text-xl font-semibold text-gray-900">
+          <h1 className="mb-6 text-xl font-semibold text-foreground">
             Editar Anotação
           </h1>
           <SessionNoteForm
@@ -111,21 +111,21 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-secondary">
         <div className="mx-auto max-w-2xl px-4 py-6">
           {/* Header modo visualização */}
           <div className="mb-4 flex items-center justify-between">
             <button
               type="button"
               onClick={handleBack}
-              className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+              className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
             >
               <span aria-hidden="true">←</span> Voltar
             </button>
             <button
               type="button"
               onClick={() => setIsEditing(true)}
-              className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Editar
             </button>
@@ -134,33 +134,33 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
           {/* Conteúdo do prontuário */}
           <div className="space-y-4">
             {/* Contexto da sessão */}
-            <div className="rounded-xl border border-gray-200 bg-white px-6 py-5 space-y-2">
-              <h2 className="text-xs font-medium uppercase tracking-wide text-gray-500">
+            <div className="rounded-xl border border-border bg-background px-6 py-5 space-y-2">
+              <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Sessão
               </h2>
-              <p className="text-sm font-semibold text-gray-900">
+              <p className="text-sm font-semibold text-foreground">
                 {note.appointment.patient.name}
               </p>
-              <p className="text-sm text-gray-600 capitalize">{dateLabel}</p>
-              <p className="text-sm text-gray-600">{timeLabel}</p>
-              <p className="text-sm text-gray-600">{modalityLabel}</p>
+              <p className="text-sm text-muted-foreground capitalize">{dateLabel}</p>
+              <p className="text-sm text-muted-foreground">{timeLabel}</p>
+              <p className="text-sm text-muted-foreground">{modalityLabel}</p>
             </div>
 
             {/* Metadados */}
-            <div className="rounded-xl border border-gray-200 bg-white px-6 py-4 space-y-1">
-              <p className="text-xs text-gray-500">
+            <div className="rounded-xl border border-border bg-background px-6 py-4 space-y-1">
+              <p className="text-xs text-muted-foreground">
                 Registrado em {createdAtLabel}
               </p>
               {updatedAtLabel && (
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   Editado em {updatedAtLabel}
                 </p>
               )}
             </div>
 
             {/* Conteúdo */}
-            <div className="rounded-xl border border-gray-200 bg-white px-6 py-5">
-              <p className="text-sm text-gray-900 whitespace-pre-wrap">
+            <div className="rounded-xl border border-border bg-background px-6 py-5">
+              <p className="text-sm text-foreground whitespace-pre-wrap">
                 {note.content}
               </p>
             </div>
@@ -170,7 +170,7 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
               <button
                 type="button"
                 onClick={() => setDeleteDialogOpen(true)}
-                className="w-full rounded-lg border border-red-300 bg-white px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 min-h-[44px]"
+                className="w-full rounded-lg border border-red-300 bg-background px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 min-h-[44px]"
               >
                 Excluir prontuário
               </button>
@@ -191,15 +191,15 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-note-dialog-title"
-            className="fixed left-1/2 top-1/2 z-[60] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-xl"
+            className="fixed left-1/2 top-1/2 z-[60] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg bg-background p-6 shadow-xl"
           >
             <h2
               id="delete-note-dialog-title"
-              className="text-base font-semibold text-gray-900"
+              className="text-base font-semibold text-foreground"
             >
               Excluir prontuário?
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-muted-foreground">
               Esta ação não pode ser desfeita. O registro será removido
               permanentemente.
             </p>
@@ -208,7 +208,7 @@ export function SessionNoteView({ note }: SessionNoteViewProps) {
                 type="button"
                 onClick={() => setDeleteDialogOpen(false)}
                 disabled={isDeleting}
-                className="flex-1 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-gray-300 min-h-[44px]"
+                className="flex-1 rounded-lg border border-border py-2.5 text-sm font-medium text-foreground hover:bg-secondary disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring min-h-[44px]"
               >
                 Cancelar
               </button>

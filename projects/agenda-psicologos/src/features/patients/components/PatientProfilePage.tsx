@@ -44,7 +44,7 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
       <div className="flex items-center gap-4">
         <Link
           href="/patients"
-          className="flex items-center gap-1 text-sm text-blue-600 hover:underline min-h-[44px] px-1"
+          className="flex items-center gap-1 text-sm text-primary hover:underline min-h-[44px] px-1"
         >
           <svg
             className="h-4 w-4"
@@ -63,35 +63,35 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
           Pacientes
         </Link>
 
-        <h1 className="flex-1 text-center text-xl font-semibold text-gray-900">
+        <h1 className="flex-1 text-center text-xl font-semibold text-foreground">
           {patient.name}
         </h1>
 
         <Link
           href={`/patients/${patient.id}/edit`}
-          className="text-sm text-blue-600 hover:underline min-h-[44px] flex items-center px-1"
+          className="text-sm text-primary hover:underline min-h-[44px] flex items-center px-1"
         >
           Editar
         </Link>
       </div>
 
       {/* Dados pessoais */}
-      <section className="rounded-lg border border-gray-200 bg-white p-4 space-y-3">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+      <section className="rounded-lg border border-border bg-background p-4 space-y-3">
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
           Dados pessoais
         </h2>
 
         <div>
-          <p className="text-xs text-gray-500">Telefone</p>
-          <p className="text-sm text-gray-900">{formatPhone(patient.phone)}</p>
+          <p className="text-xs text-muted-foreground">Telefone</p>
+          <p className="text-sm text-foreground">{formatPhone(patient.phone)}</p>
         </div>
 
         {formattedBirthDate !== null && age !== null && (
           <div>
-            <p className="text-xs text-gray-500">Data de nascimento</p>
-            <p className="text-sm text-gray-900">
+            <p className="text-xs text-muted-foreground">Data de nascimento</p>
+            <p className="text-sm text-foreground">
               {formattedBirthDate}{" "}
-              <span className="text-gray-500">({age} anos)</span>
+              <span className="text-muted-foreground">({age} anos)</span>
             </p>
           </div>
         )}
@@ -99,15 +99,15 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
 
       {/* Contato de emergência */}
       {hasEmergencyContact && (
-        <section className="rounded-lg border border-gray-200 bg-white p-4 space-y-3">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+        <section className="rounded-lg border border-border bg-background p-4 space-y-3">
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
             Contato de emergência
           </h2>
 
           {patient.emergencyContactName && (
             <div>
-              <p className="text-xs text-gray-500">Nome</p>
-              <p className="text-sm text-gray-900">
+              <p className="text-xs text-muted-foreground">Nome</p>
+              <p className="text-sm text-foreground">
                 {patient.emergencyContactName}
               </p>
             </div>
@@ -115,8 +115,8 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
 
           {patient.emergencyContactPhone && (
             <div>
-              <p className="text-xs text-gray-500">Telefone</p>
-              <p className="text-sm text-gray-900">
+              <p className="text-xs text-muted-foreground">Telefone</p>
+              <p className="text-sm text-foreground">
                 {formatPhone(patient.emergencyContactPhone)}
               </p>
             </div>
@@ -126,11 +126,11 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
 
       {/* Observações gerais */}
       {hasNotes && (
-        <section className="rounded-lg border border-gray-200 bg-white p-4 space-y-3">
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+        <section className="rounded-lg border border-border bg-background p-4 space-y-3">
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
             Observações gerais
           </h2>
-          <p className="text-sm text-gray-900 whitespace-pre-wrap">
+          <p className="text-sm text-foreground whitespace-pre-wrap">
             {patient.notes}
           </p>
         </section>
@@ -140,14 +140,14 @@ export function PatientProfilePage({ patient }: PatientProfilePageProps) {
       <div>
         <Link
           href={`/appointments?patient=${patient.id}`}
-          className="text-sm text-blue-600 hover:underline"
+          className="text-sm text-primary hover:underline"
         >
           Ver consultas deste paciente →
         </Link>
       </div>
 
       {/* Rodapé — Arquivar */}
-      <div className="pt-4 border-t border-gray-200">
+      <div className="pt-4 border-t border-border">
         <button
           type="button"
           onClick={() => setArchiveDialogOpen(true)}

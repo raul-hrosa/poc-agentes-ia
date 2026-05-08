@@ -7,19 +7,19 @@ export const metadata = {
 
 export default function ForgotPasswordPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <main className="min-h-screen flex items-center justify-center bg-secondary px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Redefinir senha</h1>
-          <p className="mt-2 text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-foreground">Redefinir senha</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Enviaremos as instruções para o seu e-mail
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-background rounded-lg shadow-sm border border-border p-6">
           <Link
             href="/login"
-            className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-500 mb-4"
+            className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 mb-4"
           >
             ← Voltar para login
           </Link>

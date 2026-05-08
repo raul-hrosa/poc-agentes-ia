@@ -105,23 +105,23 @@ export function FinancialDashboard({
   return (
     <div className="space-y-5">
       {/* Seletor de período */}
-      <div className="flex items-center justify-between rounded-xl bg-white border border-gray-200 px-4 py-3">
+      <div className="flex items-center justify-between rounded-xl bg-background border border-border px-4 py-3">
         <button
           type="button"
           onClick={handlePrevMonth}
-          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring"
           aria-label="Mês anterior"
         >
           ‹
         </button>
-        <span className="text-sm font-semibold text-gray-900">
+        <span className="text-sm font-semibold text-foreground">
           {MONTH_NAMES[month - 1]} {year}
         </span>
         <button
           type="button"
           onClick={handleNextMonth}
           disabled={isCurrentMonth}
-          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-border bg-background text-foreground hover:bg-secondary disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-ring"
           aria-label="Próximo mês"
         >
           ›
@@ -130,35 +130,35 @@ export function FinancialDashboard({
 
       {/* Cards de resumo */}
       <div className={`grid grid-cols-3 gap-3 transition-opacity ${loading ? "opacity-50" : ""}`}>
-        <div className="rounded-xl bg-white border border-gray-200 px-4 py-4">
-          <p className="text-xs font-medium text-gray-500 mb-1">Recebido</p>
+        <div className="rounded-xl bg-background border border-border px-4 py-4">
+          <p className="text-xs font-medium text-muted-foreground mb-1">Recebido</p>
           <p className="text-base font-bold text-green-700">
             {formatCurrency(summary.totalPaidCents)}
           </p>
         </div>
-        <div className="rounded-xl bg-white border border-gray-200 px-4 py-4">
-          <p className="text-xs font-medium text-gray-500 mb-1">Pendente</p>
+        <div className="rounded-xl bg-background border border-border px-4 py-4">
+          <p className="text-xs font-medium text-muted-foreground mb-1">Pendente</p>
           <p className="text-base font-bold text-yellow-700">
             {formatCurrency(summary.totalPendingCents)}
           </p>
         </div>
-        <div className="rounded-xl bg-white border border-gray-200 px-4 py-4">
-          <p className="text-xs font-medium text-gray-500 mb-1">Sessões</p>
-          <p className="text-base font-bold text-gray-900">{summary.sessionCount}</p>
+        <div className="rounded-xl bg-background border border-border px-4 py-4">
+          <p className="text-xs font-medium text-muted-foreground mb-1">Sessões</p>
+          <p className="text-base font-bold text-foreground">{summary.sessionCount}</p>
         </div>
       </div>
 
       {/* Filtro de status */}
-      <div className="flex gap-2 rounded-xl bg-white border border-gray-200 p-1">
+      <div className="flex gap-2 rounded-xl bg-background border border-border p-1">
         {(["all", "paid", "pending"] as const).map((sf) => (
           <button
             key={sf}
             type="button"
             onClick={() => handleStatusFilter(sf)}
-            className={`flex-1 rounded-lg py-2.5 text-sm font-medium min-h-[44px] focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`flex-1 rounded-lg py-2.5 text-sm font-medium min-h-[44px] focus:outline-none focus:ring-2 focus:ring-ring ${
               statusFilter === sf
-                ? "bg-blue-600 text-white"
-                : "text-gray-600 hover:bg-gray-50"
+                ? "bg-primary text-white"
+                : "text-muted-foreground hover:bg-secondary"
             }`}
           >
             {sf === "all" ? "Todas" : sf === "paid" ? "Pagas" : "Pendentes"}
@@ -167,27 +167,27 @@ export function FinancialDashboard({
       </div>
 
       {/* Lista de sessões */}
-      <div className={`rounded-xl bg-white border border-gray-200 transition-opacity ${loading ? "opacity-50" : ""}`}>
+      <div className={`rounded-xl bg-background border border-border transition-opacity ${loading ? "opacity-50" : ""}`}>
         {payments.length === 0 ? (
           <div className="px-6 py-10 text-center">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               Nenhuma sessão com pagamento registrado neste período.
             </p>
           </div>
         ) : (
-          <ul className="divide-y divide-gray-100">
+          <ul className="divide-y divide-border">
             {payments.map((payment) => (
               <li key={payment.id}>
                 <button
                   type="button"
                   onClick={() => router.push(`/appointments/${payment.appointmentId}`)}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 text-left min-h-[44px]"
+                  className="w-full flex items-center justify-between gap-3 px-4 py-4 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring text-left min-h-[44px]"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-foreground truncate">
                       {payment.appointment.patient.name}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {format(new Date(payment.appointment.scheduledAt), "d MMM · HH:mm", {
                         locale: ptBR,
                       })}
@@ -198,7 +198,7 @@ export function FinancialDashboard({
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <p className="text-sm font-semibold text-gray-900">
+                    <p className="text-sm font-semibold text-foreground">
                       {formatCurrency(payment.amountCents)}
                     </p>
                     <span

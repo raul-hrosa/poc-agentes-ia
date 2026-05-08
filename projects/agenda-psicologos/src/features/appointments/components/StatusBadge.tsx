@@ -11,17 +11,17 @@ const statusConfig: Record<
   scheduled: {
     label: "agendada",
     className:
-      "bg-gray-100 text-gray-700 border border-gray-200",
+      "bg-primary/10 text-primary border border-primary/30",
   },
   confirmed: {
     label: "confirmada",
     className:
-      "bg-blue-100 text-blue-700 border border-blue-200",
+      "bg-green-100 text-green-700 border border-green-200",
   },
   completed: {
     label: "realizada",
     className:
-      "bg-green-100 text-green-700 border border-green-200",
+      "bg-secondary text-secondary-foreground border border-border",
   },
   cancelled: {
     label: "cancelada",
@@ -32,7 +32,7 @@ const statusConfig: Record<
   no_show: {
     label: "falta",
     className:
-      "bg-orange-100 text-orange-700 border border-orange-200",
+      "bg-muted text-muted-foreground border border-border",
   },
 }
 

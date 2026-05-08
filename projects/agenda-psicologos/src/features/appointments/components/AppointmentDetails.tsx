@@ -108,10 +108,10 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
   return (
     <>
-      <div className="rounded-xl bg-white shadow-sm border border-gray-200">
+      <div className="rounded-xl bg-background shadow-sm border border-border">
         {/* Header */}
-        <div className="border-b border-gray-200 px-6 py-5">
-          <h1 className="text-lg font-semibold text-gray-900">
+        <div className="border-b border-border px-6 py-5">
+          <h1 className="text-lg font-semibold text-foreground">
             Detalhes da consulta
           </h1>
         </div>
@@ -120,12 +120,12 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
         <div className="px-6 py-5 space-y-5">
           {/* Paciente */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Paciente
             </p>
             <a
               href={`/patients/${appointment.patientId}`}
-              className="text-sm font-semibold text-blue-600 hover:underline"
+              className="text-sm font-semibold text-primary hover:underline"
             >
               {appointment.patientName}
             </a>
@@ -133,23 +133,23 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
           {/* Data e horário */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Data e horário
             </p>
-            <p className="text-sm text-gray-900 capitalize">{dateLabel}</p>
-            <p className="text-sm text-gray-600">{timeLabel}</p>
+            <p className="text-sm text-foreground capitalize">{dateLabel}</p>
+            <p className="text-sm text-muted-foreground">{timeLabel}</p>
           </div>
 
           {/* Modalidade e local */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Modalidade
             </p>
-            <p className="text-sm text-gray-900">
+            <p className="text-sm text-foreground">
               {appointment.modality === "in_person" ? "Presencial" : "Online"}
             </p>
             {appointment.location && (
-              <p className="text-sm text-gray-600 mt-0.5">
+              <p className="text-sm text-muted-foreground mt-0.5">
                 {appointment.location}
               </p>
             )}
@@ -157,7 +157,7 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
           {/* Status */}
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
               Status
             </p>
             <AppointmentStatusBadge
@@ -166,7 +166,7 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
             />
             {/* Linha de data/hora da resposta do paciente (AC-01, AC-02) */}
             {formatTokenResponseLabel(appointment) && (
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {formatTokenResponseLabel(appointment)}
               </p>
             )}
@@ -176,10 +176,10 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
           {appointment.status === "cancelled" &&
             appointment.cancellationReason != null && (
               <div>
-                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
                   Motivo
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-foreground">
                   {appointment.cancellationReason}
                 </p>
               </div>
@@ -188,13 +188,13 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
         {/* Ações conforme status (RN-03, RN-04) */}
         {isActive && (
-          <div className="border-t border-gray-100 px-6 py-5 space-y-3">
+          <div className="border-t border-border px-6 py-5 space-y-3">
             {appointment.status === "scheduled" && (
               <button
                 type="button"
                 onClick={handleConfirm}
                 disabled={isPendingConfirm || isPendingComplete || isPendingNoShow}
-                className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
               >
                 {isPendingConfirm ? "Confirmando..." : "Confirmar consulta"}
               </button>
@@ -223,7 +223,7 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
               onClick={() =>
                 router.push(`/appointments/${appointment.id}/edit`)
               }
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+              className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
             >
               Editar consulta
             </button>
@@ -240,18 +240,18 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
         {/* Ações para consulta realizada (AC-29) */}
         {isCompleted && (
-          <div className="border-t border-gray-100 px-6 py-5">
+          <div className="border-t border-border px-6 py-5">
             {appointment.hasNote && appointment.noteId ? (
               <a
                 href={`/notes/${appointment.noteId}`}
-                className="flex w-full items-center justify-center rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                className="flex w-full items-center justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
               >
                 Ver prontuário
               </a>
             ) : (
               <a
                 href={`/notes/new?appointment=${appointment.id}`}
-                className="flex w-full items-center justify-center rounded-lg border border-blue-300 bg-white px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
+                className="flex w-full items-center justify-center rounded-lg border border-primary/30 bg-background px-4 py-3 text-sm font-medium text-primary hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px]"
               >
                 Registrar prontuário
               </a>
@@ -261,8 +261,8 @@ export function AppointmentDetails({ appointment }: AppointmentDetailsProps) {
 
         {/* Consulta terminal: nenhuma ação disponível (AC-09, AC-26, AC-30) */}
         {isTerminal && (
-          <div className="border-t border-gray-100 px-6 py-4">
-            <p className="text-xs text-gray-500 text-center">
+          <div className="border-t border-border px-6 py-4">
+            <p className="text-xs text-muted-foreground text-center">
               (nenhuma ação disponível)
             </p>
           </div>
