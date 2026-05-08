@@ -77,7 +77,7 @@ export function AppointmentDetailPanel({
       onClose()
       router.refresh()
     } catch {
-      toast.error("Não foi possível marcar a consulta como realizada.")
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     } finally {
       setIsPendingComplete(false)
     }
@@ -87,11 +87,11 @@ export function AppointmentDetailPanel({
     setIsPendingNoShow(true)
     try {
       await markNoShow({ appointmentId: appointment.id })
-      toast.success("Falta registrada")
+      toast.success("Marcado como não compareceu")
       onClose()
       router.refresh()
     } catch {
-      toast.error("Não foi possível registrar a falta.")
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     } finally {
       setIsPendingNoShow(false)
     }

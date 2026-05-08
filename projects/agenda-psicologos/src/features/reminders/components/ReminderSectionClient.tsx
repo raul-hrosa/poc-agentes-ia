@@ -31,8 +31,11 @@ export function ReminderSectionClient({
   function handleCopyLink() {
     if (!latestReminder?.link) return
     navigator.clipboard.writeText(latestReminder.link).then(() => {
+      toast.success("Link de lembrete copiado")
       setCopyLabel("Copiado!")
       setTimeout(() => setCopyLabel("Copiar link"), 2000)
+    }).catch(() => {
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     })
   }
 
@@ -41,12 +44,8 @@ export function ReminderSectionClient({
       try {
         await generateReminderToken({ appointmentId })
         router.refresh()
-      } catch (error) {
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : "Não foi possível gerar o lembrete.",
-        )
+      } catch {
+        toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
       }
     })
   }
@@ -57,12 +56,8 @@ export function ReminderSectionClient({
         await sendReminderEmail({ appointmentId })
         toast.success("E-mail enviado com sucesso")
         router.refresh()
-      } catch (error) {
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : "Falha ao enviar e-mail. Copie o link e envie manualmente.",
-        )
+      } catch {
+        toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
       }
     })
   }

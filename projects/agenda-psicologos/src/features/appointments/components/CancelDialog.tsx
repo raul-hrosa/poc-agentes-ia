@@ -28,7 +28,6 @@ export function CancelDialog({
 }: CancelDialogProps) {
   const [cancellationReason, setCancellationReason] = useState("")
   const [isPending, setIsPending] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const startTime = new Date(appointment.scheduledAt)
   const formattedDate = format(startTime, "EEEE, d 'de' MMMM 'de' yyyy", {
@@ -39,7 +38,6 @@ export function CancelDialog({
 
   async function handleConfirm() {
     setIsPending(true)
-    setErrorMessage(null)
     try {
       await cancelAppointment({
         appointmentId: appointment.id,
@@ -47,12 +45,8 @@ export function CancelDialog({
       })
       toast.success("Consulta cancelada")
       onCancelled()
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Não foi possível cancelar a consulta."
-      setErrorMessage(message)
+    } catch {
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
       setIsPending(false)
     }
   }
@@ -114,16 +108,6 @@ export function CancelDialog({
             {charsRemaining} caracteres restantes
           </p>
         </div>
-
-        {/* Mensagem de erro inline (AC-10) */}
-        {errorMessage && (
-          <p
-            role="alert"
-            className="mt-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
-          >
-            {errorMessage}
-          </p>
-        )}
 
         {/* Botões */}
         <div className="mt-5 flex gap-3">

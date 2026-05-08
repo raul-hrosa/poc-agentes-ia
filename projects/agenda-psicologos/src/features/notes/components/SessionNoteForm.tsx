@@ -80,7 +80,7 @@ export function SessionNoteForm({
         })
 
         if ("error" in result) {
-          toast.error("Não foi possível salvar o prontuário. Tente novamente.")
+          toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
           return
         }
 
@@ -93,15 +93,15 @@ export function SessionNoteForm({
         })
 
         if ("error" in result) {
-          toast.error("Não foi possível salvar o prontuário. Tente novamente.")
+          toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
           return
         }
 
-        toast.success("Prontuário registrado com sucesso")
+        toast.success("Prontuário salvo")
         router.push(`/notes/${result.noteId}`)
       }
     } catch {
-      toast.error("Não foi possível salvar o prontuário. Tente novamente.")
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     } finally {
       setIsSubmitting(false)
     }

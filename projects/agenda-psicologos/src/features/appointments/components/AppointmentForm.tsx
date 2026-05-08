@@ -134,7 +134,7 @@ export function AppointmentForm({
       })
 
       if (result.success) {
-        toast.success("Consulta atualizada com sucesso")
+        toast.success("Consulta atualizada")
         router.push(`/appointments/${appointment.id}`)
         return
       }
@@ -142,6 +142,8 @@ export function AppointmentForm({
       const { error } = result
       if (typeof error === "object" && error.type === "conflict") {
         setConflictError(error)
+      } else {
+        toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
       }
       return
     }
@@ -157,6 +159,8 @@ export function AppointmentForm({
     const { error } = result
     if (typeof error === "object" && error.type === "conflict") {
       setConflictError(error)
+    } else {
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     }
   }
 

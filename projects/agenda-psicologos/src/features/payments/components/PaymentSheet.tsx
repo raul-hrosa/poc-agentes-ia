@@ -94,21 +94,11 @@ export function PaymentSheet({
       } else if ("fieldErrors" in result) {
         setFieldErrors(result.fieldErrors)
       } else if ("error" in result) {
-        if (result.error === "not_found") {
-          toast.error("Consulta não encontrada.")
-          onClose()
-        } else if (result.error === "invalid_status") {
-          toast.error("Pagamento só pode ser registrado para sessões realizadas.")
-          onClose()
-        } else if (result.error === "plan_required") {
-          toast.error("Esta funcionalidade requer o plano pro.")
-          onClose()
-        } else {
-          toast.error("Não foi possível salvar o pagamento. Tente novamente.")
-        }
+        toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
+        onClose()
       }
     } catch {
-      toast.error("Não foi possível salvar o pagamento. Tente novamente.")
+      toast.error("Algo deu errado. Tente novamente.", { duration: Infinity })
     } finally {
       setSubmitting(false)
     }
