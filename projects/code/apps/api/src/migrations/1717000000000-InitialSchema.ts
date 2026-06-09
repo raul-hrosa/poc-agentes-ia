@@ -75,11 +75,15 @@ export class InitialSchema1717000000000 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TABLE \`subscriptions\` (
         \`id\` CHAR(36) NOT NULL,
+        \`created_at\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+        \`updated_at\` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
         \`psychologist_id\` CHAR(36) NOT NULL,
         \`plan\` ENUM('free','pro','clinic') NOT NULL DEFAULT 'free',
         \`status\` ENUM('trialing','active','past_due','cancelled') NOT NULL DEFAULT 'trialing',
         \`trial_ends_at\` DATETIME NULL,
+        \`current_period_starts_at\` DATETIME NULL,
         \`current_period_ends_at\` DATETIME NULL,
+        \`cancel_at_period_end\` TINYINT(1) NOT NULL DEFAULT 0,
         \`stripe_customer_id\` VARCHAR(255) NULL,
         \`stripe_subscription_id\` VARCHAR(255) NULL,
         \`cancelled_at\` DATETIME NULL,
@@ -140,6 +144,8 @@ export class InitialSchema1717000000000 implements MigrationInterface {
         \`location\` VARCHAR(255) NULL,
         \`price_cents\` INT UNSIGNED NOT NULL,
         PRIMARY KEY (\`id\`),
+        INDEX \`idx_recurrences_psychologist\` (\`psychologist_id\`),
+        INDEX \`idx_recurrences_patient\` (\`patient_id\`),
         CONSTRAINT \`FK_recurrences_psychologist\` FOREIGN KEY (\`psychologist_id\`)
           REFERENCES \`psychologists\` (\`id\`),
         CONSTRAINT \`FK_recurrences_patient\` FOREIGN KEY (\`patient_id\`)

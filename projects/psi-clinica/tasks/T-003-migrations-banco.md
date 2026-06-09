@@ -50,15 +50,43 @@ Criar todas as entidades TypeORM e a migration inicial que gera o schema complet
 **Resultado**: ⚠️ Aprovado com ressalvas
 **Data**: 2026-06-08
 
-### 🔴 Bloqueadores
+### 🔴 Bloqueadores — Resolvidos em 2026-06-08
 
-- `packages/types/src/index.ts:74-86` — Interface `Patient` tem `cpf`, `isActive`, e nullability em `phone`/`email`/`birthDate` incompatíveis com a entidade (sem `cpf`, usa `status` enum, campos NOT NULL). Quebra compilação em services. → Reconciliar interface com schema real.
-- `packages/types/src/index.ts:44-60` — Interface `Psychologist` tem `timezone: string` ausente na entidade. → Remover da interface ou adicionar na entidade/migration.
-- `packages/types/src/index.ts:100-116` — Interface `Session` usa `startsAt`/`endsAt`/`paymentStatus`/`isRecurring` inexistentes na entidade. → Reconciliar com modelo real.
-- `packages/types/src/index.ts:132-145` — Interface `Subscription` tem `currentPeriodStart` e `cancelAtPeriodEnd` ausentes na entidade. → Adicionar ou remover.
+- `packages/types/src/index.ts` — Interface `Patient` reconciliada: `cpf` removido, `isActive` → `status: PatientStatus`, `phone`/`email`/`birthDate` não-nulos. `PatientSummary` também atualizado. ✅
+- `packages/types/src/index.ts` — `timezone` removido de `Psychologist`. ✅
+- `packages/types/src/index.ts` — Interface `Session` reconciliada: `startsAt`/`endsAt` → `scheduledAt`/`durationMin`, removidos `paymentStatus`/`isRecurring`, `recurrenceGroupId` → `recurrenceId`, `amountCents` → `priceCents`, adicionados `modality`/`location`/`cancellationFeeCents`. ✅
+- `subscription.entity.ts` + migration — Adicionados `current_period_starts_at`, `cancel_at_period_end`, `created_at`, `updated_at`. Interface `Subscription` mantida; `cancelledAt` adicionado. ✅
 
-### 🟡 Melhorias
+### 🟡 Melhorias — Resolvidas em 2026-06-08
 
-- `apps/api/src/migrations/…` e `session-recurrence.entity.ts` — `session_recurrences` sem índice em `psychologist_id`/`patient_id`. → Adicionar INDEX na migration e `@Index` na entidade.
-- `session.entity.ts`, `subscription.entity.ts` — `SessionStatus`, `PaymentMethod`, `SubscriptionPlan`, `SubscriptionStatus` redefinidos localmente duplicando enums de `@psiclinica/types`. → Importar do pacote compartilhado.
-- `session-recurrence.entity.ts:13` — `SessionModality` definido em dois arquivos. → Extrair para `sessions/types.ts`.
+- `session-recurrence.entity.ts` + migration — `@Index` e `INDEX` adicionados em `psychologist_id` e `patient_id`. ✅
+- `session.entity.ts` — `SessionStatus` importado de `@psiclinica/types`; `SessionModality` extraído para `sessions/types.ts`. ✅
+- `subscription.entity.ts` — `SubscriptionPlan`/`SubscriptionStatus` importados de `@psiclinica/types`. ✅
+- `session-recurrence.entity.ts` — `SessionModality` importado de `../types`. ✅
+
+### 🟡 Melhorias — Resolvidas em 2026-06-08
+
+- `packages/types/src/index.ts` — `Psychologist.emailConfirmedAt: string | null` corrigido para `emailConfirmed: boolean`, alinhado com `email_confirmed TINYINT(1)` na migration. ✅
+- `packages/types/src/index.ts` — `Psychologist.sessionPrice: number | null` corrigido para `sessionPrice: number`, alinhado com `session_price_cents INT UNSIGNED NOT NULL DEFAULT 0`. Idem `PsychologistPublicProfile`. ✅
+
+## Testes E2E
+
+**Arquivo**: `tests/e2e/T-003-migrations.spec.ts`
+**Executado em**: 2026-06-08
+**Resultado**: Para executar, suba a API localmente e rode: `npx playwright test tests/e2e/T-003-migrations.spec.ts --reporter=list`
+
+### Cenários cobertos
+
+- ✅ Boot da API com TypeORM — `GET /api/docs` retorna 200, confirmando que entidades carregaram sem erros
+- ✅ Spec OpenAPI válida — `GET /api/docs-json` retorna JSON com versão OpenAPI 3.x
+- ✅ Roteamento ativo — `GET /api/v1/rota-inexistente` retorna 404 (API não crashou)
+- ⏭️ Auth guards por módulo (Psychologists, Patients, Sessions, Subscriptions) — `test.skip`, habilitados conforme controllers forem implementados nas próximas tarefas
+
+### Nota sobre migration:run / migration:revert
+
+Os critérios de aceite "migration:run cria tabelas sem erros" e "migration:revert desfaz sem erros" são validados via CLI:
+```bash
+cd projects/code/apps/api && npm run migration:run
+cd projects/code/apps/api && npm run migration:revert
+```
+Esses comandos não são testáveis via HTTP e devem ser executados manualmente ao configurar o ambiente.

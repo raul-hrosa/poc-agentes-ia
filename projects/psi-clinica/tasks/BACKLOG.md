@@ -7,7 +7,7 @@
 | [T-001](T-001-setup-monorepo.md) | Setup do monorepo (Turborepo + workspaces) | P1 | M | ✅ |
 | [T-002](T-002-setup-nestjs-base.md) | Setup NestJS base (guards, pipes, crypto, R2, mail) | P1 | M | ✅ |
 | [T-003](T-003-migrations-banco.md) | Migrations MySQL completas (todas as tabelas) | P1 | M | ✅ |
-| [T-004](T-004-auth-api.md) | Auth API (register, login, refresh, logout, reset, confirm) | P1 | L | ⬜ |
+| [T-004](T-004-auth-api.md) | Auth API (register, login, refresh, logout, reset, confirm) | P1 | L | ✅ |
 | [T-005](T-005-auth-frontend.md) | Auth frontend (login, register, forgot-password + api.ts) | P1 | M | ⬜ |
 | [T-006](T-006-perfil-psicologo.md) | Perfil do psicólogo (API + frontend settings) | P1 | M | ⬜ |
 

@@ -8,20 +8,11 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm'
+import { SessionStatus } from '@psiclinica/types'
 import { Psychologist } from '../../psychologists/entities/psychologist.entity'
 import { Patient } from '../../patients/entities/patient.entity'
 import { SessionRecurrence } from './session-recurrence.entity'
-
-export type SessionStatus =
-  | 'scheduled'
-  | 'confirmed'
-  | 'completed'
-  | 'missed'
-  | 'cancelled_patient'
-  | 'cancelled_psychologist'
-  | 'rescheduled'
-
-export type SessionModality = 'in_person' | 'online'
+import { SessionModality } from '../types'
 
 @Entity('sessions')
 @Index('idx_sessions_psychologist_date', ['psychologist_id', 'scheduled_at'])
@@ -75,16 +66,8 @@ export class Session {
 
   @Column({
     type: 'enum',
-    enum: [
-      'scheduled',
-      'confirmed',
-      'completed',
-      'missed',
-      'cancelled_patient',
-      'cancelled_psychologist',
-      'rescheduled',
-    ],
-    default: 'scheduled',
+    enum: SessionStatus,
+    default: SessionStatus.Scheduled,
   })
   status: SessionStatus
 

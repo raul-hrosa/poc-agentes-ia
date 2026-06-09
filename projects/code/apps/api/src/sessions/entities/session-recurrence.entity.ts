@@ -5,14 +5,17 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  Index,
 } from 'typeorm'
 import { Psychologist } from '../../psychologists/entities/psychologist.entity'
 import { Patient } from '../../patients/entities/patient.entity'
+import { SessionModality } from '../types'
 
 export type RecurrenceFrequency = 'weekly' | 'biweekly' | 'monthly'
-export type SessionModality = 'in_person' | 'online'
 
 @Entity('session_recurrences')
+@Index('idx_recurrences_psychologist', ['psychologist_id'])
+@Index('idx_recurrences_patient', ['patient_id'])
 export class SessionRecurrence {
   @PrimaryGeneratedColumn('uuid')
   id: string

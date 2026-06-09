@@ -40,6 +40,8 @@ export enum PaymentStatus {
   Refunded = 'refunded',
 }
 
+export type PatientStatus = 'active' | 'paused' | 'archived'
+
 // ─── Psychologist ─────────────────────────────────────────────────────────────
 
 export interface Psychologist {
@@ -52,9 +54,8 @@ export interface Psychologist {
   avatarUrl: string | null
   slug: string
   sessionDurationMinutes: number
-  sessionPrice: number | null
-  timezone: string
-  emailConfirmedAt: string | null
+  sessionPrice: number
+  emailConfirmed: boolean
   createdAt: string
   updatedAt: string
 }
@@ -66,7 +67,7 @@ export interface PsychologistPublicProfile {
   avatarUrl: string | null
   slug: string
   sessionDurationMinutes: number
-  sessionPrice: number | null
+  sessionPrice: number
 }
 
 // ─── Patient ──────────────────────────────────────────────────────────────────
@@ -75,11 +76,10 @@ export interface Patient {
   id: string
   psychologistId: string
   fullName: string
-  email: string | null
-  phone: string | null
-  birthDate: string | null
-  cpf: string | null
-  isActive: boolean
+  email: string
+  phone: string
+  birthDate: string
+  status: PatientStatus
   notes: string | null
   createdAt: string
   updatedAt: string
@@ -90,7 +90,7 @@ export interface PatientSummary {
   fullName: string
   email: string | null
   phone: string | null
-  isActive: boolean
+  status: PatientStatus
   nextSessionAt: string | null
   pendingPaymentsCount: number
 }
@@ -102,14 +102,14 @@ export interface Session {
   psychologistId: string
   patientId: string
   patientName: string
-  startsAt: string
-  endsAt: string
+  scheduledAt: string
+  durationMin: number
+  modality: 'in_person' | 'online'
+  location: string | null
   status: SessionStatus
-  paymentMethod: PaymentMethod | null
-  paymentStatus: PaymentStatus
-  amountCents: number | null
-  isRecurring: boolean
-  recurrenceGroupId: string | null
+  priceCents: number
+  cancellationFeeCents: number | null
+  recurrenceId: string | null
   notes: string | null
   createdAt: string
   updatedAt: string
@@ -140,6 +140,7 @@ export interface Subscription {
   currentPeriodEnd: string | null
   cancelAtPeriodEnd: boolean
   trialEndsAt: string | null
+  cancelledAt: string | null
   createdAt: string
   updatedAt: string
 }

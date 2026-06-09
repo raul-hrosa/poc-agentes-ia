@@ -88,7 +88,7 @@ test.describe('T-002 — Setup NestJS Base', () => {
 
   test.describe('JwtAuthGuard', () => {
     test.skip('rota protegida sem token retorna 401 com "Token não fornecido"', async ({ request }) => {
-      // Substituir pela primeira rota protegida implementada (ex: GET /api/v1/psychologists/me)
+      // Habilitar em T-005 — PsychologistsModule controller implementado
       const res = await request.get(`${API}/api/v1/psychologists/me`)
       expect(res.status()).toBe(401)
       const body = await res.json()
@@ -96,6 +96,7 @@ test.describe('T-002 — Setup NestJS Base', () => {
     })
 
     test.skip('rota protegida com token inválido retorna 401 com "Token inválido ou expirado"', async ({ request }) => {
+      // Habilitar em T-005 — PsychologistsModule controller implementado
       const res = await request.get(`${API}/api/v1/psychologists/me`, {
         headers: { Authorization: 'Bearer token.invalido.assinado.errado' },
       })
@@ -104,13 +105,14 @@ test.describe('T-002 — Setup NestJS Base', () => {
       expect(body.message).toBe('Token inválido ou expirado')
     })
 
-    test.skip('rota marcada @Public() é acessível sem token (ex: POST /api/v1/auth/login)', async ({ request }) => {
-      // Habilitado em T-004 — endpoint de login usa @Public()
+    test('rota @Public() acessível sem token — resposta vem do AuthService, não do JwtAuthGuard', async ({ request }) => {
       const res = await request.post(`${API}/api/v1/auth/login`, {
         data: { email: 'qualquer@email.com', password: 'qualquer' },
       })
-      // Espera 400 (credenciais inválidas) ou 200 — o que NÃO deve ocorrer é 401
-      expect(res.status()).not.toBe(401)
+      // 401 do AuthService (credenciais inválidas), não do guard (Token não fornecido)
+      expect(res.status()).toBe(401)
+      const body = await res.json()
+      expect(body.message).toBe('Credenciais inválidas')
     })
   })
 
@@ -118,8 +120,7 @@ test.describe('T-002 — Setup NestJS Base', () => {
   // Habilitados em T-004 — quando existir rota com DTO
 
   test.describe('ValidationPipe', () => {
-    test.skip('POST com campo extra proibido retorna 400 (forbidNonWhitelisted)', async ({ request }) => {
-      // Habilitado em T-004 — usar POST /api/v1/auth/login com campo extra
+    test('POST com campo extra proibido retorna 400 (forbidNonWhitelisted)', async ({ request }) => {
       const res = await request.post(`${API}/api/v1/auth/login`, {
         data: { email: 'a@b.com', password: '123', campoHacker: 'injeção' },
       })
@@ -130,7 +131,7 @@ test.describe('T-002 — Setup NestJS Base', () => {
       )
     })
 
-    test.skip('POST com campo obrigatório ausente retorna 400 com detalhes de validação', async ({ request }) => {
+    test('POST com campo obrigatório ausente retorna 400 com detalhes de validação', async ({ request }) => {
       const res = await request.post(`${API}/api/v1/auth/login`, {
         data: {},
       })
